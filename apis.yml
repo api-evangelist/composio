@@ -1,0 +1,30 @@
+aid: composio
+name: Composio
+segments:
+  - Unified_API
+description: >-
+  Composio is a unified API and tooling platform for AI agents with 850+ pre-built connectors and managed OAuth.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Unified_API
+created: '2026-03-03'
+modified: '2026-03-03'
+url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml
+specificationVersion: '0.19'
+apis:
+  - aid: composio:composio
+    name: Composio
+    description: >-
+      Composio is a unified API and tooling platform for AI agents with 850+ pre-built connectors and managed OAuth.
+    humanURL: https://example.com
+    tags:
+      - Unified_API
+    properties:
+      - type: Documentation
+        url: https://example.com
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
