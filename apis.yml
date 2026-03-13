@@ -3,28 +3,143 @@ name: Composio
 segments:
   - Unified_API
 description: >-
-  Composio is a unified API and tooling platform for AI agents with 850+ pre-built connectors and managed OAuth.
+  Composio is a unified API and tooling platform for AI agents with 1000+ pre-built connectors, managed OAuth, tool search, context management, and a sandboxed workbench to help you build AI agents that turn intent into action.
 type: Index
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - Unified_API
+  - AI Agents
+  - Authentication
+  - Integrations
+  - OAuth
+  - Tools
 created: '2026-03-03'
 modified: '2026-03-03'
 url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: composio:composio
-    name: Composio
+  - aid: composio:tool-router-api
+    name: Composio Tool Router API
     description: >-
-      Composio is a unified API and tooling platform for AI agents with 850+ pre-built connectors and managed OAuth.
-    humanURL: https://example.com
+      Session-based API for AI agents to discover and execute tools. The Tool Router provides the primary interface for AI agents to find relevant tools and execute actions through Composio's unified platform.
+    humanURL: https://docs.composio.dev/reference
     tags:
-      - Unified_API
+      - AI Agents
+      - Tools
+      - Sessions
     properties:
       - type: Documentation
-        url: https://example.com
+        url: https://docs.composio.dev/reference
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+  - aid: composio:tools-api
+    name: Composio Tools API
+    description: >-
+      Enables listing, searching, and executing individual actions within toolkits. The Tools API allows developers to discover available tools, filter by toolkit or capability, and execute specific actions on behalf of connected users.
+    humanURL: https://docs.composio.dev/reference/api-reference/tools
+    tags:
+      - Tools
+      - Actions
+      - Execution
+    properties:
+      - type: Documentation
+        url: https://docs.composio.dev/reference/api-reference/tools
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+  - aid: composio:connected-accounts-api
+    name: Composio Connected Accounts API
+    description: >-
+      Handles management of user OAuth connections to applications. The Connected Accounts API enables creating, listing, and managing authenticated connections between end users and third-party applications through Composio's managed OAuth flow.
+    humanURL: https://docs.composio.dev/reference/api-reference/connected-accounts
+    tags:
+      - OAuth
+      - Authentication
+      - Connections
+      - Accounts
+    properties:
+      - type: Documentation
+        url: https://docs.composio.dev/reference/api-reference/connected-accounts
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+  - aid: composio:auth-configs-api
+    name: Composio Auth Configs API
+    description: >-
+      Allows configuration of authentication methods for toolkit access. Auth configs contain developer credentials and app-level settings such as scopes and authentication methods, and can be reused across all users.
+    humanURL: https://docs.composio.dev/reference/api-reference/auth-configs
+    tags:
+      - Authentication
+      - Configuration
+      - OAuth
+    properties:
+      - type: Documentation
+        url: https://docs.composio.dev/reference/api-reference/auth-configs
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+  - aid: composio:triggers-api
+    name: Composio Triggers API
+    description: >-
+      Manages webhook subscriptions from connected applications. The Triggers API enables developers to set up and manage event-driven notifications from third-party applications, allowing AI agents to respond to real-time events.
+    humanURL: https://docs.composio.dev/reference/api-reference/triggers
+    tags:
+      - Triggers
+      - Webhooks
+      - Events
+    properties:
+      - type: Documentation
+        url: https://docs.composio.dev/reference/api-reference/triggers
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+  - aid: composio:toolkits-api
+    name: Composio Toolkits API
+    description: >-
+      Provides browsing capabilities for available applications and their associated tools. The Toolkits API allows developers to discover and explore the 1000+ available integrations across services like GitHub, Gmail, Slack, Notion, and more.
+    humanURL: https://docs.composio.dev/reference/api-reference/toolkits
+    tags:
+      - Toolkits
+      - Integrations
+      - Applications
+    properties:
+      - type: Documentation
+        url: https://docs.composio.dev/reference/api-reference/toolkits
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+common:
+  - type: Portal
+    url: https://app.composio.dev/dashboard
+  - type: Documentation
+    url: https://docs.composio.dev/docs
+  - type: Getting Started
+    url: https://docs.composio.dev/docs/quickstart
+  - type: API Reference
+    url: https://docs.composio.dev/reference
+  - type: OpenAPI
+    url: https://backend.composio.dev/api/v3/openapi.json
+  - type: Authentication
+    url: https://docs.composio.dev/faq/api_key/api_key
+  - type: Blog
+    url: https://composio.dev/blog
+  - type: Status
+    url: https://status.composio.dev
+  - type: Pricing
+    url: https://composio.dev/pricing
+  - type: Change Log
+    url: https://docs.composio.dev/docs/changelog
+  - type: Privacy Policy
+    url: https://composio.dev/privacy
+  - type: Terms of Service
+    url: https://composio.dev/terms
+  - type: GitHub Organization
+    url: https://github.com/ComposioHQ
+  - type: GitHub Repo
+    url: https://github.com/ComposioHQ/composio
+  - type: Python SDK
+    url: https://github.com/ComposioHQ/composio
+  - type: Node.js SDK
+    url: https://www.npmjs.com/package/@composio/client
+  - type: Sign Up
+    url: https://app.composio.dev/dashboard
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
