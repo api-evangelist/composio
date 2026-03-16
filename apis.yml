@@ -1,7 +1,5 @@
 aid: composio
 name: Composio
-segments:
-  - Unified_API
 description: >-
   Composio is a unified API and tooling platform for AI agents with 1000+ pre-built connectors, managed OAuth, tool search, context management, and a sandboxed workbench to help you build AI agents that turn intent into action.
 type: Index
@@ -16,7 +14,7 @@ tags:
   - OAuth
   - Tools
 created: '2026-03-03'
-modified: '2026-03-03'
+modified: '2026-03-16'
 url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
