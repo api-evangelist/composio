@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://composio.dev/schemas/composio/tool.json",
+  "title": "Composio Tool",
+  "description": "Represents an individual tool action within a Composio toolkit, including its metadata, input parameters, and the toolkit it belongs to.",
+  "type": "object",
+  "required": ["id", "name", "toolkit"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the tool.",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the tool.",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the tool's functionality and what it does."
+    },
+    "toolkit": {
+      "type": "string",
+      "description": "The toolkit (application) this tool belongs to, such as 'github', 'gmail', or 'slack'.",
+      "minLength": 1
+    },
+    "parameters": {
+      "$ref": "#/$defs/ParameterSchema",
+      "description": "JSON Schema describing the required and optional input parameters for the tool."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Categorization tags for the tool.",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "ParameterSchema": {
+      "type": "object",
+      "description": "Schema describing the input parameters for a tool.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "object"
+        },
+        "required": {
+          "type": "array",
+          "description": "List of required input parameter names.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "properties": {
+          "type": "object",
+          "description": "Map of parameter names to their type definitions.",
+          "additionalProperties": {
+            "$ref": "#/$defs/ParameterDefinition"
+          }
+        }
+      }
+    },
+    "ParameterDefinition": {
+      "type": "object",
+      "description": "Definition of a single input parameter for a tool.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The data type of the parameter.",
+          "enum": ["string", "integer", "number", "boolean", "array", "object"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the parameter."
+        },
+        "enum": {
+          "type": "array",
+          "description": "Allowed values for the parameter."
+        },
+        "default": {
+          "description": "Default value for the parameter when not provided."
+        },
+        "format": {
+          "type": "string",
+          "description": "Format hint for the parameter value, such as 'email', 'uri', or 'date-time'."
+        }
+      }
+    }
+  }
+}

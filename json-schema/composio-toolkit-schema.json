@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://composio.dev/schemas/composio/toolkit.json",
+  "title": "Composio Toolkit",
+  "description": "Represents an application toolkit in the Composio platform, containing a collection of tools and integration metadata for a specific third-party service.",
+  "type": "object",
+  "required": ["slug", "name"],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier for the toolkit, such as 'github', 'gmail', or 'slack'.",
+      "minLength": 1,
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the toolkit.",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the toolkit and the third-party service it integrates with."
+    },
+    "logo": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the toolkit's logo image."
+    },
+    "categories": {
+      "type": "array",
+      "description": "Categories this toolkit belongs to, such as 'productivity', 'communication', or 'developer-tools'.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authSchemes": {
+      "type": "array",
+      "description": "Supported authentication schemes for connecting to this toolkit.",
+      "items": {
+        "type": "string",
+        "enum": ["OAUTH2", "API_KEY", "BASIC", "BEARER_TOKEN"]
+      }
+    },
+    "toolCount": {
+      "type": "integer",
+      "description": "Number of available tools in this toolkit.",
+      "minimum": 0
+    }
+  }
+}

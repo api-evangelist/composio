@@ -1,0 +1,113 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "composio": "https://composio.dev/ns/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Tool": {
+      "@id": "composio:Tool",
+      "@context": {
+        "id": "composio:toolId",
+        "name": "schema:name",
+        "description": "schema:description",
+        "toolkit": "composio:toolkit",
+        "parameters": "composio:parameters",
+        "tags": {
+          "@id": "schema:keywords",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Toolkit": {
+      "@id": "composio:Toolkit",
+      "@context": {
+        "slug": "composio:slug",
+        "name": "schema:name",
+        "description": "schema:description",
+        "logo": {
+          "@id": "schema:logo",
+          "@type": "@id"
+        },
+        "categories": {
+          "@id": "schema:category",
+          "@container": "@set"
+        },
+        "authSchemes": {
+          "@id": "composio:authSchemes",
+          "@container": "@set"
+        },
+        "toolCount": "composio:toolCount"
+      }
+    },
+
+    "ConnectedAccount": {
+      "@id": "composio:ConnectedAccount",
+      "@context": {
+        "id": "composio:connectedAccountId",
+        "toolkit": "composio:toolkit",
+        "status": "composio:status",
+        "entityId": "composio:entityId",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "AuthConfig": {
+      "@id": "composio:AuthConfig",
+      "@context": {
+        "id": "composio:authConfigId",
+        "toolkit": "composio:toolkit",
+        "authScheme": "composio:authScheme",
+        "scopes": {
+          "@id": "composio:scopes",
+          "@container": "@set"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Trigger": {
+      "@id": "composio:Trigger",
+      "@context": {
+        "id": "composio:triggerId",
+        "connectedAccountId": "composio:connectedAccountId",
+        "triggerName": "composio:triggerName",
+        "webhookUrl": {
+          "@id": "composio:webhookUrl",
+          "@type": "@id"
+        },
+        "status": "composio:status",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Session": {
+      "@id": "composio:Session",
+      "@context": {
+        "sessionId": "composio:sessionId",
+        "connectedAccountId": "composio:connectedAccountId",
+        "status": "composio:status"
+      }
+    },
+
+    "ExecutionResult": {
+      "@id": "composio:ExecutionResult",
+      "@context": {
+        "success": "composio:success",
+        "output": "composio:output",
+        "error": "composio:error"
+      }
+    }
+  }
+}

@@ -1,0 +1,696 @@
+# Composio Tool Router API - OpenAPI Specification
+# Source: https://backend.composio.dev/api/v3/openapi.json
+# NOTE: Download the original spec and convert to YAML:
+#   curl -s https://backend.composio.dev/api/v3/openapi.json | python3 -c "import sys,json,yaml; yaml.dump(json.load(sys.stdin),sys.stdout,default_flow_style=False)" > composio-openapi-original.yml
+#
+# Based on the apis.yml metadata, this API covers:
+# - Tool Router: Session-based API for AI agents to discover and execute tools
+# - Tools: Listing, searching, and executing individual actions within toolkits
+# - Connected Accounts: Management of user OAuth connections to applications
+# - Auth Configs: Configuration of authentication methods for toolkit access
+# - Triggers: Webhook subscriptions from connected applications
+# - Toolkits: Browsing available applications and their associated tools
+
+openapi: "3.0.0"
+info:
+  title: Composio API
+  description: >-
+    Composio is a unified API and tooling platform for AI agents with 1000+
+    pre-built connectors, managed OAuth, tool search, context management, and a
+    sandboxed workbench to help you build AI agents that turn intent into action.
+    This specification covers the Tool Router, Tools, Connected Accounts, Auth
+    Configs, Triggers, and Toolkits APIs.
+  version: v3
+  contact:
+    name: Composio
+    url: https://composio.dev
+  termsOfService: https://composio.dev/terms
+externalDocs:
+  description: Composio API Reference
+  url: https://docs.composio.dev/reference
+servers:
+  - url: https://backend.composio.dev/api/v3
+    description: Production Server
+tags:
+  - name: Tool Router
+    description: >-
+      Session-based API for AI agents to discover and execute tools through
+      Composio's unified platform.
+  - name: Tools
+    description: >-
+      List, search, and execute individual actions within toolkits.
+  - name: Connected Accounts
+    description: >-
+      Manage user OAuth connections to third-party applications through
+      Composio's managed OAuth flow.
+  - name: Auth Configs
+    description: >-
+      Configure authentication methods for toolkit access, including developer
+      credentials and app-level settings.
+  - name: Triggers
+    description: >-
+      Manage webhook subscriptions from connected applications for event-driven
+      notifications.
+  - name: Toolkits
+    description: >-
+      Browse available applications and their associated tools across 1000+
+      integrations.
+security:
+  - apiKeyAuth: []
+paths:
+  /toolRouter/session:
+    post:
+      operationId: createSession
+      summary: Create a tool router session
+      description: >-
+        Creates a new session for an AI agent to discover and execute tools.
+      tags:
+        - Tool Router
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connectedAccountId:
+                  type: string
+                  description: The connected account to use for this session.
+      responses:
+        '200':
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '401':
+          description: Unauthorized
+  /tools:
+    get:
+      operationId: listTools
+      summary: List available tools
+      description: >-
+        Returns a list of available tools, optionally filtered by toolkit or
+        search query.
+      tags:
+        - Tools
+      parameters:
+        - name: toolkit
+          in: query
+          schema:
+            type: string
+          description: Filter tools by toolkit name.
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Search query to filter tools.
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Maximum number of tools to return.
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Offset for pagination.
+      responses:
+        '200':
+          description: List of tools
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolListResponse'
+        '401':
+          description: Unauthorized
+  /tools/{toolId}/execute:
+    post:
+      operationId: executeTool
+      summary: Execute a tool action
+      description: >-
+        Executes a specific tool action on behalf of a connected user.
+      tags:
+        - Tools
+      parameters:
+        - name: toolId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the tool to execute.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteToolRequest'
+      responses:
+        '200':
+          description: Tool executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteToolResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Tool not found
+  /connectedAccounts:
+    get:
+      operationId: listConnectedAccounts
+      summary: List connected accounts
+      description: >-
+        Returns a list of authenticated connections between end users and
+        third-party applications.
+      tags:
+        - Connected Accounts
+      parameters:
+        - name: toolkit
+          in: query
+          schema:
+            type: string
+          description: Filter by toolkit name.
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of connected accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedAccountListResponse'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createConnectedAccount
+      summary: Create a connected account
+      description: >-
+        Initiates an OAuth flow to connect a user to a third-party application.
+      tags:
+        - Connected Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConnectedAccountRequest'
+      responses:
+        '200':
+          description: Connected account created or OAuth flow initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedAccountResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+  /connectedAccounts/{connectedAccountId}:
+    get:
+      operationId: getConnectedAccount
+      summary: Get a connected account
+      description: >-
+        Returns details of a specific connected account.
+      tags:
+        - Connected Accounts
+      parameters:
+        - name: connectedAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Connected account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectedAccountResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+    delete:
+      operationId: deleteConnectedAccount
+      summary: Delete a connected account
+      description: >-
+        Removes an authenticated connection to a third-party application.
+      tags:
+        - Connected Accounts
+      parameters:
+        - name: connectedAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Connected account deleted
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not found
+  /authConfigs:
+    get:
+      operationId: listAuthConfigs
+      summary: List auth configurations
+      description: >-
+        Returns a list of authentication configurations for toolkit access.
+      tags:
+        - Auth Configs
+      responses:
+        '200':
+          description: List of auth configs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfigListResponse'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createAuthConfig
+      summary: Create an auth configuration
+      description: >-
+        Creates a new authentication configuration containing developer
+        credentials and app-level settings.
+      tags:
+        - Auth Configs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAuthConfigRequest'
+      responses:
+        '200':
+          description: Auth config created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthConfigResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+  /triggers:
+    get:
+      operationId: listTriggers
+      summary: List triggers
+      description: >-
+        Returns a list of webhook subscriptions from connected applications.
+      tags:
+        - Triggers
+      parameters:
+        - name: connectedAccountId
+          in: query
+          schema:
+            type: string
+          description: Filter triggers by connected account.
+      responses:
+        '200':
+          description: List of triggers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerListResponse'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createTrigger
+      summary: Create a trigger
+      description: >-
+        Sets up a webhook subscription for event-driven notifications from a
+        connected application.
+      tags:
+        - Triggers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTriggerRequest'
+      responses:
+        '200':
+          description: Trigger created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+  /toolkits:
+    get:
+      operationId: listToolkits
+      summary: List available toolkits
+      description: >-
+        Returns a list of available application toolkits with their associated
+        tools and integration details.
+      tags:
+        - Toolkits
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Search query to filter toolkits.
+        - name: category
+          in: query
+          schema:
+            type: string
+          description: Filter by category.
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of toolkits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolkitListResponse'
+        '401':
+          description: Unauthorized
+  /toolkits/{toolkitSlug}:
+    get:
+      operationId: getToolkit
+      summary: Get toolkit details
+      description: >-
+        Returns details of a specific toolkit including its tools and
+        authentication requirements.
+      tags:
+        - Toolkits
+      parameters:
+        - name: toolkitSlug
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The slug identifier of the toolkit.
+      responses:
+        '200':
+          description: Toolkit details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolkitResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Toolkit not found
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: >-
+        API key for authenticating requests to the Composio platform. Obtain
+        from the Composio dashboard at app.composio.dev.
+  schemas:
+    SessionResponse:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: Unique identifier for the session.
+        status:
+          type: string
+          description: Session status.
+    ToolListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+        totalCount:
+          type: integer
+    Tool:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the tool.
+        name:
+          type: string
+          description: Human-readable name of the tool.
+        description:
+          type: string
+          description: Description of the tool's functionality.
+        toolkit:
+          type: string
+          description: The toolkit this tool belongs to.
+        parameters:
+          type: object
+          description: JSON Schema for the tool's input parameters.
+          additionalProperties: true
+        tags:
+          type: array
+          items:
+            type: string
+    ExecuteToolRequest:
+      type: object
+      required:
+        - connectedAccountId
+      properties:
+        connectedAccountId:
+          type: string
+          description: The connected account to execute on behalf of.
+        input:
+          type: object
+          description: Input parameters for the tool execution.
+          additionalProperties: true
+    ExecuteToolResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the execution succeeded.
+        output:
+          description: The output from the tool execution.
+        error:
+          type: string
+          description: Error message if execution failed.
+    ConnectedAccountListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedAccountResponse'
+        totalCount:
+          type: integer
+    ConnectedAccountResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the connected account.
+        toolkit:
+          type: string
+          description: The toolkit this account is connected to.
+        status:
+          type: string
+          description: Connection status.
+          enum:
+            - active
+            - expired
+            - pending
+        createdAt:
+          type: string
+          format: date-time
+    CreateConnectedAccountRequest:
+      type: object
+      required:
+        - toolkit
+      properties:
+        toolkit:
+          type: string
+          description: The toolkit to connect to.
+        authConfigId:
+          type: string
+          description: Optional auth config to use for this connection.
+        entityId:
+          type: string
+          description: Identifier for the end user entity.
+    AuthConfigListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthConfigResponse'
+    AuthConfigResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the auth config.
+        toolkit:
+          type: string
+          description: The toolkit this auth config applies to.
+        authScheme:
+          type: string
+          description: The authentication scheme.
+          enum:
+            - OAUTH2
+            - API_KEY
+            - BASIC
+            - BEARER_TOKEN
+        scopes:
+          type: array
+          items:
+            type: string
+          description: OAuth scopes requested.
+        createdAt:
+          type: string
+          format: date-time
+    CreateAuthConfigRequest:
+      type: object
+      required:
+        - toolkit
+        - authScheme
+      properties:
+        toolkit:
+          type: string
+          description: The toolkit to configure authentication for.
+        authScheme:
+          type: string
+          description: The authentication scheme to use.
+          enum:
+            - OAUTH2
+            - API_KEY
+            - BASIC
+            - BEARER_TOKEN
+        credentials:
+          type: object
+          description: Developer credentials for the authentication scheme.
+          additionalProperties: true
+        scopes:
+          type: array
+          items:
+            type: string
+          description: OAuth scopes to request.
+    TriggerListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerResponse'
+    TriggerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the trigger.
+        connectedAccountId:
+          type: string
+          description: The connected account this trigger is associated with.
+        triggerName:
+          type: string
+          description: Name of the trigger event.
+        webhookUrl:
+          type: string
+          format: uri
+          description: The webhook URL for receiving events.
+        status:
+          type: string
+          enum:
+            - active
+            - paused
+            - disabled
+        createdAt:
+          type: string
+          format: date-time
+    CreateTriggerRequest:
+      type: object
+      required:
+        - connectedAccountId
+        - triggerName
+      properties:
+        connectedAccountId:
+          type: string
+          description: The connected account to create the trigger for.
+        triggerName:
+          type: string
+          description: The name of the trigger event to subscribe to.
+        webhookUrl:
+          type: string
+          format: uri
+          description: The URL to receive webhook events.
+        config:
+          type: object
+          description: Additional trigger configuration.
+          additionalProperties: true
+    ToolkitListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolkitResponse'
+        totalCount:
+          type: integer
+    ToolkitResponse:
+      type: object
+      properties:
+        slug:
+          type: string
+          description: URL-friendly identifier for the toolkit.
+        name:
+          type: string
+          description: Human-readable name of the toolkit.
+        description:
+          type: string
+          description: Description of the toolkit.
+        logo:
+          type: string
+          format: uri
+          description: URL of the toolkit's logo.
+        categories:
+          type: array
+          items:
+            type: string
+        authSchemes:
+          type: array
+          items:
+            type: string
+          description: Supported authentication schemes.
+        toolCount:
+          type: integer
+          description: Number of tools in this toolkit.
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+        code:
+          type: string
+          description: Machine-readable error code.
+        details:
+          type: object
+          additionalProperties: true

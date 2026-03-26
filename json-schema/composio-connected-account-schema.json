@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://composio.dev/schemas/composio/connected-account.json",
+  "title": "Composio Connected Account",
+  "description": "Represents an authenticated connection between an end user and a third-party application, managed through Composio's OAuth flow.",
+  "type": "object",
+  "required": ["id", "toolkit", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the connected account.",
+      "minLength": 1
+    },
+    "toolkit": {
+      "type": "string",
+      "description": "The toolkit (application) this account is connected to.",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the connection.",
+      "enum": ["active", "expired", "pending"]
+    },
+    "entityId": {
+      "type": "string",
+      "description": "Identifier for the end user entity that owns this connection."
+    },
+    "authConfigId": {
+      "type": "string",
+      "description": "The auth configuration used for this connection."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the connected account was created."
+    }
+  }
+}

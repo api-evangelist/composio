@@ -5,9 +5,9 @@ Composio is a unified API and tooling platform for AI agents with 1000+ pre-buil
 
 ## Scope
 
-- **Type:** Index 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+- **Type:** Contract
+- **Position:** Consuming
+- **Access:** 3rd-Party
 
 ## Tags:
 
@@ -15,8 +15,8 @@ Composio is a unified API and tooling platform for AI agents with 1000+ pre-buil
 
 ## Timestamps
 
-- **Created:** 2026-03-03 
-- **Modified:** 2026-03-16 
+- **Created:** 2026-03-03
+- **Modified:** 2026-03-26
 
 ## APIs
 
@@ -129,9 +129,13 @@ Provides browsing capabilities for available applications and their associated t
 - [Python SDK](https://github.com/ComposioHQ/composio)
 - [Node.js SDK](https://www.npmjs.com/package/@composio/client)
 - [Sign Up](https://app.composio.dev/dashboard)
+- [JSON-LD](json-ld/composio-context.jsonld)
+- [JSONSchema](json-schema/composio-tool-schema.json)
+- [JSONSchema](json-schema/composio-toolkit-schema.json)
+- [JSONSchema](json-schema/composio-connected-account-schema.json)
 
 ## Maintainers
 
-**FN:** Kin Lane
+**FN:** API Evangelist
 
-**Email:** kin@apievangelist.com
+**Email:** info@apievangelist.com
