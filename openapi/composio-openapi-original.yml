@@ -61,7 +61,7 @@ paths:
   /toolRouter/session:
     post:
       operationId: createSession
-      summary: Create a tool router session
+      summary: Composio Create a tool router session
       description: >-
         Creates a new session for an AI agent to discover and execute tools.
       tags:
@@ -88,7 +88,7 @@ paths:
   /tools:
     get:
       operationId: listTools
-      summary: List available tools
+      summary: Composio List available tools
       description: >-
         Returns a list of available tools, optionally filtered by toolkit or
         search query.
@@ -129,7 +129,7 @@ paths:
   /tools/{toolId}/execute:
     post:
       operationId: executeTool
-      summary: Execute a tool action
+      summary: Composio Execute a tool action
       description: >-
         Executes a specific tool action on behalf of a connected user.
       tags:
@@ -163,7 +163,7 @@ paths:
   /connectedAccounts:
     get:
       operationId: listConnectedAccounts
-      summary: List connected accounts
+      summary: Composio List connected accounts
       description: >-
         Returns a list of authenticated connections between end users and
         third-party applications.
@@ -196,7 +196,7 @@ paths:
           description: Unauthorized
     post:
       operationId: createConnectedAccount
-      summary: Create a connected account
+      summary: Composio Create a connected account
       description: >-
         Initiates an OAuth flow to connect a user to a third-party application.
       tags:
@@ -221,7 +221,7 @@ paths:
   /connectedAccounts/{connectedAccountId}:
     get:
       operationId: getConnectedAccount
-      summary: Get a connected account
+      summary: Composio Get a connected account
       description: >-
         Returns details of a specific connected account.
       tags:
@@ -245,7 +245,7 @@ paths:
           description: Not found
     delete:
       operationId: deleteConnectedAccount
-      summary: Delete a connected account
+      summary: Composio Delete a connected account
       description: >-
         Removes an authenticated connection to a third-party application.
       tags:
@@ -266,7 +266,7 @@ paths:
   /authConfigs:
     get:
       operationId: listAuthConfigs
-      summary: List auth configurations
+      summary: Composio List auth configurations
       description: >-
         Returns a list of authentication configurations for toolkit access.
       tags:
@@ -282,7 +282,7 @@ paths:
           description: Unauthorized
     post:
       operationId: createAuthConfig
-      summary: Create an auth configuration
+      summary: Composio Create an auth configuration
       description: >-
         Creates a new authentication configuration containing developer
         credentials and app-level settings.
@@ -308,7 +308,7 @@ paths:
   /triggers:
     get:
       operationId: listTriggers
-      summary: List triggers
+      summary: Composio List triggers
       description: >-
         Returns a list of webhook subscriptions from connected applications.
       tags:
@@ -330,7 +330,7 @@ paths:
           description: Unauthorized
     post:
       operationId: createTrigger
-      summary: Create a trigger
+      summary: Composio Create a trigger
       description: >-
         Sets up a webhook subscription for event-driven notifications from a
         connected application.
@@ -356,7 +356,7 @@ paths:
   /toolkits:
     get:
       operationId: listToolkits
-      summary: List available toolkits
+      summary: Composio List available toolkits
       description: >-
         Returns a list of available application toolkits with their associated
         tools and integration details.
@@ -395,7 +395,7 @@ paths:
   /toolkits/{toolkitSlug}:
     get:
       operationId: getToolkit
-      summary: Get toolkit details
+      summary: Composio Get toolkit details
       description: >-
         Returns details of a specific toolkit including its tools and
         authentication requirements.
