@@ -7,12 +7,12 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Unified_API
   - AI Agents
   - Authentication
   - Integrations
   - OAuth
   - Tools
+  - Unified_API
 created: '2026-03-03'
 modified: '2026-03-16'
 url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml
@@ -25,8 +25,8 @@ apis:
     humanURL: https://docs.composio.dev/reference
     tags:
       - AI Agents
-      - Tools
       - Sessions
+      - Tools
     properties:
       - type: Documentation
         url: https://docs.composio.dev/reference
@@ -38,9 +38,9 @@ apis:
       Enables listing, searching, and executing individual actions within toolkits. The Tools API allows developers to discover available tools, filter by toolkit or capability, and execute specific actions on behalf of connected users.
     humanURL: https://docs.composio.dev/reference/api-reference/tools
     tags:
-      - Tools
       - Actions
       - Execution
+      - Tools
     properties:
       - type: Documentation
         url: https://docs.composio.dev/reference/api-reference/tools
@@ -52,10 +52,10 @@ apis:
       Handles management of user OAuth connections to applications. The Connected Accounts API enables creating, listing, and managing authenticated connections between end users and third-party applications through Composio's managed OAuth flow.
     humanURL: https://docs.composio.dev/reference/api-reference/connected-accounts
     tags:
-      - OAuth
+      - Accounts
       - Authentication
       - Connections
-      - Accounts
+      - OAuth
     properties:
       - type: Documentation
         url: https://docs.composio.dev/reference/api-reference/connected-accounts
@@ -81,9 +81,9 @@ apis:
       Manages webhook subscriptions from connected applications. The Triggers API enables developers to set up and manage event-driven notifications from third-party applications, allowing AI agents to respond to real-time events.
     humanURL: https://docs.composio.dev/reference/api-reference/triggers
     tags:
+      - Events
       - Triggers
       - Webhooks
-      - Events
     properties:
       - type: Documentation
         url: https://docs.composio.dev/reference/api-reference/triggers
@@ -95,9 +95,9 @@ apis:
       Provides browsing capabilities for available applications and their associated tools. The Toolkits API allows developers to discover and explore the 1000+ available integrations across services like GitHub, Gmail, Slack, Notion, and more.
     humanURL: https://docs.composio.dev/reference/api-reference/toolkits
     tags:
-      - Toolkits
-      - Integrations
       - Applications
+      - Integrations
+      - Toolkits
     properties:
       - type: Documentation
         url: https://docs.composio.dev/reference/api-reference/toolkits

@@ -32,29 +32,29 @@ servers:
   - url: https://backend.composio.dev/api/v3
     description: Production Server
 tags:
-  - name: Tool Router
-    description: >-
-      Session-based API for AI agents to discover and execute tools through
-      Composio's unified platform.
-  - name: Tools
-    description: >-
-      List, search, and execute individual actions within toolkits.
-  - name: Connected Accounts
-    description: >-
-      Manage user OAuth connections to third-party applications through
-      Composio's managed OAuth flow.
   - name: Auth Configs
     description: >-
       Configure authentication methods for toolkit access, including developer
       credentials and app-level settings.
-  - name: Triggers
+  - name: Connected Accounts
     description: >-
-      Manage webhook subscriptions from connected applications for event-driven
-      notifications.
+      Manage user OAuth connections to third-party applications through
+      Composio's managed OAuth flow.
+  - name: Tool Router
+    description: >-
+      Session-based API for AI agents to discover and execute tools through
+      Composio's unified platform.
   - name: Toolkits
     description: >-
       Browse available applications and their associated tools across 1000+
       integrations.
+  - name: Tools
+    description: >-
+      List, search, and execute individual actions within toolkits.
+  - name: Triggers
+    description: >-
+      Manage webhook subscriptions from connected applications for event-driven
+      notifications.
 security:
   - apiKeyAuth: []
 paths:
