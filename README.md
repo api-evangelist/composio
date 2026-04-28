@@ -1,22 +1,22 @@
 # Composio (composio)
-Composio is a unified API and tooling platform for AI agents with 1000+ pre-built connectors, managed OAuth, tool search, context management, and a sandboxed workbench to help you build AI agents that turn intent into action.
+Composio is a unified API and tooling platform for AI agents with 1000+ pre-built connectors, managed OAuth, tool search, context management, and a sandboxed workbench to help you build AI agents that turn intent into action. Authentication is via the `x-api-key` (project) or `x-org-api-key` (organization) header.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Contract
-- **Position:** Consuming
+- **Type:** Index
+- **Position:** Consumer
 - **Access:** 3rd-Party
 
-## Tags:
+## Tags
 
- - Unified_API, AI Agents, Authentication, Integrations, OAuth, Tools
+ - AI Agents, Authentication, Integrations, OAuth, Tools, Unified_API
 
 ## Timestamps
 
 - **Created:** 2026-03-03
-- **Modified:** 2026-03-26
+- **Modified:** 2026-04-28
 
 ## APIs
 
@@ -25,90 +25,114 @@ Session-based API for AI agents to discover and execute tools. The Tool Router p
 
 **Human URL:** [https://docs.composio.dev/reference](https://docs.composio.dev/reference)
 
+**Base URL:** `https://backend.composio.dev/api/v3`
 
-#### Tags:
+#### Tags
 
- - AI Agents, Tools, Sessions
+ - AI Agents, Sessions, Tools
 
 #### Properties
 
 - [Documentation](https://docs.composio.dev/reference)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Local OpenAPI](openapi/composio-openapi-original.yml)
+- [Upstream OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Spectral Rules](rules/composio-rules.yml)
+- [Naftiko Capabilities](capabilities/composio-tool-router.yml)
 
 ### Composio Tools API
 Enables listing, searching, and executing individual actions within toolkits. The Tools API allows developers to discover available tools, filter by toolkit or capability, and execute specific actions on behalf of connected users.
 
 **Human URL:** [https://docs.composio.dev/reference/api-reference/tools](https://docs.composio.dev/reference/api-reference/tools)
 
+**Base URL:** `https://backend.composio.dev/api/v3`
 
-#### Tags:
+#### Tags
 
- - Tools, Actions, Execution
+ - Actions, Execution, Tools
 
 #### Properties
 
 - [Documentation](https://docs.composio.dev/reference/api-reference/tools)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Local OpenAPI](openapi/composio-openapi-original.yml)
+- [Upstream OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Spectral Rules](rules/composio-rules.yml)
+- [Naftiko Capabilities](capabilities/composio-tool-router.yml)
 
 ### Composio Connected Accounts API
 Handles management of user OAuth connections to applications. The Connected Accounts API enables creating, listing, and managing authenticated connections between end users and third-party applications through Composio's managed OAuth flow.
 
 **Human URL:** [https://docs.composio.dev/reference/api-reference/connected-accounts](https://docs.composio.dev/reference/api-reference/connected-accounts)
 
+**Base URL:** `https://backend.composio.dev/api/v3`
 
-#### Tags:
+#### Tags
 
- - OAuth, Authentication, Connections, Accounts
+ - Accounts, Authentication, Connections, OAuth
 
 #### Properties
 
 - [Documentation](https://docs.composio.dev/reference/api-reference/connected-accounts)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Local OpenAPI](openapi/composio-openapi-original.yml)
+- [Upstream OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Spectral Rules](rules/composio-rules.yml)
+- [Naftiko Capabilities](capabilities/composio-tool-router.yml)
 
 ### Composio Auth Configs API
 Allows configuration of authentication methods for toolkit access. Auth configs contain developer credentials and app-level settings such as scopes and authentication methods, and can be reused across all users.
 
 **Human URL:** [https://docs.composio.dev/reference/api-reference/auth-configs](https://docs.composio.dev/reference/api-reference/auth-configs)
 
+**Base URL:** `https://backend.composio.dev/api/v3`
 
-#### Tags:
+#### Tags
 
  - Authentication, Configuration, OAuth
 
 #### Properties
 
 - [Documentation](https://docs.composio.dev/reference/api-reference/auth-configs)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Local OpenAPI](openapi/composio-openapi-original.yml)
+- [Upstream OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Spectral Rules](rules/composio-rules.yml)
+- [Naftiko Capabilities](capabilities/composio-tool-router.yml)
 
 ### Composio Triggers API
 Manages webhook subscriptions from connected applications. The Triggers API enables developers to set up and manage event-driven notifications from third-party applications, allowing AI agents to respond to real-time events.
 
 **Human URL:** [https://docs.composio.dev/reference/api-reference/triggers](https://docs.composio.dev/reference/api-reference/triggers)
 
+**Base URL:** `https://backend.composio.dev/api/v3`
 
-#### Tags:
+#### Tags
 
- - Triggers, Webhooks, Events
+ - Events, Triggers, Webhooks
 
 #### Properties
 
 - [Documentation](https://docs.composio.dev/reference/api-reference/triggers)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Local OpenAPI](openapi/composio-openapi-original.yml)
+- [Upstream OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Spectral Rules](rules/composio-rules.yml)
+- [Naftiko Capabilities](capabilities/composio-tool-router.yml)
 
 ### Composio Toolkits API
 Provides browsing capabilities for available applications and their associated tools. The Toolkits API allows developers to discover and explore the 1000+ available integrations across services like GitHub, Gmail, Slack, Notion, and more.
 
 **Human URL:** [https://docs.composio.dev/reference/api-reference/toolkits](https://docs.composio.dev/reference/api-reference/toolkits)
 
+**Base URL:** `https://backend.composio.dev/api/v3`
 
-#### Tags:
+#### Tags
 
- - Toolkits, Integrations, Applications
+ - Applications, Integrations, Toolkits
 
 #### Properties
 
 - [Documentation](https://docs.composio.dev/reference/api-reference/toolkits)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Local OpenAPI](openapi/composio-openapi-original.yml)
+- [Upstream OpenAPI](https://backend.composio.dev/api/v3/openapi.json)
+- [Spectral Rules](rules/composio-rules.yml)
+- [Naftiko Capabilities](capabilities/composio-tool-router.yml)
 
 ## Common Properties
 
@@ -130,12 +154,12 @@ Provides browsing capabilities for available applications and their associated t
 - [Node.js SDK](https://www.npmjs.com/package/@composio/client)
 - [Sign Up](https://app.composio.dev/dashboard)
 - [JSON-LD](json-ld/composio-context.jsonld)
-- [JSONSchema](json-schema/composio-tool-schema.json)
-- [JSONSchema](json-schema/composio-toolkit-schema.json)
-- [JSONSchema](json-schema/composio-connected-account-schema.json)
+- [Tool JSON Schema](json-schema/composio-tool-schema.json)
+- [Toolkit JSON Schema](json-schema/composio-toolkit-schema.json)
+- [Connected Account JSON Schema](json-schema/composio-connected-account-schema.json)
 
 ## Maintainers
 
-**FN:** API Evangelist
+**FN:** Kin Lane
 
-**Email:** info@apievangelist.com
+**Email:** kin@apievangelist.com

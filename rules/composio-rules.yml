@@ -1,0 +1,101 @@
+extends:
+  - spectral:oas
+
+# Spectral linting rules tuned for the Composio v3 API.
+# Validates that OpenAPI specs follow the conventions described at
+# https://docs.composio.dev/reference — API key authentication via
+# x-api-key (project) or x-org-api-key (organization) headers, JSON
+# request and response bodies, and resource-oriented v3 paths under
+# https://backend.composio.dev/api/v3.
+rules:
+  composio-info-contact:
+    description: API contact information must be present.
+    severity: error
+    given: "$.info"
+    then:
+      field: contact
+      function: truthy
+
+  composio-info-terms:
+    description: API terms of service must be declared.
+    severity: warn
+    given: "$.info"
+    then:
+      field: termsOfService
+      function: truthy
+
+  composio-server-https:
+    description: All server URLs must use HTTPS.
+    severity: error
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  composio-server-versioned:
+    description: Server URLs must include the /api/v3 segment.
+    severity: warn
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "/api/v3$"
+
+  composio-apikey-security:
+    description: An x-api-key header security scheme must be defined.
+    severity: error
+    given: "$.components.securitySchemes"
+    then:
+      function: truthy
+
+  composio-operation-tags:
+    description: Every operation must declare at least one tag.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+
+  composio-operation-summary:
+    description: Every operation must include a short summary.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  composio-operation-id:
+    description: Every operation must declare a unique operationId.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  composio-error-responses:
+    description: Mutating operations should declare 4xx error responses.
+    severity: warn
+    given: "$.paths[*][post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["400"]
+            - required: ["401"]
+            - required: ["403"]
+            - required: ["404"]
+            - required: ["422"]
+
+  composio-resource-naming:
+    description: Resource path segments should use camelCase, matching the v3 surface.
+    severity: info
+    given: "$.paths"
+    then:
+      function: truthy
