@@ -4,7 +4,8 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Composio
 providerId: composio
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - AI Agents
   - Authentication
@@ -12,102 +13,124 @@ tags:
   - OAuth
   - Tools
   - Unified_API
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: Composio prices on a tiered subscription model around tool-call volume. Each tier includes
+  a monthly quota of tool calls; usage above quota is billed per 1,000 calls at a tier-specific overage
+  rate. Enterprise is custom-quoted with VPC/on-prem and SOC-2 options.
+sources:
+  - https://composio.dev/pricing
 plans:
   - id: composio-free
-    name: Free
+    name: Hobby
     type: freemium
-    description: Free entry tier for the Composio API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+    description: Free entry tier with 20K tool calls per month and community support.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
+      - label: Tool Calls
+        description: Included monthly tool-call quota
+        name: tool_calls
         type: quota
-        metric: requests
-        limit: 1000
+        metric: tool_calls
+        limit: 20000
         timeFrame: month
         geo: global
-        domains:
-          - https://backend.composio.dev/api/v3
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://backend.composio.dev/api/v3
         unit: 1
         price: '0.00'
         userMultiplied: false
     elements:
-      - name: Public Documentation
       - name: Community Support
-      - name: Sandbox Access
+      - name: Public Documentation
       - name: Composio Tool Router API
       - name: Composio Tools API
       - name: Composio Connected Accounts API
       - name: Composio Auth Configs API
       - name: Composio Triggers API
       - name: Composio Toolkits API
-  - id: composio-pro
-    name: Professional
-    type: paid
-    description: Production tier for Composio. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+  - id: composio-starter
+    name: Starter
+    type: subscription
+    description: Entry paid tier at $29/month with 200K tool calls included and email support.
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
+      - label: Subscription
+        description: Monthly base subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
         timeFrame: month
         geo: global
-        domains:
-          - https://backend.composio.dev/api/v3
         unit: 1
-        price: TBD
+        price: '$29'
         userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
+      - label: Tool Calls
+        description: Included monthly tool-call quota
+        name: tool_calls
+        type: quota
+        metric: tool_calls
+        limit: 200000
+        timeFrame: month
         geo: global
-        domains:
-          - https://backend.composio.dev/api/v3
         unit: 1
-        price: '0.00'
+        price: included
         userMultiplied: false
       - label: Overage
-        description: Per-request price after monthly quota is exceeded
+        description: Per-1K tool-call price after monthly quota is exceeded
         name: overage
         type: metered
-        metric: requests
+        metric: tool_calls
         limit: -1
         timeFrame: month
         geo: global
-        domains:
-          - https://backend.composio.dev/api/v3
         unit: 1000
-        price: TBD
+        price: '$0.299'
         userMultiplied: false
     elements:
-      - name: All Production Endpoints
       - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
+      - name: Composio Tool Router API
+      - name: Composio Tools API
+      - name: Composio Connected Accounts API
+      - name: Composio Auth Configs API
+      - name: Composio Triggers API
+      - name: Composio Toolkits API
+  - id: composio-professional
+    name: Professional
+    type: subscription
+    description: Production tier at $229/month with 2M tool calls included and Slack support for 1K+/month
+      consumers.
+    entries:
+      - label: Subscription
+        description: Monthly base subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$229'
+        userMultiplied: false
+      - label: Tool Calls
+        description: Included monthly tool-call quota
+        name: tool_calls
+        type: quota
+        metric: tool_calls
+        limit: 2000000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Overage
+        description: Per-1K tool-call price after monthly quota is exceeded
+        name: overage
+        type: metered
+        metric: tool_calls
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1000
+        price: '$0.249'
+        userMultiplied: false
+    elements:
+      - name: Slack Support
       - name: Composio Tool Router API
       - name: Composio Tools API
       - name: Composio Connected Accounts API
@@ -117,42 +140,36 @@ plans:
   - id: composio-enterprise
     name: Enterprise
     type: enterprise
-    description: Custom-negotiated tier for Composio. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
+    description: Custom-quoted tier with adjustable API volume, dedicated SLA, SOC-2 compliance, and VPC
+      or on-premises deployment options.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Subscription
+        description: Custom-negotiated subscription
+        name: subscription
+        type: subscription
+        metric: month
         limit: -1
         timeFrame: month
         geo: configurable
-        domains:
-          - https://backend.composio.dev/api/v3
         unit: 1
         price: custom
         userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
+      - label: Tool Calls
+        description: Negotiated tool-call volume
+        name: tool_calls
+        type: quota
+        metric: tool_calls
+        limit: -1
+        timeFrame: month
         geo: configurable
-        domains:
-          - https://backend.composio.dev/api/v3
         unit: 1
         price: custom
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
+      - name: Custom User Accounts
+      - name: Dedicated SLA
+      - name: SOC-2 Compliance
+      - name: VPC / On-Premises Deployment
       - name: Composio Tool Router API
       - name: Composio Tools API
       - name: Composio Connected Accounts API
