@@ -1,0 +1,98 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Composio Toolkits Discovery
+  description: >-
+    Pulls Composio's 1000+ pre-integrated toolkit catalog (GitHub, Slack,
+    Notion, Linear, HubSpot, Salesforce, Gmail, etc.) into Naftiko Fleet
+    discovery so Backstage's NaftikoFabricExplorerPage can show the
+    Composio catalog alongside Naftiko-built capabilities. Shopping list
+    for "what governed integrations are already available."
+  tags:
+    - Naftiko
+    - Composio
+    - Partnership
+    - Discovery
+    - Toolkits
+    - Backstage
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: composio-env
+    description: Composio Platform API key (project-scoped or org-scoped).
+    keys:
+      COMPOSIO_API_KEY: COMPOSIO_API_KEY
+
+capability:
+  consumes:
+    - namespace: composio
+      type: http
+      baseUri: https://backend.composio.dev/api/v3
+      authentication:
+        type: bearer
+        token: '{{COMPOSIO_API_KEY}}'
+      resources:
+        - name: list-toolkits
+          path: '/toolkits'
+          operations:
+            - name: list-toolkits
+              method: GET
+              inputParameters:
+                - { name: search, in: query, type: string, required: false }
+                - { name: cursor, in: query, type: string, required: false }
+                - { name: limit,  in: query, type: integer, required: false }
+        - name: get-toolkit
+          path: '/toolkits/{{toolkit_id}}'
+          operations:
+            - name: get-toolkit
+              method: GET
+              inputParameters:
+                - { name: toolkit_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: composio-toolkits-discovery-rest
+      description: REST surface for Naftiko Fleet to browse the Composio toolkit catalog.
+      resources:
+        - name: list-toolkits
+          path: '/toolkits'
+          operations:
+            - name: list-toolkits
+              method: GET
+              inputParameters:
+                - { name: search, in: query, type: string, required: false }
+                - { name: cursor, in: query, type: string, required: false }
+                - { name: limit,  in: query, type: integer, required: false }
+              call: composio.list-toolkits
+        - name: get-toolkit
+          path: '/toolkits/{toolkit_id}'
+          operations:
+            - name: get-toolkit
+              method: GET
+              inputParameters:
+                - { name: toolkit_id, in: path, type: string, required: true }
+              call: composio.get-toolkit
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: composio-toolkits-discovery-mcp
+      description: MCP server exposing the Composio toolkit catalog to discovery agents.
+      tools:
+        - name: list-toolkits
+          description: List or search Composio's 1000+ pre-integrated toolkits.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: search, type: string, required: false, description: Free-text search across toolkits. }
+            - { name: cursor, type: string, required: false, description: Pagination cursor. }
+            - { name: limit,  type: integer, required: false, description: Max results per page. }
+          call: composio.list-toolkits
+        - name: get-toolkit
+          description: Get a single Composio toolkit by ID with its tools and metadata.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: toolkit_id, type: string, required: true, description: Composio toolkit ID. }
+          call: composio.get-toolkit

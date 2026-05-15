@@ -1,0 +1,92 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Composio Toolkit as Naftiko Capability
+  description: >-
+    Synthesizes a Naftiko capability YAML from any Composio toolkit's
+    metadata — every tool in the toolkit becomes a Naftiko expose with
+    matching consume + REST + MCP. Lets a Naftiko Fleet automatically
+    absorb the entire Composio catalog as governed, observable, audit-
+    trailed Naftiko capabilities. Where the two products bridge.
+  tags:
+    - Naftiko
+    - Composio
+    - Partnership
+    - Capability-Generation
+    - Catalog-Bridge
+    - Spec-Synthesis
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: composio-env
+    description: Composio Platform API key.
+    keys:
+      COMPOSIO_API_KEY: COMPOSIO_API_KEY
+
+capability:
+  consumes:
+    - namespace: composio
+      type: http
+      baseUri: https://backend.composio.dev/api/v3
+      authentication:
+        type: bearer
+        token: '{{COMPOSIO_API_KEY}}'
+      resources:
+        - name: get-toolkit-with-tools
+          path: '/toolkits/{{toolkit_id}}/tools'
+          operations:
+            - name: get-toolkit-with-tools
+              method: GET
+              inputParameters:
+                - { name: toolkit_id, in: path, required: true }
+        - name: get-tool-schema
+          path: '/tools/{{tool_id}}/schema'
+          operations:
+            - name: get-tool-schema
+              method: GET
+              inputParameters:
+                - { name: tool_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: composio-toolkit-as-naftiko-capability-rest
+      description: REST surface for synthesizing Naftiko capability YAML from Composio toolkit metadata.
+      resources:
+        - name: get-toolkit-with-tools
+          path: '/toolkits/{toolkit_id}/tools'
+          operations:
+            - name: get-toolkit-with-tools
+              method: GET
+              inputParameters:
+                - { name: toolkit_id, in: path, type: string, required: true }
+              call: composio.get-toolkit-with-tools
+        - name: get-tool-schema
+          path: '/tools/{tool_id}/schema'
+          operations:
+            - name: get-tool-schema
+              method: GET
+              inputParameters:
+                - { name: tool_id, in: path, type: string, required: true }
+              call: composio.get-tool-schema
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: composio-toolkit-as-naftiko-capability-mcp
+      description: MCP server for synthesizing Naftiko capability YAML from Composio toolkit metadata.
+      tools:
+        - name: get-toolkit-with-tools
+          description: Get a Composio toolkit with the full tool list (used as input for Naftiko capability synthesis).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: toolkit_id, type: string, required: true, description: Composio toolkit ID. }
+          call: composio.get-toolkit-with-tools
+        - name: get-tool-schema
+          description: Get the JSON Schema for a single Composio tool's parameters and return shape.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: tool_id, type: string, required: true, description: Composio tool ID. }
+          call: composio.get-tool-schema

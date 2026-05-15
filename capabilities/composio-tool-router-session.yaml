@@ -1,0 +1,100 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Composio Tool Router Session
+  description: >-
+    Wraps Composio's session-based Tool Router so a Naftiko capability
+    can hand an AI agent a runtime container scoped to a single connected
+    account — the agent can then discover and execute tools just-in-time
+    without seeing raw credentials. Ephemeral, scoped, audit-trailed.
+  tags:
+    - Naftiko
+    - Composio
+    - Partnership
+    - Tool-Router
+    - Sessions
+    - Runtime
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: composio-env
+    description: Composio Platform API key.
+    keys:
+      COMPOSIO_API_KEY: COMPOSIO_API_KEY
+
+capability:
+  consumes:
+    - namespace: composio
+      type: http
+      baseUri: https://backend.composio.dev/api/v3
+      authentication:
+        type: bearer
+        token: '{{COMPOSIO_API_KEY}}'
+      resources:
+        - name: create-session
+          path: '/toolRouter/session'
+          operations:
+            - name: create-session
+              method: POST
+        - name: get-session
+          path: '/toolRouter/session/{{session_id}}'
+          operations:
+            - name: get-session
+              method: GET
+              inputParameters:
+                - { name: session_id, in: path, required: true }
+            - name: delete-session
+              method: DELETE
+              inputParameters:
+                - { name: session_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: composio-tool-router-session-rest
+      description: REST surface for managing Composio Tool Router sessions.
+      resources:
+        - name: create-session
+          path: '/sessions'
+          operations:
+            - name: create-session
+              method: POST
+              call: composio.create-session
+        - name: session
+          path: '/sessions/{session_id}'
+          operations:
+            - name: get-session
+              method: GET
+              inputParameters:
+                - { name: session_id, in: path, type: string, required: true }
+              call: composio.get-session
+            - name: delete-session
+              method: DELETE
+              inputParameters:
+                - { name: session_id, in: path, type: string, required: true }
+              call: composio.delete-session
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: composio-tool-router-session-mcp
+      description: MCP server for AI agents to manage their Composio Tool Router sessions.
+      tools:
+        - name: create-session
+          description: Create a new Composio Tool Router session scoped to a connected account.
+          hints: { destructiveHint: false }
+          call: composio.create-session
+        - name: get-session
+          description: Get a single Composio Tool Router session by ID.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: session_id, type: string, required: true, description: Composio session ID. }
+          call: composio.get-session
+        - name: delete-session
+          description: End a Composio Tool Router session.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: session_id, type: string, required: true, description: Composio session ID. }
+          call: composio.delete-session

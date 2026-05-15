@@ -1,0 +1,123 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Composio MCP Gateway Bridge
+  description: >-
+    Wraps Composio's MCP gateway (which exposes 1000+ toolkits to MCP-
+    compatible clients with delegated auth) so Naftiko capabilities can
+    consume Composio tools via MCP and re-expose them as governed
+    Naftiko capabilities. Lets the entire Composio catalog become a
+    Naftiko-governed toolkit with one capability.
+  tags:
+    - Naftiko
+    - Composio
+    - Partnership
+    - MCP
+    - Gateway
+    - Catalog-Bridge
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: composio-env
+    description: Composio Platform API key + MCP gateway endpoint.
+    keys:
+      COMPOSIO_API_KEY: COMPOSIO_API_KEY
+      COMPOSIO_MCP_BASE: COMPOSIO_MCP_BASE
+
+capability:
+  consumes:
+    - namespace: composio-mcp
+      type: http
+      baseUri: '{{COMPOSIO_MCP_BASE}}'
+      authentication:
+        type: bearer
+        token: '{{COMPOSIO_API_KEY}}'
+      resources:
+        - name: list-mcp-endpoints
+          path: '/mcp/endpoints'
+          operations:
+            - name: list-mcp-endpoints
+              method: GET
+              inputParameters:
+                - { name: toolkit, in: query, type: string, required: false }
+        - name: mcp-endpoint
+          path: '/mcp/endpoints/{{endpoint_id}}'
+          operations:
+            - name: get-mcp-endpoint
+              method: GET
+              inputParameters:
+                - { name: endpoint_id, in: path, required: true }
+            - name: create-mcp-endpoint
+              method: POST
+              inputParameters:
+                - { name: endpoint_id, in: path, required: true }
+            - name: delete-mcp-endpoint
+              method: DELETE
+              inputParameters:
+                - { name: endpoint_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: composio-mcp-gateway-bridge-rest
+      description: REST surface for managing Composio MCP gateway endpoints.
+      resources:
+        - name: mcp-endpoints
+          path: '/mcp-endpoints'
+          operations:
+            - name: list-mcp-endpoints
+              method: GET
+              inputParameters:
+                - { name: toolkit, in: query, type: string, required: false }
+              call: composio-mcp.list-mcp-endpoints
+        - name: mcp-endpoint
+          path: '/mcp-endpoints/{endpoint_id}'
+          operations:
+            - name: get-mcp-endpoint
+              method: GET
+              inputParameters:
+                - { name: endpoint_id, in: path, type: string, required: true }
+              call: composio-mcp.get-mcp-endpoint
+            - name: create-mcp-endpoint
+              method: POST
+              inputParameters:
+                - { name: endpoint_id, in: path, type: string, required: true }
+              call: composio-mcp.create-mcp-endpoint
+            - name: delete-mcp-endpoint
+              method: DELETE
+              inputParameters:
+                - { name: endpoint_id, in: path, type: string, required: true }
+              call: composio-mcp.delete-mcp-endpoint
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: composio-mcp-gateway-bridge-mcp
+      description: MCP server for managing Composio MCP endpoints from Naftiko-built agents.
+      tools:
+        - name: list-mcp-endpoints
+          description: List Composio MCP gateway endpoints (one per toolkit / per session).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: toolkit, type: string, required: false, description: Filter to a specific toolkit. }
+          call: composio-mcp.list-mcp-endpoints
+        - name: get-mcp-endpoint
+          description: Get a single Composio MCP endpoint by ID.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: endpoint_id, type: string, required: true, description: Composio MCP endpoint ID. }
+          call: composio-mcp.get-mcp-endpoint
+        - name: create-mcp-endpoint
+          description: Create a new Composio MCP endpoint for a toolkit / session.
+          hints: { destructiveHint: false }
+          inputParameters:
+            - { name: endpoint_id, type: string, required: true, description: Composio MCP endpoint ID. }
+          call: composio-mcp.create-mcp-endpoint
+        - name: delete-mcp-endpoint
+          description: Delete a Composio MCP endpoint.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: endpoint_id, type: string, required: true, description: Composio MCP endpoint ID. }
+          call: composio-mcp.delete-mcp-endpoint

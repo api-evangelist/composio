@@ -1,0 +1,131 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Composio Auth Configs
+  description: >-
+    Manages Composio AuthConfigs — reusable developer-owned OAuth client
+    profiles per toolkit (OAuth client ID/secret/scopes, API key, basic
+    auth). Lets Naftiko declare per-toolkit auth intent in capability
+    YAML and have Composio provision the AuthConfig that ConnectedAccounts
+    will inherit from. White-label OAuth at the spec layer.
+  tags:
+    - Naftiko
+    - Composio
+    - Partnership
+    - Auth
+    - OAuth
+    - White-Label
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: composio-env
+    description: Composio Platform API key.
+    keys:
+      COMPOSIO_API_KEY: COMPOSIO_API_KEY
+
+capability:
+  consumes:
+    - namespace: composio
+      type: http
+      baseUri: https://backend.composio.dev/api/v3
+      authentication:
+        type: bearer
+        token: '{{COMPOSIO_API_KEY}}'
+      resources:
+        - name: list-auth-configs
+          path: '/authConfigs'
+          operations:
+            - name: list-auth-configs
+              method: GET
+              inputParameters:
+                - { name: toolkit, in: query, type: string, required: false }
+            - name: create-auth-config
+              method: POST
+        - name: auth-config
+          path: '/authConfigs/{{auth_config_id}}'
+          operations:
+            - name: get-auth-config
+              method: GET
+              inputParameters:
+                - { name: auth_config_id, in: path, required: true }
+            - name: update-auth-config
+              method: PATCH
+              inputParameters:
+                - { name: auth_config_id, in: path, required: true }
+            - name: delete-auth-config
+              method: DELETE
+              inputParameters:
+                - { name: auth_config_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: composio-auth-configs-rest
+      description: REST surface for managing Composio AuthConfigs.
+      resources:
+        - name: auth-configs
+          path: '/auth-configs'
+          operations:
+            - name: list-auth-configs
+              method: GET
+              inputParameters:
+                - { name: toolkit, in: query, type: string, required: false }
+              call: composio.list-auth-configs
+            - name: create-auth-config
+              method: POST
+              call: composio.create-auth-config
+        - name: auth-config
+          path: '/auth-configs/{auth_config_id}'
+          operations:
+            - name: get-auth-config
+              method: GET
+              inputParameters:
+                - { name: auth_config_id, in: path, type: string, required: true }
+              call: composio.get-auth-config
+            - name: update-auth-config
+              method: PATCH
+              inputParameters:
+                - { name: auth_config_id, in: path, type: string, required: true }
+              call: composio.update-auth-config
+            - name: delete-auth-config
+              method: DELETE
+              inputParameters:
+                - { name: auth_config_id, in: path, type: string, required: true }
+              call: composio.delete-auth-config
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: composio-auth-configs-mcp
+      description: MCP server for managing Composio AuthConfigs from Naftiko spec.
+      tools:
+        - name: list-auth-configs
+          description: List Composio AuthConfigs (developer OAuth client profiles per toolkit).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: toolkit, type: string, required: false, description: Filter to a specific toolkit. }
+          call: composio.list-auth-configs
+        - name: create-auth-config
+          description: Create a new Composio AuthConfig.
+          hints: { destructiveHint: false }
+          call: composio.create-auth-config
+        - name: get-auth-config
+          description: Get a Composio AuthConfig by ID.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: auth_config_id, type: string, required: true, description: AuthConfig UUID. }
+          call: composio.get-auth-config
+        - name: update-auth-config
+          description: Patch a Composio AuthConfig.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: auth_config_id, type: string, required: true, description: AuthConfig UUID. }
+          call: composio.update-auth-config
+        - name: delete-auth-config
+          description: Delete a Composio AuthConfig.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: auth_config_id, type: string, required: true, description: AuthConfig UUID. }
+          call: composio.delete-auth-config

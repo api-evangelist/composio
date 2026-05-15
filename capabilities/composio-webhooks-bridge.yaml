@@ -1,0 +1,145 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Composio Webhooks Bridge
+  description: >-
+    Manages Composio's outbound webhook subscriptions so events emitted
+    by Composio (trigger fires, account state changes, execution events)
+    land in Naftiko's webhook-driven workflows. Bridge between Composio's
+    event surface and Naftiko's incident-response / orchestration layer.
+  tags:
+    - Naftiko
+    - Composio
+    - Partnership
+    - Webhooks
+    - Events
+    - Bridge
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: composio-env
+    description: Composio Platform API key.
+    keys:
+      COMPOSIO_API_KEY: COMPOSIO_API_KEY
+
+capability:
+  consumes:
+    - namespace: composio
+      type: http
+      baseUri: https://backend.composio.dev/api/v3
+      authentication:
+        type: bearer
+        token: '{{COMPOSIO_API_KEY}}'
+      resources:
+        - name: list-webhooks
+          path: '/webhooks'
+          operations:
+            - name: list-webhooks
+              method: GET
+            - name: register-webhook
+              method: POST
+        - name: webhook
+          path: '/webhooks/{{webhook_id}}'
+          operations:
+            - name: get-webhook
+              method: GET
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+            - name: update-webhook
+              method: PATCH
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+            - name: delete-webhook
+              method: DELETE
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+        - name: webhook-deliveries
+          path: '/webhooks/{{webhook_id}}/deliveries'
+          operations:
+            - name: list-webhook-deliveries
+              method: GET
+              inputParameters:
+                - { name: webhook_id, in: path, required: true }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: composio-webhooks-bridge-rest
+      description: REST surface for managing Composio webhook subscriptions + delivery logs.
+      resources:
+        - name: webhooks
+          path: '/webhooks'
+          operations:
+            - name: list-webhooks
+              method: GET
+              call: composio.list-webhooks
+            - name: register-webhook
+              method: POST
+              call: composio.register-webhook
+        - name: webhook
+          path: '/webhooks/{webhook_id}'
+          operations:
+            - name: get-webhook
+              method: GET
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: composio.get-webhook
+            - name: update-webhook
+              method: PATCH
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: composio.update-webhook
+            - name: delete-webhook
+              method: DELETE
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: composio.delete-webhook
+        - name: webhook-deliveries
+          path: '/webhooks/{webhook_id}/deliveries'
+          operations:
+            - name: list-webhook-deliveries
+              method: GET
+              inputParameters:
+                - { name: webhook_id, in: path, type: string, required: true }
+              call: composio.list-webhook-deliveries
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: composio-webhooks-bridge-mcp
+      description: MCP server for managing Composio outbound webhooks.
+      tools:
+        - name: list-webhooks
+          description: List Composio webhook subscriptions.
+          hints: { readOnly: true }
+          call: composio.list-webhooks
+        - name: register-webhook
+          description: Register a new outbound webhook subscription with Composio.
+          hints: { destructiveHint: false }
+          call: composio.register-webhook
+        - name: get-webhook
+          description: Get a single Composio webhook subscription by ID.
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Composio webhook UUID. }
+          call: composio.get-webhook
+        - name: update-webhook
+          description: Patch a Composio webhook subscription.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Composio webhook UUID. }
+          call: composio.update-webhook
+        - name: delete-webhook
+          description: Delete a Composio webhook subscription.
+          hints: { destructiveHint: true }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Composio webhook UUID. }
+          call: composio.delete-webhook
+        - name: list-webhook-deliveries
+          description: List recent delivery attempts for a Composio webhook (success / failure / payload).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: webhook_id, type: string, required: true, description: Composio webhook UUID. }
+          call: composio.list-webhook-deliveries

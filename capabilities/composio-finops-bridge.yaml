@@ -1,0 +1,126 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  title: Composio FinOps Bridge
+  description: >-
+    Pulls Composio's tool-call usage stats (per-toolkit, per-account,
+    per-time-window) and correlates them with Naftiko's per-call cost
+    attribution (Kubecost labels) to produce a unified FOCUS-aligned
+    cost view across both systems. Output: "this team made X Composio
+    tool calls worth $Y, plus Z Naftiko-routed calls worth $W."
+  tags:
+    - Naftiko
+    - Composio
+    - Partnership
+    - FinOps
+    - Cost
+    - FOCUS
+    - Chargeback
+  created: '2026-05-15'
+  modified: '2026-05-15'
+
+binds:
+  - namespace: composio-env
+    description: Composio Platform API key.
+    keys:
+      COMPOSIO_API_KEY: COMPOSIO_API_KEY
+
+capability:
+  consumes:
+    - namespace: composio
+      type: http
+      baseUri: https://backend.composio.dev/api/v3
+      authentication:
+        type: bearer
+        token: '{{COMPOSIO_API_KEY}}'
+      resources:
+        - name: usage-summary
+          path: '/usage/summary'
+          operations:
+            - name: get-usage-summary
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: until, in: query, type: string, required: false }
+                - { name: groupby, in: query, type: string, required: false }
+        - name: usage-by-toolkit
+          path: '/usage/toolkits'
+          operations:
+            - name: get-usage-by-toolkit
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: toolkit, in: query, type: string, required: false }
+        - name: usage-by-account
+          path: '/usage/accounts'
+          operations:
+            - name: get-usage-by-account
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: connected_account_id, in: query, type: string, required: false }
+
+  exposes:
+    - type: rest
+      address: 0.0.0.0
+      port: 8080
+      namespace: composio-finops-bridge-rest
+      description: REST surface for unified FOCUS-aligned FinOps reporting across Composio + Naftiko.
+      resources:
+        - name: get-usage-summary
+          path: '/usage/summary'
+          operations:
+            - name: get-usage-summary
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: until, in: query, type: string, required: false }
+                - { name: groupby, in: query, type: string, required: false }
+              call: composio.get-usage-summary
+        - name: get-usage-by-toolkit
+          path: '/usage/toolkits'
+          operations:
+            - name: get-usage-by-toolkit
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: toolkit, in: query, type: string, required: false }
+              call: composio.get-usage-by-toolkit
+        - name: get-usage-by-account
+          path: '/usage/accounts'
+          operations:
+            - name: get-usage-by-account
+              method: GET
+              inputParameters:
+                - { name: since, in: query, type: string, required: false }
+                - { name: connected_account_id, in: query, type: string, required: false }
+              call: composio.get-usage-by-account
+
+    - type: mcp
+      address: 0.0.0.0
+      port: 3010
+      namespace: composio-finops-bridge-mcp
+      description: MCP server for FinOps / platform agents to query Composio + Naftiko unified cost.
+      tools:
+        - name: get-usage-summary
+          description: Get a Composio usage summary across the org (tool-call volume, optionally grouped).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: since, type: string, required: false, description: ISO 8601 timestamp lower bound. }
+            - { name: until, type: string, required: false, description: ISO 8601 timestamp upper bound. }
+            - { name: groupby, type: string, required: false, description: Group dimension (toolkit / account / day). }
+          call: composio.get-usage-summary
+        - name: get-usage-by-toolkit
+          description: Get Composio usage broken down by toolkit (which integrations are most active).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: since, type: string, required: false, description: ISO 8601 timestamp lower bound. }
+            - { name: toolkit, type: string, required: false, description: Filter to a specific toolkit. }
+          call: composio.get-usage-by-toolkit
+        - name: get-usage-by-account
+          description: Get Composio usage broken down by connected account (per-user / per-team chargeback).
+          hints: { readOnly: true }
+          inputParameters:
+            - { name: since, type: string, required: false, description: ISO 8601 timestamp lower bound. }
+            - { name: connected_account_id, type: string, required: false, description: Filter to a specific connected account. }
+          call: composio.get-usage-by-account
