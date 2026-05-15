@@ -4,11 +4,27 @@
     {
       "source": "https://composio.dev/blog",
       "feed_url": "",
-      "title": "",
-      "saved": 0,
-      "error": "no_feed"
+      "title": "Composio Blog",
+      "saved": 2,
+      "note": "No public RSS/Atom feed; posts enumerated manually from blog index page."
     }
   ],
-  "fetched": "2026-05-09T20:17:51Z",
-  "post_count": 0
+  "fetched": "2026-05-15T00:00:00Z",
+  "post_count": 2,
+  "posts": [
+    {
+      "title": "Incident Report: April 28th",
+      "date": "2026-05-04",
+      "author": "Composio",
+      "url": "https://composio.dev/blog/incident-report-april-28",
+      "file": "2026-05-04-incident-report-april-28.md"
+    },
+    {
+      "title": "Your agents can sign up for Composio",
+      "date": "2026-05-04",
+      "author": "Rahul Tarak",
+      "url": "https://composio.dev/blog/your-agents-can-signup-for-composio",
+      "file": "2026-05-04-your-agents-can-signup-for-composio.md"
+    }
+  ]
 }

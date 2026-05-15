@@ -1,7 +1,7 @@
 aid: composio
 name: Composio
 description: >-
-  Composio is a unified API and tooling platform for AI agents with 1000+ pre-built connectors, managed OAuth, tool search, context management, and a sandboxed workbench to help you build AI agents that turn intent into action.
+  Composio is an agent execution platform that bridges AI decision-making and real-world action across 1000+ apps through just-in-time tool calls, secure delegated auth, sandboxed environments, an MCP gateway, parallel execution, and context-aware sessions. Developers get managed OAuth, a tool router for runtime tool discovery, webhook triggers, and a CLI so agents turn intent into action without custom integration work.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -10,11 +10,15 @@ tags:
   - AI Agents
   - Authentication
   - Integrations
+  - MCP
   - OAuth
+  - Sandbox
   - Tools
+  - Triggers
   - Unified_API
+  - Webhooks
 created: '2026-03-03'
-modified: '2026-04-28'
+modified: '2026-05-15'
 url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 x-type: company
@@ -34,6 +38,8 @@ apis:
         url: https://docs.composio.dev/reference
       - type: OpenAPI
         url: openapi/composio-openapi-original.yml
+      - type: OpenAPI
+        url: openapi/composio-openapi-original.json
       - type: OpenAPI
         url: https://backend.composio.dev/api/v3/openapi.json
       - type: Spectral Rules
@@ -63,6 +69,8 @@ apis:
         url: https://docs.composio.dev/reference/api-reference/tools
       - type: OpenAPI
         url: openapi/composio-openapi-original.yml
+      - type: OpenAPI
+        url: openapi/composio-openapi-original.json
       - type: OpenAPI
         url: https://backend.composio.dev/api/v3/openapi.json
       - type: Spectral Rules
@@ -96,6 +104,8 @@ apis:
       - type: OpenAPI
         url: openapi/composio-openapi-original.yml
       - type: OpenAPI
+        url: openapi/composio-openapi-original.json
+      - type: OpenAPI
         url: https://backend.composio.dev/api/v3/openapi.json
       - type: Spectral Rules
         url: rules/composio-rules.yml
@@ -127,6 +137,8 @@ apis:
       - type: OpenAPI
         url: openapi/composio-openapi-original.yml
       - type: OpenAPI
+        url: openapi/composio-openapi-original.json
+      - type: OpenAPI
         url: https://backend.composio.dev/api/v3/openapi.json
       - type: Spectral Rules
         url: rules/composio-rules.yml
@@ -155,6 +167,8 @@ apis:
         url: https://docs.composio.dev/reference/api-reference/triggers
       - type: OpenAPI
         url: openapi/composio-openapi-original.yml
+      - type: OpenAPI
+        url: openapi/composio-openapi-original.json
       - type: OpenAPI
         url: https://backend.composio.dev/api/v3/openapi.json
       - type: Spectral Rules
@@ -185,6 +199,8 @@ apis:
       - type: OpenAPI
         url: openapi/composio-openapi-original.yml
       - type: OpenAPI
+        url: openapi/composio-openapi-original.json
+      - type: OpenAPI
         url: https://backend.composio.dev/api/v3/openapi.json
       - type: Spectral Rules
         url: rules/composio-rules.yml
@@ -200,6 +216,71 @@ apis:
         description: Allow agent builders to pick the right integrations for their use case.
       - title: App Marketplace UI
         description: Power an in-product app marketplace inside agentic applications.
+  - aid: composio:mcp-api
+    name: Composio MCP API
+    description: >-
+      Exposes Composio's toolkits over the Model Context Protocol so MCP-compatible clients (Claude Desktop, Cursor, and other MCP hosts) can discover and execute Composio tools through a managed gateway with delegated auth and scoped sessions.
+    humanURL: https://docs.composio.dev/reference
+    baseURL: https://backend.composio.dev/api/v3
+    tags:
+      - MCP
+      - Gateway
+      - AI Agents
+      - Tools
+    properties:
+      - type: Documentation
+        url: https://docs.composio.dev/reference
+      - type: OpenAPI
+        url: openapi/composio-openapi-original.yml
+      - type: OpenAPI
+        url: openapi/composio-openapi-original.json
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+      - type: Spectral Rules
+        url: rules/composio-rules.yml
+      - type: Naftiko Capabilities
+        url: capabilities/composio-tool-router.yml
+    features:
+      - title: MCP Gateway
+        description: Surface Composio's 1000+ toolkits to MCP-compatible AI clients via a single managed endpoint.
+      - title: Delegated Auth
+        description: Use Composio's managed OAuth to attach connected accounts to MCP sessions without exposing raw credentials to the agent.
+    useCases:
+      - title: MCP-Native Agents
+        description: Let any MCP-compatible host call into Composio's full toolkit catalog.
+      - title: Desktop Agent Tooling
+        description: Plug Composio tools into Claude Desktop, Cursor, and other MCP hosts.
+  - aid: composio:webhooks-api
+    name: Composio Webhooks API
+    description: >-
+      Manages webhook endpoints and subscriptions for outbound delivery of Composio events (trigger fires, account state changes, execution events) to consumer-owned HTTP endpoints, including signing keys and replay controls.
+    humanURL: https://docs.composio.dev/reference
+    baseURL: https://backend.composio.dev/api/v3
+    tags:
+      - Events
+      - Webhooks
+      - Notifications
+    properties:
+      - type: Documentation
+        url: https://docs.composio.dev/reference
+      - type: OpenAPI
+        url: openapi/composio-openapi-original.yml
+      - type: OpenAPI
+        url: openapi/composio-openapi-original.json
+      - type: OpenAPI
+        url: https://backend.composio.dev/api/v3/openapi.json
+      - type: Spectral Rules
+        url: rules/composio-rules.yml
+      - type: Naftiko Capabilities
+        url: capabilities/composio-tool-router.yml
+    features:
+      - title: Webhook Endpoints
+        description: Register HTTP endpoints to receive Composio events.
+      - title: Webhook Subscriptions
+        description: Subscribe an endpoint to specific event categories with signing keys for verification.
+    useCases:
+      - title: Server-Side Event Routing
+        description: Route Composio events into a consumer's own backend for processing and persistence.
 common:
   - type: Portal
     url: https://app.composio.dev/dashboard
@@ -235,6 +316,10 @@ common:
     url: https://www.npmjs.com/package/@composio/client
   - type: Sign Up
     url: https://app.composio.dev/dashboard
+  - type: Agent Sign Up
+    url: https://agents.composio.dev
+  - type: Toolkits Catalog
+    url: https://composio.dev/toolkits
   - type: JSON-LD
     url: json-ld/composio-context.jsonld
   - type: JSONSchema

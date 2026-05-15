@@ -4,8 +4,8 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Composio
 providerId: composio
 created: '2026-05-04'
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-05-15'
+reconciled: true
 tags:
   - AI Agents
   - Authentication
@@ -51,10 +51,12 @@ limits:
     notes: Custom-negotiated volume.
   - name: Per-Account Throttling
     scope: account
-    metric: requests_per_minute
-    limit: 'see Composio docs / not publicly published'
-    notes: Composio applies per-account throttling on the API surface; specific RPS/RPM thresholds are
-      not publicly published.
+    metric: requests_per_10_minutes
+    limit: '20000 to 100000 depending on plan'
+    notes: Composio docs reference per-account throttling in the range of 20K to 100K requests per 10 minutes
+      depending on the user's plan tier. Specific per-second / per-minute envelopes are not separately
+      published; consumers should expect 429 responses with Retry-After when steady-state limits are
+      exceeded.
 policies:
   - name: Backoff Strategy
     description: Implement exponential backoff with jitter on 429 and 503 responses; honor Retry-After
