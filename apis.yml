@@ -21,7 +21,7 @@ created: '2026-03-03'
 modified: '2026-05-15'
 url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml
 specificationVersion: '0.19'
-x-type: company
+kind: company
 apis:
   - aid: composio:tool-router-api
     name: Composio Tool Router API
@@ -286,9 +286,9 @@ common:
     url: https://app.composio.dev/dashboard
   - type: Documentation
     url: https://docs.composio.dev/docs
-  - type: Getting Started
+  - type: GettingStarted
     url: https://docs.composio.dev/docs/quickstart
-  - type: API Reference
+  - type: APIReference
     url: https://docs.composio.dev/reference
   - type: OpenAPI
     url: https://backend.composio.dev/api/v3/openapi.json
@@ -296,17 +296,17 @@ common:
     url: https://docs.composio.dev/faq/api_key/api_key
   - type: Blog
     url: https://composio.dev/blog
-  - type: Status
+  - type: StatusPage
     url: https://status.composio.dev
   - type: Pricing
     url: https://composio.dev/pricing
-  - type: Change Log
+  - type: ChangeLog
     url: https://docs.composio.dev/docs/changelog
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://composio.dev/privacy
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://composio.dev/terms
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/ComposioHQ
   - type: GitHub Repo
     url: https://github.com/ComposioHQ/composio
@@ -314,13 +314,13 @@ common:
     url: https://github.com/ComposioHQ/composio
   - type: Node.js SDK
     url: https://www.npmjs.com/package/@composio/client
-  - type: Sign Up
+  - type: SignUp
     url: https://app.composio.dev/dashboard
   - type: Agent Sign Up
     url: https://agents.composio.dev
   - type: Toolkits Catalog
     url: https://composio.dev/toolkits
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/composio-context.jsonld
   - type: JSONSchema
     url: json-schema/composio-tool-schema.json
