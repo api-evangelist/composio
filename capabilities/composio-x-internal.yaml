@@ -1,0 +1,573 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — x-internal
+  description: 'Composio Platform API — x-internal. 13 operations. Lead operation: End user session and clear authentication.
+    Self-contained Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - x-internal
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-x-internal
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — x-internal business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-auth-session-logout
+      path: /api/v3/auth/session/logout
+      operations:
+      - name: postauthsessionlogout
+        method: POST
+        description: End user session and clear authentication
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v3-cli-create-session
+      path: /api/v3/cli/create-session
+      operations:
+      - name: postclicreatesession
+        method: POST
+        description: Create a new CLI session with auth code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-cli-get-session
+      path: /api/v3/cli/get-session
+      operations:
+      - name: getcligetsession
+        method: GET
+        description: Get CLI session details by ID or code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: query
+          type: string
+          description: CLI session ID (UUID format) or 6-character code to check. Both formats are supported for flexibility
+            in client implementations.
+          required: true
+    - name: api-v3-cli-realtime-auth
+      path: /api/v3/cli/realtime/auth
+      operations:
+      - name: postclirealtimeauth
+        method: POST
+        description: Authenticate CLI Pusher channel access
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-cli-realtime-credentials
+      path: /api/v3/cli/realtime/credentials
+      operations:
+      - name: getclirealtimecredentials
+        method: GET
+        description: Get credentials for CLI realtime events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v3-internal-action_execution-fields
+      path: /api/v3/internal/action_execution/fields
+      operations:
+      - name: getinternalactionexecutionfields
+        method: GET
+        description: Get action log fields for filtering
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v3-internal-action_execution-log-id
+      path: /api/v3/internal/action_execution/log/{id}
+      operations:
+      - name: getinternalactionexecutionlogbyid
+        method: GET
+        description: Get detailed execution log by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: api-v3-internal-action_execution-logs
+      path: /api/v3/internal/action_execution/logs
+      operations:
+      - name: postinternalactionexecutionlogs
+        method: POST
+        description: Search and retrieve action execution logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-internal-trigger-log-id
+      path: /api/v3/internal/trigger/log/{id}
+      operations:
+      - name: getinternaltriggerlogbyid
+        method: GET
+        description: Get detailed trigger log by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: api-v3-internal-trigger-logs
+      path: /api/v3/internal/trigger/logs
+      operations:
+      - name: postinternaltriggerlogs
+        method: POST
+        description: Search and retrieve trigger event logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-labs-tool_router-session
+      path: /api/v3/labs/tool_router/session
+      operations:
+      - name: postlabstoolroutersession
+        method: POST
+        description: Create a new tool router session (Legacy)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-org-consumer-connected_toolkits
+      path: /api/v3/org/consumer/connected_toolkits
+      operations:
+      - name: getorgconsumerconnectedtoolkits
+        method: GET
+        description: List active connected toolkits for a consumer user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: query
+          type: string
+          description: Consumer user ID to inspect within the consumer project.
+          required: true
+        - name: x-user-api-key
+          in: header
+          type: string
+          required: true
+        - name: x-org-id
+          in: header
+          type: string
+          description: Organization nano ID that owns the consumer project.
+          required: true
+    - name: api-v3-org-consumer-project-resolve
+      path: /api/v3/org/consumer/project/resolve
+      operations:
+      - name: postorgconsumerprojectresolve
+        method: POST
+        description: Resolve the organization consumer project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-user-api-key
+          in: header
+          type: string
+          required: true
+        - name: x-org-id
+          in: header
+          type: string
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-x-internal-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — x-internal. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/auth/session/logout
+      name: api-v3-auth-session-logout
+      description: REST surface for api-v3-auth-session-logout.
+      operations:
+      - method: POST
+        name: postauthsessionlogout
+        description: End user session and clear authentication
+        call: composio-x-internal.postauthsessionlogout
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/cli/create-session
+      name: api-v3-cli-create-session
+      description: REST surface for api-v3-cli-create-session.
+      operations:
+      - method: POST
+        name: postclicreatesession
+        description: Create a new CLI session with auth code
+        call: composio-x-internal.postclicreatesession
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/cli/get-session
+      name: api-v3-cli-get-session
+      description: REST surface for api-v3-cli-get-session.
+      operations:
+      - method: GET
+        name: getcligetsession
+        description: Get CLI session details by ID or code
+        call: composio-x-internal.getcligetsession
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/cli/realtime/auth
+      name: api-v3-cli-realtime-auth
+      description: REST surface for api-v3-cli-realtime-auth.
+      operations:
+      - method: POST
+        name: postclirealtimeauth
+        description: Authenticate CLI Pusher channel access
+        call: composio-x-internal.postclirealtimeauth
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/cli/realtime/credentials
+      name: api-v3-cli-realtime-credentials
+      description: REST surface for api-v3-cli-realtime-credentials.
+      operations:
+      - method: GET
+        name: getclirealtimecredentials
+        description: Get credentials for CLI realtime events
+        call: composio-x-internal.getclirealtimecredentials
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/internal/action-execution/fields
+      name: api-v3-internal-action-execution-fields
+      description: REST surface for api-v3-internal-action_execution-fields.
+      operations:
+      - method: GET
+        name: getinternalactionexecutionfields
+        description: Get action log fields for filtering
+        call: composio-x-internal.getinternalactionexecutionfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/internal/action-execution/log/{id}
+      name: api-v3-internal-action-execution-log-id
+      description: REST surface for api-v3-internal-action_execution-log-id.
+      operations:
+      - method: GET
+        name: getinternalactionexecutionlogbyid
+        description: Get detailed execution log by ID
+        call: composio-x-internal.getinternalactionexecutionlogbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/internal/action-execution/logs
+      name: api-v3-internal-action-execution-logs
+      description: REST surface for api-v3-internal-action_execution-logs.
+      operations:
+      - method: POST
+        name: postinternalactionexecutionlogs
+        description: Search and retrieve action execution logs
+        call: composio-x-internal.postinternalactionexecutionlogs
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/internal/trigger/log/{id}
+      name: api-v3-internal-trigger-log-id
+      description: REST surface for api-v3-internal-trigger-log-id.
+      operations:
+      - method: GET
+        name: getinternaltriggerlogbyid
+        description: Get detailed trigger log by ID
+        call: composio-x-internal.getinternaltriggerlogbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/internal/trigger/logs
+      name: api-v3-internal-trigger-logs
+      description: REST surface for api-v3-internal-trigger-logs.
+      operations:
+      - method: POST
+        name: postinternaltriggerlogs
+        description: Search and retrieve trigger event logs
+        call: composio-x-internal.postinternaltriggerlogs
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/labs/tool-router/session
+      name: api-v3-labs-tool-router-session
+      description: REST surface for api-v3-labs-tool_router-session.
+      operations:
+      - method: POST
+        name: postlabstoolroutersession
+        description: Create a new tool router session (Legacy)
+        call: composio-x-internal.postlabstoolroutersession
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/consumer/connected-toolkits
+      name: api-v3-org-consumer-connected-toolkits
+      description: REST surface for api-v3-org-consumer-connected_toolkits.
+      operations:
+      - method: GET
+        name: getorgconsumerconnectedtoolkits
+        description: List active connected toolkits for a consumer user
+        call: composio-x-internal.getorgconsumerconnectedtoolkits
+        with:
+          user_id: rest.user_id
+          x-user-api-key: rest.x-user-api-key
+          x-org-id: rest.x-org-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/consumer/project/resolve
+      name: api-v3-org-consumer-project-resolve
+      description: REST surface for api-v3-org-consumer-project-resolve.
+      operations:
+      - method: POST
+        name: postorgconsumerprojectresolve
+        description: Resolve the organization consumer project
+        call: composio-x-internal.postorgconsumerprojectresolve
+        with:
+          x-user-api-key: rest.x-user-api-key
+          x-org-id: rest.x-org-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-x-internal-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — x-internal. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: end-user-session-and-clear
+      description: End user session and clear authentication
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-x-internal.postauthsessionlogout
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-cli-session-auth
+      description: Create a new CLI session with auth code
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-x-internal.postclicreatesession
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-cli-session-details-id
+      description: Get CLI session details by ID or code
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-x-internal.getcligetsession
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: authenticate-cli-pusher-channel-access
+      description: Authenticate CLI Pusher channel access
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-x-internal.postclirealtimeauth
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-credentials-cli-realtime-events
+      description: Get credentials for CLI realtime events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-x-internal.getclirealtimecredentials
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-action-log-fields-filtering
+      description: Get action log fields for filtering
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-x-internal.getinternalactionexecutionfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-detailed-execution-log-id
+      description: Get detailed execution log by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-x-internal.getinternalactionexecutionlogbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-and-retrieve-action-execution
+      description: Search and retrieve action execution logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: composio-x-internal.postinternalactionexecutionlogs
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-detailed-trigger-log-id
+      description: Get detailed trigger log by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-x-internal.getinternaltriggerlogbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-and-retrieve-trigger-event
+      description: Search and retrieve trigger event logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: composio-x-internal.postinternaltriggerlogs
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-tool-router-session
+      description: Create a new tool router session (Legacy)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-x-internal.postlabstoolroutersession
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-active-connected-toolkits-consumer
+      description: List active connected toolkits for a consumer user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-x-internal.getorgconsumerconnectedtoolkits
+      with:
+        user_id: tools.user_id
+        x-user-api-key: tools.x-user-api-key
+        x-org-id: tools.x-org-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resolve-organization-consumer-project
+      description: Resolve the organization consumer project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-x-internal.postorgconsumerprojectresolve
+      with:
+        x-user-api-key: tools.x-user-api-key
+        x-org-id: tools.x-org-id
+      outputParameters:
+      - type: object
+        mapping: $.

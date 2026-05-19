@@ -1,0 +1,124 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Applications
+  description: 'Composio Platform API — Applications. 1 operations. Lead operation: List MCP servers for a specific app. Self-contained
+    Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Applications
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-applications
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Applications business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-mcp-app-appKey
+      path: /api/v3/mcp/app/{appKey}
+      operations:
+      - name: getmcpappbyappkey
+        method: GET
+        description: List MCP servers for a specific app
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appKey
+          in: path
+          type: string
+          description: The key of the app to find MCP servers for
+          required: true
+        - name: name
+          in: query
+          type: string
+          description: Filter MCP servers by name (case-insensitive partial match)
+        - name: toolkits
+          in: query
+          type: string
+          description: Comma-separated list of toolkit slugs to filter servers by
+        - name: auth_config_ids
+          in: query
+          type: string
+          description: Comma-separated list of auth config IDs to filter servers by
+        - name: order_by
+          in: query
+          type: string
+          description: Field to order results by
+        - name: order_direction
+          in: query
+          type: string
+          description: Direction of ordering
+        - name: page_no
+          in: query
+          type: number
+          description: Page number for pagination (1-based)
+        - name: limit
+          in: query
+          type: number
+          description: 'Number of items per page (default: 10)'
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-applications-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Applications. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/mcp/app/{appkey}
+      name: api-v3-mcp-app-appkey
+      description: REST surface for api-v3-mcp-app-appKey.
+      operations:
+      - method: GET
+        name: getmcpappbyappkey
+        description: List MCP servers for a specific app
+        call: composio-applications.getmcpappbyappkey
+        with:
+          appKey: rest.appKey
+          name: rest.name
+          toolkits: rest.toolkits
+          auth_config_ids: rest.auth_config_ids
+          order_by: rest.order_by
+          order_direction: rest.order_direction
+          page_no: rest.page_no
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-applications-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Applications. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-mcp-servers-specific-app
+      description: List MCP servers for a specific app
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-applications.getmcpappbyappkey
+      with:
+        appKey: tools.appKey
+        name: tools.name
+        toolkits: tools.toolkits
+        auth_config_ids: tools.auth_config_ids
+        order_by: tools.order_by
+        order_direction: tools.order_direction
+        page_no: tools.page_no
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.

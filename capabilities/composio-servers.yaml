@@ -1,0 +1,602 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Servers
+  description: 'Composio Platform API — Servers. 11 operations. Lead operation: List MCP servers for a specific app. Self-contained
+    Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Servers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-servers
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Servers business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-mcp-app-appKey
+      path: /api/v3/mcp/app/{appKey}
+      operations:
+      - name: getmcpappbyappkey
+        method: GET
+        description: List MCP servers for a specific app
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appKey
+          in: path
+          type: string
+          description: The key of the app to find MCP servers for
+          required: true
+        - name: name
+          in: query
+          type: string
+          description: Filter MCP servers by name (case-insensitive partial match)
+        - name: toolkits
+          in: query
+          type: string
+          description: Comma-separated list of toolkit slugs to filter servers by
+        - name: auth_config_ids
+          in: query
+          type: string
+          description: Comma-separated list of auth config IDs to filter servers by
+        - name: order_by
+          in: query
+          type: string
+          description: Field to order results by
+        - name: order_direction
+          in: query
+          type: string
+          description: Direction of ordering
+        - name: page_no
+          in: query
+          type: number
+          description: Page number for pagination (1-based)
+        - name: limit
+          in: query
+          type: number
+          description: 'Number of items per page (default: 10)'
+    - name: api-v3-mcp-servers
+      path: /api/v3/mcp/servers
+      operations:
+      - name: getmcpservers
+        method: GET
+        description: List MCP servers with optional filters and pagination
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+          description: Filter MCP servers by name (case-insensitive partial match)
+        - name: toolkits
+          in: query
+          type: string
+          description: Comma-separated list of toolkit slugs to filter servers by
+        - name: auth_config_ids
+          in: query
+          type: string
+          description: Comma-separated list of auth config IDs to filter servers by
+        - name: order_by
+          in: query
+          type: string
+          description: Field to order results by
+        - name: order_direction
+          in: query
+          type: string
+          description: Direction of ordering
+        - name: page_no
+          in: query
+          type: number
+          description: Page number for pagination (1-based)
+        - name: limit
+          in: query
+          type: number
+          description: 'Number of items per page (default: 10)'
+      - name: postmcpservers
+        method: POST
+        description: Create a new MCP server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-mcp-servers-custom
+      path: /api/v3/mcp/servers/custom
+      operations:
+      - name: postmcpserverscustom
+        method: POST
+        description: Create a new custom MCP server with multiple apps
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-mcp-servers-generate
+      path: /api/v3/mcp/servers/generate
+      operations:
+      - name: postmcpserversgenerate
+        method: POST
+        description: Generate MCP URL with custom parameters
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-mcp-servers-serverId-instances
+      path: /api/v3/mcp/servers/{serverId}/instances
+      operations:
+      - name: getmcpserversbyserveridinstances
+        method: GET
+        description: List all instances for an MCP server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverId
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+        - name: page_no
+          in: query
+          type: number
+          description: Page number for pagination (1-based)
+        - name: limit
+          in: query
+          type: number
+          description: 'Number of items per page (default: 20)'
+        - name: search
+          in: query
+          type: string
+          description: Search instances by user ID/instance ID
+        - name: order_by
+          in: query
+          type: string
+          description: Field to order results by
+        - name: order_direction
+          in: query
+          type: string
+          description: Direction of ordering
+      - name: postmcpserversbyserveridinstances
+        method: POST
+        description: Create a new MCP server instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverId
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-mcp-servers-serverId-instances-instanceId
+      path: /api/v3/mcp/servers/{serverId}/instances/{instanceId}
+      operations:
+      - name: deletemcpserversbyserveridinstancesbyinstanceid
+        method: DELETE
+        description: Delete an MCP server instance and associated connected accounts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverId
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+        - name: instanceId
+          in: path
+          type: string
+          description: The instance ID (user ID) to delete
+          required: true
+    - name: api-v3-mcp-id
+      path: /api/v3/mcp/{id}
+      operations:
+      - name: getmcpbyid
+        method: GET
+        description: Get MCP server details by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+      - name: patchmcpbyid
+        method: PATCH
+        description: Update MCP server configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletemcpbyid
+        method: DELETE
+        description: Delete an MCP server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-servers-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Servers. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/mcp/app/{appkey}
+      name: api-v3-mcp-app-appkey
+      description: REST surface for api-v3-mcp-app-appKey.
+      operations:
+      - method: GET
+        name: getmcpappbyappkey
+        description: List MCP servers for a specific app
+        call: composio-servers.getmcpappbyappkey
+        with:
+          appKey: rest.appKey
+          name: rest.name
+          toolkits: rest.toolkits
+          auth_config_ids: rest.auth_config_ids
+          order_by: rest.order_by
+          order_direction: rest.order_direction
+          page_no: rest.page_no
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/mcp/servers
+      name: api-v3-mcp-servers
+      description: REST surface for api-v3-mcp-servers.
+      operations:
+      - method: GET
+        name: getmcpservers
+        description: List MCP servers with optional filters and pagination
+        call: composio-servers.getmcpservers
+        with:
+          name: rest.name
+          toolkits: rest.toolkits
+          auth_config_ids: rest.auth_config_ids
+          order_by: rest.order_by
+          order_direction: rest.order_direction
+          page_no: rest.page_no
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postmcpservers
+        description: Create a new MCP server
+        call: composio-servers.postmcpservers
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/mcp/servers/custom
+      name: api-v3-mcp-servers-custom
+      description: REST surface for api-v3-mcp-servers-custom.
+      operations:
+      - method: POST
+        name: postmcpserverscustom
+        description: Create a new custom MCP server with multiple apps
+        call: composio-servers.postmcpserverscustom
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/mcp/servers/generate
+      name: api-v3-mcp-servers-generate
+      description: REST surface for api-v3-mcp-servers-generate.
+      operations:
+      - method: POST
+        name: postmcpserversgenerate
+        description: Generate MCP URL with custom parameters
+        call: composio-servers.postmcpserversgenerate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/mcp/servers/{serverid}/instances
+      name: api-v3-mcp-servers-serverid-instances
+      description: REST surface for api-v3-mcp-servers-serverId-instances.
+      operations:
+      - method: GET
+        name: getmcpserversbyserveridinstances
+        description: List all instances for an MCP server
+        call: composio-servers.getmcpserversbyserveridinstances
+        with:
+          serverId: rest.serverId
+          page_no: rest.page_no
+          limit: rest.limit
+          search: rest.search
+          order_by: rest.order_by
+          order_direction: rest.order_direction
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postmcpserversbyserveridinstances
+        description: Create a new MCP server instance
+        call: composio-servers.postmcpserversbyserveridinstances
+        with:
+          serverId: rest.serverId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/mcp/servers/{serverid}/instances/{instanceid}
+      name: api-v3-mcp-servers-serverid-instances-instanceid
+      description: REST surface for api-v3-mcp-servers-serverId-instances-instanceId.
+      operations:
+      - method: DELETE
+        name: deletemcpserversbyserveridinstancesbyinstanceid
+        description: Delete an MCP server instance and associated connected accounts
+        call: composio-servers.deletemcpserversbyserveridinstancesbyinstanceid
+        with:
+          serverId: rest.serverId
+          instanceId: rest.instanceId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/mcp/{id}
+      name: api-v3-mcp-id
+      description: REST surface for api-v3-mcp-id.
+      operations:
+      - method: GET
+        name: getmcpbyid
+        description: Get MCP server details by ID
+        call: composio-servers.getmcpbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchmcpbyid
+        description: Update MCP server configuration
+        call: composio-servers.patchmcpbyid
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletemcpbyid
+        description: Delete an MCP server
+        call: composio-servers.deletemcpbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-servers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Servers. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-mcp-servers-specific-app
+      description: List MCP servers for a specific app
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-servers.getmcpappbyappkey
+      with:
+        appKey: tools.appKey
+        name: tools.name
+        toolkits: tools.toolkits
+        auth_config_ids: tools.auth_config_ids
+        order_by: tools.order_by
+        order_direction: tools.order_direction
+        page_no: tools.page_no
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-mcp-servers-optional-filters
+      description: List MCP servers with optional filters and pagination
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-servers.getmcpservers
+      with:
+        name: tools.name
+        toolkits: tools.toolkits
+        auth_config_ids: tools.auth_config_ids
+        order_by: tools.order_by
+        order_direction: tools.order_direction
+        page_no: tools.page_no
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-mcp-server
+      description: Create a new MCP server
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-servers.postmcpservers
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-custom-mcp-server
+      description: Create a new custom MCP server with multiple apps
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-servers.postmcpserverscustom
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-mcp-url-custom-parameters
+      description: Generate MCP URL with custom parameters
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-servers.postmcpserversgenerate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-instances-mcp-server
+      description: List all instances for an MCP server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-servers.getmcpserversbyserveridinstances
+      with:
+        serverId: tools.serverId
+        page_no: tools.page_no
+        limit: tools.limit
+        search: tools.search
+        order_by: tools.order_by
+        order_direction: tools.order_direction
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-mcp-server-instance
+      description: Create a new MCP server instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-servers.postmcpserversbyserveridinstances
+      with:
+        serverId: tools.serverId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-mcp-server-instance-and
+      description: Delete an MCP server instance and associated connected accounts
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: composio-servers.deletemcpserversbyserveridinstancesbyinstanceid
+      with:
+        serverId: tools.serverId
+        instanceId: tools.instanceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-mcp-server-details-id
+      description: Get MCP server details by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-servers.getmcpbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-mcp-server-configuration
+      description: Update MCP server configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: composio-servers.patchmcpbyid
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-mcp-server
+      description: Delete an MCP server
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: composio-servers.deletemcpbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,203 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Instances
+  description: 'Composio Platform API — Instances. 3 operations. Lead operation: List all instances for an MCP server. Self-contained
+    Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Instances
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-instances
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Instances business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-mcp-servers-serverId-instances
+      path: /api/v3/mcp/servers/{serverId}/instances
+      operations:
+      - name: getmcpserversbyserveridinstances
+        method: GET
+        description: List all instances for an MCP server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverId
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+        - name: page_no
+          in: query
+          type: number
+          description: Page number for pagination (1-based)
+        - name: limit
+          in: query
+          type: number
+          description: 'Number of items per page (default: 20)'
+        - name: search
+          in: query
+          type: string
+          description: Search instances by user ID/instance ID
+        - name: order_by
+          in: query
+          type: string
+          description: Field to order results by
+        - name: order_direction
+          in: query
+          type: string
+          description: Direction of ordering
+      - name: postmcpserversbyserveridinstances
+        method: POST
+        description: Create a new MCP server instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverId
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-mcp-servers-serverId-instances-instanceId
+      path: /api/v3/mcp/servers/{serverId}/instances/{instanceId}
+      operations:
+      - name: deletemcpserversbyserveridinstancesbyinstanceid
+        method: DELETE
+        description: Delete an MCP server instance and associated connected accounts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: serverId
+          in: path
+          type: string
+          description: The ID of the MCP server
+          required: true
+        - name: instanceId
+          in: path
+          type: string
+          description: The instance ID (user ID) to delete
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-instances-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Instances. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/mcp/servers/{serverid}/instances
+      name: api-v3-mcp-servers-serverid-instances
+      description: REST surface for api-v3-mcp-servers-serverId-instances.
+      operations:
+      - method: GET
+        name: getmcpserversbyserveridinstances
+        description: List all instances for an MCP server
+        call: composio-instances.getmcpserversbyserveridinstances
+        with:
+          serverId: rest.serverId
+          page_no: rest.page_no
+          limit: rest.limit
+          search: rest.search
+          order_by: rest.order_by
+          order_direction: rest.order_direction
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postmcpserversbyserveridinstances
+        description: Create a new MCP server instance
+        call: composio-instances.postmcpserversbyserveridinstances
+        with:
+          serverId: rest.serverId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/mcp/servers/{serverid}/instances/{instanceid}
+      name: api-v3-mcp-servers-serverid-instances-instanceid
+      description: REST surface for api-v3-mcp-servers-serverId-instances-instanceId.
+      operations:
+      - method: DELETE
+        name: deletemcpserversbyserveridinstancesbyinstanceid
+        description: Delete an MCP server instance and associated connected accounts
+        call: composio-instances.deletemcpserversbyserveridinstancesbyinstanceid
+        with:
+          serverId: rest.serverId
+          instanceId: rest.instanceId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-instances-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Instances. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-instances-mcp-server
+      description: List all instances for an MCP server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-instances.getmcpserversbyserveridinstances
+      with:
+        serverId: tools.serverId
+        page_no: tools.page_no
+        limit: tools.limit
+        search: tools.search
+        order_by: tools.order_by
+        order_direction: tools.order_direction
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-mcp-server-instance
+      description: Create a new MCP server instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-instances.postmcpserversbyserveridinstances
+      with:
+        serverId: tools.serverId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-mcp-server-instance-and
+      description: Delete an MCP server instance and associated connected accounts
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: composio-instances.deletemcpserversbyserveridinstancesbyinstanceid
+      with:
+        serverId: tools.serverId
+        instanceId: tools.instanceId
+      outputParameters:
+      - type: object
+        mapping: $.

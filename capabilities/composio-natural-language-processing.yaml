@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Natural Language Processing
+  description: 'Composio Platform API — Natural Language Processing. 1 operations. Lead operation: Generate tool inputs from
+    natural language. Self-contained Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Natural Language Processing
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-natural-language-processing
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Natural Language Processing business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-tools-execute-tool_slug-input
+      path: /api/v3/tools/execute/{tool_slug}/input
+      operations:
+      - name: posttoolsexecutebytoolsluginput
+        method: POST
+        description: Generate tool inputs from natural language
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tool_slug
+          in: path
+          type: string
+          description: The tool slug to generate inputs for
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-natural-language-processing-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Natural Language Processing. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/tools/execute/{tool-slug}/input
+      name: api-v3-tools-execute-tool-slug-input
+      description: REST surface for api-v3-tools-execute-tool_slug-input.
+      operations:
+      - method: POST
+        name: posttoolsexecutebytoolsluginput
+        description: Generate tool inputs from natural language
+        call: composio-natural-language-processing.posttoolsexecutebytoolsluginput
+        with:
+          tool_slug: rest.tool_slug
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-natural-language-processing-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Natural Language Processing. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: generate-tool-inputs-natural-language
+      description: Generate tool inputs from natural language
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-natural-language-processing.posttoolsexecutebytoolsluginput
+      with:
+        tool_slug: tools.tool_slug
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

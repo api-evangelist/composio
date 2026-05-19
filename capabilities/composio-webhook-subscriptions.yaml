@@ -1,0 +1,316 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Webhook Subscriptions
+  description: 'Composio Platform API — Webhook Subscriptions. 7 operations. Lead operation: Create webhook subscription.
+    Self-contained Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Webhook Subscriptions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-webhook-subscriptions
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Webhook Subscriptions business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-webhook_subscriptions
+      path: /api/v3/webhook_subscriptions
+      operations:
+      - name: postwebhooksubscriptions
+        method: POST
+        description: Create webhook subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: getwebhooksubscriptions
+        method: GET
+        description: List webhook subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: number
+          description: Number of items per page, max allowed is 1000
+        - name: cursor
+          in: query
+          type: string
+          description: Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the
+            page number and the limit is the number of items per page. T
+    - name: api-v3-webhook_subscriptions-event_types
+      path: /api/v3/webhook_subscriptions/event_types
+      operations:
+      - name: getwebhooksubscriptionseventtypes
+        method: GET
+        description: List available event types
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v3-webhook_subscriptions-id
+      path: /api/v3/webhook_subscriptions/{id}
+      operations:
+      - name: getwebhooksubscriptionsbyid
+        method: GET
+        description: Get webhook subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Webhook subscription ID
+          required: true
+      - name: patchwebhooksubscriptionsbyid
+        method: PATCH
+        description: Update webhook subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Webhook subscription ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deletewebhooksubscriptionsbyid
+        method: DELETE
+        description: Delete webhook subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Webhook subscription ID
+          required: true
+    - name: api-v3-webhook_subscriptions-id-rotate_secret
+      path: /api/v3/webhook_subscriptions/{id}/rotate_secret
+      operations:
+      - name: postwebhooksubscriptionsbyidrotatesecret
+        method: POST
+        description: Rotate webhook secret
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Webhook subscription ID
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-webhook-subscriptions-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Webhook Subscriptions. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/webhook-subscriptions
+      name: api-v3-webhook-subscriptions
+      description: REST surface for api-v3-webhook_subscriptions.
+      operations:
+      - method: POST
+        name: postwebhooksubscriptions
+        description: Create webhook subscription
+        call: composio-webhook-subscriptions.postwebhooksubscriptions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getwebhooksubscriptions
+        description: List webhook subscriptions
+        call: composio-webhook-subscriptions.getwebhooksubscriptions
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/webhook-subscriptions/event-types
+      name: api-v3-webhook-subscriptions-event-types
+      description: REST surface for api-v3-webhook_subscriptions-event_types.
+      operations:
+      - method: GET
+        name: getwebhooksubscriptionseventtypes
+        description: List available event types
+        call: composio-webhook-subscriptions.getwebhooksubscriptionseventtypes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/webhook-subscriptions/{id}
+      name: api-v3-webhook-subscriptions-id
+      description: REST surface for api-v3-webhook_subscriptions-id.
+      operations:
+      - method: GET
+        name: getwebhooksubscriptionsbyid
+        description: Get webhook subscription
+        call: composio-webhook-subscriptions.getwebhooksubscriptionsbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchwebhooksubscriptionsbyid
+        description: Update webhook subscription
+        call: composio-webhook-subscriptions.patchwebhooksubscriptionsbyid
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletewebhooksubscriptionsbyid
+        description: Delete webhook subscription
+        call: composio-webhook-subscriptions.deletewebhooksubscriptionsbyid
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/webhook-subscriptions/{id}/rotate-secret
+      name: api-v3-webhook-subscriptions-id-rotate-secret
+      description: REST surface for api-v3-webhook_subscriptions-id-rotate_secret.
+      operations:
+      - method: POST
+        name: postwebhooksubscriptionsbyidrotatesecret
+        description: Rotate webhook secret
+        call: composio-webhook-subscriptions.postwebhooksubscriptionsbyidrotatesecret
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-webhook-subscriptions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Webhook Subscriptions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: create-webhook-subscription
+      description: Create webhook subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-webhook-subscriptions.postwebhooksubscriptions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-webhook-subscriptions
+      description: List webhook subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-webhook-subscriptions.getwebhooksubscriptions
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-available-event-types
+      description: List available event types
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-webhook-subscriptions.getwebhooksubscriptionseventtypes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-webhook-subscription
+      description: Get webhook subscription
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-webhook-subscriptions.getwebhooksubscriptionsbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-webhook-subscription
+      description: Update webhook subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: composio-webhook-subscriptions.patchwebhooksubscriptionsbyid
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-webhook-subscription
+      description: Delete webhook subscription
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: composio-webhook-subscriptions.deletewebhooksubscriptionsbyid
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rotate-webhook-secret
+      description: Rotate webhook secret
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-webhook-subscriptions.postwebhooksubscriptionsbyidrotatesecret
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

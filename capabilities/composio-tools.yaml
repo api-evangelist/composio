@@ -1,0 +1,382 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Tools
+  description: 'Composio Platform API — Tools. 6 operations. Lead operation: List available tools. Self-contained Naftiko
+    capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Tools
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-tools
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Tools business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-tools
+      path: /api/v3/tools
+      operations:
+      - name: gettools
+        method: GET
+        description: List available tools
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolkit_slug
+          in: query
+          type: string
+          description: The slug of the toolkit to filter by
+        - name: tool_slugs
+          in: query
+          type: string
+          description: Comma-separated list of specific tool slugs to retrieve (overrides other filters)
+        - name: auth_config_ids
+          in: query
+          type: string
+          description: Comma-separated list of auth config IDs to filter tools by
+        - name: important
+          in: query
+          type: string
+          description: Filter to only show important/featured tools (set to "true" to enable)
+        - name: tags
+          in: query
+          type: array
+          description: Filter tools by one or more tags (can be specified multiple times)
+        - name: scopes
+          in: query
+          type: array
+          description: Array of scopes to filter tools by)
+        - name: query
+          in: query
+          type: string
+          description: Full-text search query to filter tools by name, slug, or description. Applied as a soft filter on top
+            of other filters.
+        - name: search
+          in: query
+          type: string
+          description: 'Deprecated: use "query" instead. Free-text search query to find tools by name, description, or functionality.'
+        - name: include_deprecated
+          in: query
+          type: boolean
+          description: Include deprecated tools in the response
+        - name: toolkit_versions
+          in: query
+          type: string
+          description: Toolkit version specification. Use "latest" for latest versions or bracket notation for specific versions
+            per toolkit.
+        - name: limit
+          in: query
+          type: number
+          description: Number of items per page, max allowed is 1000
+        - name: cursor
+          in: query
+          type: string
+          description: Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the
+            page number and the limit is the number of items per page. T
+    - name: api-v3-tools-enum
+      path: /api/v3/tools/enum
+      operations:
+      - name: gettoolsenum
+        method: GET
+        description: Get tool enum list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v3-tools-execute-proxy
+      path: /api/v3/tools/execute/proxy
+      operations:
+      - name: posttoolsexecuteproxy
+        method: POST
+        description: Execute proxy request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-tools-execute-tool_slug
+      path: /api/v3/tools/execute/{tool_slug}
+      operations:
+      - name: posttoolsexecutebytoolslug
+        method: POST
+        description: Execute tool
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tool_slug
+          in: path
+          type: string
+          description: The tool slug to execute
+          required: true
+        - name: x-llm-gateway-headers
+          in: header
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-tools-execute-tool_slug-input
+      path: /api/v3/tools/execute/{tool_slug}/input
+      operations:
+      - name: posttoolsexecutebytoolsluginput
+        method: POST
+        description: Generate tool inputs from natural language
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tool_slug
+          in: path
+          type: string
+          description: The tool slug to generate inputs for
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-tools-tool_slug
+      path: /api/v3/tools/{tool_slug}
+      operations:
+      - name: gettoolsbytoolslug
+        method: GET
+        description: Get tool by slug
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tool_slug
+          in: path
+          type: string
+          description: The unique slug identifier of the tool
+          required: true
+        - name: version
+          in: query
+          type: string
+          description: Optional version of the tool to retrieve
+        - name: toolkit_versions
+          in: query
+          type: string
+          description: Toolkit version specification. Use "latest" for latest versions or bracket notation for specific versions
+            per toolkit.
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-tools-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Tools. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/tools
+      name: api-v3-tools
+      description: REST surface for api-v3-tools.
+      operations:
+      - method: GET
+        name: gettools
+        description: List available tools
+        call: composio-tools.gettools
+        with:
+          toolkit_slug: rest.toolkit_slug
+          tool_slugs: rest.tool_slugs
+          auth_config_ids: rest.auth_config_ids
+          important: rest.important
+          tags: rest.tags
+          scopes: rest.scopes
+          query: rest.query
+          search: rest.search
+          include_deprecated: rest.include_deprecated
+          toolkit_versions: rest.toolkit_versions
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/tools/enum
+      name: api-v3-tools-enum
+      description: REST surface for api-v3-tools-enum.
+      operations:
+      - method: GET
+        name: gettoolsenum
+        description: Get tool enum list
+        call: composio-tools.gettoolsenum
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/tools/execute/proxy
+      name: api-v3-tools-execute-proxy
+      description: REST surface for api-v3-tools-execute-proxy.
+      operations:
+      - method: POST
+        name: posttoolsexecuteproxy
+        description: Execute proxy request
+        call: composio-tools.posttoolsexecuteproxy
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/tools/execute/{tool-slug}
+      name: api-v3-tools-execute-tool-slug
+      description: REST surface for api-v3-tools-execute-tool_slug.
+      operations:
+      - method: POST
+        name: posttoolsexecutebytoolslug
+        description: Execute tool
+        call: composio-tools.posttoolsexecutebytoolslug
+        with:
+          tool_slug: rest.tool_slug
+          x-llm-gateway-headers: rest.x-llm-gateway-headers
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/tools/execute/{tool-slug}/input
+      name: api-v3-tools-execute-tool-slug-input
+      description: REST surface for api-v3-tools-execute-tool_slug-input.
+      operations:
+      - method: POST
+        name: posttoolsexecutebytoolsluginput
+        description: Generate tool inputs from natural language
+        call: composio-tools.posttoolsexecutebytoolsluginput
+        with:
+          tool_slug: rest.tool_slug
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/tools/{tool-slug}
+      name: api-v3-tools-tool-slug
+      description: REST surface for api-v3-tools-tool_slug.
+      operations:
+      - method: GET
+        name: gettoolsbytoolslug
+        description: Get tool by slug
+        call: composio-tools.gettoolsbytoolslug
+        with:
+          tool_slug: rest.tool_slug
+          version: rest.version
+          toolkit_versions: rest.toolkit_versions
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-tools-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Tools. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-available-tools
+      description: List available tools
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-tools.gettools
+      with:
+        toolkit_slug: tools.toolkit_slug
+        tool_slugs: tools.tool_slugs
+        auth_config_ids: tools.auth_config_ids
+        important: tools.important
+        tags: tools.tags
+        scopes: tools.scopes
+        query: tools.query
+        search: tools.search
+        include_deprecated: tools.include_deprecated
+        toolkit_versions: tools.toolkit_versions
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-tool-enum-list
+      description: Get tool enum list
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-tools.gettoolsenum
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: execute-proxy-request
+      description: Execute proxy request
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-tools.posttoolsexecuteproxy
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: execute-tool
+      description: Execute tool
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-tools.posttoolsexecutebytoolslug
+      with:
+        tool_slug: tools.tool_slug
+        x-llm-gateway-headers: tools.x-llm-gateway-headers
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-tool-inputs-natural-language
+      description: Generate tool inputs from natural language
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-tools.posttoolsexecutebytoolsluginput
+      with:
+        tool_slug: tools.tool_slug
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-tool-slug
+      description: Get tool by slug
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-tools.gettoolsbytoolslug
+      with:
+        tool_slug: tools.tool_slug
+        version: tools.version
+        toolkit_versions: tools.toolkit_versions
+      outputParameters:
+      - type: object
+        mapping: $.

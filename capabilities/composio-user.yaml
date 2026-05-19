@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — User
+  description: 'Composio Platform API — User. 1 operations. Lead operation: Get current user session information. Self-contained
+    Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - User
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-user
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — User business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-auth-session-info
+      path: /api/v3/auth/session/info
+      operations:
+      - name: getauthsessioninfo
+        method: GET
+        description: Get current user session information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-user-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — User. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/auth/session/info
+      name: api-v3-auth-session-info
+      description: REST surface for api-v3-auth-session-info.
+      operations:
+      - method: GET
+        name: getauthsessioninfo
+        description: Get current user session information
+        call: composio-user.getauthsessioninfo
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-user-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — User. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-current-user-session-information
+      description: Get current user session information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-user.getauthsessioninfo
+      outputParameters:
+      - type: object
+        mapping: $.

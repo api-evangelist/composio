@@ -1,0 +1,363 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Projects
+  description: 'Composio Platform API — Projects. 8 operations. Lead operation: Resolve the organization consumer project.
+    Self-contained Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Projects
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-projects
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Projects business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-org-consumer-project-resolve
+      path: /api/v3/org/consumer/project/resolve
+      operations:
+      - name: postorgconsumerprojectresolve
+        method: POST
+        description: Resolve the organization consumer project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: x-user-api-key
+          in: header
+          type: string
+          required: true
+        - name: x-org-id
+          in: header
+          type: string
+          required: true
+    - name: api-v3-org-owner-project-list
+      path: /api/v3/org/owner/project/list
+      operations:
+      - name: getorgownerprojectlist
+        method: GET
+        description: List all projects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: number
+          description: Number of items per page, max allowed is 1000
+        - name: cursor
+          in: query
+          type: string
+          description: Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the
+            page number and the limit is the number of items per page. T
+    - name: api-v3-org-owner-project-new
+      path: /api/v3/org/owner/project/new
+      operations:
+      - name: postorgownerprojectnew
+        method: POST
+        description: Create a new project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-org-owner-project-nano_id
+      path: /api/v3/org/owner/project/{nano_id}
+      operations:
+      - name: getorgownerprojectbynanoid
+        method: GET
+        description: Get project details by ID With Org Api key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nano_id
+          in: path
+          type: string
+          description: Unique identifier (Nano ID) of the project to retrieve
+          required: true
+      - name: deleteorgownerprojectbynanoid
+        method: DELETE
+        description: Delete a project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nano_id
+          in: path
+          type: string
+          description: Unique identifier (Nano ID) of the project to delete
+          required: true
+    - name: api-v3-org-owner-project-nano_id-regenerate_api_key
+      path: /api/v3/org/owner/project/{nano_id}/regenerate_api_key
+      operations:
+      - name: postorgownerprojectbynanoidregenerateapikey
+        method: POST
+        description: Delete and generate new API key for project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nano_id
+          in: path
+          type: string
+          description: Unique identifier (Nano ID) of the project to regenerate API key for
+          required: true
+    - name: api-v3-org-project-config
+      path: /api/v3/org/project/config
+      operations:
+      - name: getorgprojectconfig
+        method: GET
+        description: Get project configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: patchorgprojectconfig
+        method: PATCH
+        description: Update project configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-projects-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Projects. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/org/consumer/project/resolve
+      name: api-v3-org-consumer-project-resolve
+      description: REST surface for api-v3-org-consumer-project-resolve.
+      operations:
+      - method: POST
+        name: postorgconsumerprojectresolve
+        description: Resolve the organization consumer project
+        call: composio-projects.postorgconsumerprojectresolve
+        with:
+          x-user-api-key: rest.x-user-api-key
+          x-org-id: rest.x-org-id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/owner/project/list
+      name: api-v3-org-owner-project-list
+      description: REST surface for api-v3-org-owner-project-list.
+      operations:
+      - method: GET
+        name: getorgownerprojectlist
+        description: List all projects
+        call: composio-projects.getorgownerprojectlist
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/owner/project/new
+      name: api-v3-org-owner-project-new
+      description: REST surface for api-v3-org-owner-project-new.
+      operations:
+      - method: POST
+        name: postorgownerprojectnew
+        description: Create a new project
+        call: composio-projects.postorgownerprojectnew
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/owner/project/{nano-id}
+      name: api-v3-org-owner-project-nano-id
+      description: REST surface for api-v3-org-owner-project-nano_id.
+      operations:
+      - method: GET
+        name: getorgownerprojectbynanoid
+        description: Get project details by ID With Org Api key
+        call: composio-projects.getorgownerprojectbynanoid
+        with:
+          nano_id: rest.nano_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteorgownerprojectbynanoid
+        description: Delete a project
+        call: composio-projects.deleteorgownerprojectbynanoid
+        with:
+          nano_id: rest.nano_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/owner/project/{nano-id}/regenerate-api-key
+      name: api-v3-org-owner-project-nano-id-regenerate-api-key
+      description: REST surface for api-v3-org-owner-project-nano_id-regenerate_api_key.
+      operations:
+      - method: POST
+        name: postorgownerprojectbynanoidregenerateapikey
+        description: Delete and generate new API key for project
+        call: composio-projects.postorgownerprojectbynanoidregenerateapikey
+        with:
+          nano_id: rest.nano_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/project/config
+      name: api-v3-org-project-config
+      description: REST surface for api-v3-org-project-config.
+      operations:
+      - method: GET
+        name: getorgprojectconfig
+        description: Get project configuration
+        call: composio-projects.getorgprojectconfig
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchorgprojectconfig
+        description: Update project configuration
+        call: composio-projects.patchorgprojectconfig
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-projects-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Projects. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: resolve-organization-consumer-project
+      description: Resolve the organization consumer project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-projects.postorgconsumerprojectresolve
+      with:
+        x-user-api-key: tools.x-user-api-key
+        x-org-id: tools.x-org-id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-projects
+      description: List all projects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-projects.getorgownerprojectlist
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-project
+      description: Create a new project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-projects.postorgownerprojectnew
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-project-details-id-org
+      description: Get project details by ID With Org Api key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-projects.getorgownerprojectbynanoid
+      with:
+        nano_id: tools.nano_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-project
+      description: Delete a project
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: composio-projects.deleteorgownerprojectbynanoid
+      with:
+        nano_id: tools.nano_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-and-generate-new-api
+      description: Delete and generate new API key for project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-projects.postorgownerprojectbynanoidregenerateapikey
+      with:
+        nano_id: tools.nano_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-project-configuration
+      description: Get project configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-projects.getorgprojectconfig
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-project-configuration
+      description: Update project configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: composio-projects.patchorgprojectconfig
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

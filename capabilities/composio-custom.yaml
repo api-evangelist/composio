@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Custom
+  description: 'Composio Platform API — Custom. 1 operations. Lead operation: Create a new custom MCP server with multiple
+    apps. Self-contained Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Custom
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-custom
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Custom business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-mcp-servers-custom
+      path: /api/v3/mcp/servers/custom
+      operations:
+      - name: postmcpserverscustom
+        method: POST
+        description: Create a new custom MCP server with multiple apps
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-custom-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Custom. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/mcp/servers/custom
+      name: api-v3-mcp-servers-custom
+      description: REST surface for api-v3-mcp-servers-custom.
+      operations:
+      - method: POST
+        name: postmcpserverscustom
+        description: Create a new custom MCP server with multiple apps
+        call: composio-custom.postmcpserverscustom
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-custom-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Custom. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-new-custom-mcp-server
+      description: Create a new custom MCP server with multiple apps
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-custom.postmcpserverscustom
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

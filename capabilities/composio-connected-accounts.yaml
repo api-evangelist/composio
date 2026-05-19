@@ -1,0 +1,490 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Connected Accounts
+  description: 'Composio Platform API — Connected Accounts. 9 operations. Lead operation: List connected accounts with optional
+    filters. Self-contained Naftiko capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Connected Accounts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-connected-accounts
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Connected Accounts business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-connected_accounts
+      path: /api/v3/connected_accounts
+      operations:
+      - name: getconnectedaccounts
+        method: GET
+        description: List connected accounts with optional filters
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolkit_slugs
+          in: query
+          type: array
+          description: The toolkit slugs of the connected accounts
+        - name: statuses
+          in: query
+          type: array
+          description: The status of the connected account
+        - name: cursor
+          in: query
+          type: string
+          description: The cursor to paginate through the connected accounts
+        - name: limit
+          in: query
+          type: number
+          description: The limit of the connected accounts to return
+        - name: user_ids
+          in: query
+          type: array
+          description: The user ids of the connected accounts
+        - name: auth_config_ids
+          in: query
+          type: array
+          description: The auth config ids of the connected accounts
+        - name: connected_account_ids
+          in: query
+          type: array
+          description: The connected account ids to filter by
+        - name: order_by
+          in: query
+          type: string
+          description: The order by of the connected accounts
+        - name: order_direction
+          in: query
+          type: string
+          description: The order direction of the connected accounts
+        - name: account_type
+          in: query
+          type: string
+          description: '[Experimental] Filter by sharing model. Default (omitted) returns PRIVATE only — shared accounts must
+            be requested explicitly. Pass SHARED for only shared accou'
+      - name: postconnectedaccounts
+        method: POST
+        description: Create a new connected account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-connected_accounts-link
+      path: /api/v3/connected_accounts/link
+      operations:
+      - name: postconnectedaccountslink
+        method: POST
+        description: Create a new auth link session
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-connected_accounts-nanoId-status
+      path: /api/v3/connected_accounts/{nanoId}/status
+      operations:
+      - name: patchconnectedaccountsbynanoidstatus
+        method: PATCH
+        description: Enable or disable a connected account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoId
+          in: path
+          type: string
+          description: The unique identifier of the connected account
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-connected_accounts-nanoid
+      path: /api/v3/connected_accounts/{nanoid}
+      operations:
+      - name: getconnectedaccountsbynanoid
+        method: GET
+        description: Get connected account details by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier (nanoid) of the connected account
+          required: true
+      - name: deleteconnectedaccountsbynanoid
+        method: DELETE
+        description: Delete a connected account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier (nanoid) of the connected account
+          required: true
+      - name: patchconnectedaccountsbynanoid
+        method: PATCH
+        description: Update a connected account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier (nanoid) of the connected account
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-connected_accounts-nanoid-refresh
+      path: /api/v3/connected_accounts/{nanoid}/refresh
+      operations:
+      - name: postconnectedaccountsbynanoidrefresh
+        method: POST
+        description: Refresh authentication for a connected account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier of the connected account
+          required: true
+        - name: redirect_url
+          in: query
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-org-consumer-connected_toolkits
+      path: /api/v3/org/consumer/connected_toolkits
+      operations:
+      - name: getorgconsumerconnectedtoolkits
+        method: GET
+        description: List active connected toolkits for a consumer user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: query
+          type: string
+          description: Consumer user ID to inspect within the consumer project.
+          required: true
+        - name: x-user-api-key
+          in: header
+          type: string
+          required: true
+        - name: x-org-id
+          in: header
+          type: string
+          description: Organization nano ID that owns the consumer project.
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-connected-accounts-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Connected Accounts. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/connected-accounts
+      name: api-v3-connected-accounts
+      description: REST surface for api-v3-connected_accounts.
+      operations:
+      - method: GET
+        name: getconnectedaccounts
+        description: List connected accounts with optional filters
+        call: composio-connected-accounts.getconnectedaccounts
+        with:
+          toolkit_slugs: rest.toolkit_slugs
+          statuses: rest.statuses
+          cursor: rest.cursor
+          limit: rest.limit
+          user_ids: rest.user_ids
+          auth_config_ids: rest.auth_config_ids
+          connected_account_ids: rest.connected_account_ids
+          order_by: rest.order_by
+          order_direction: rest.order_direction
+          account_type: rest.account_type
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postconnectedaccounts
+        description: Create a new connected account
+        call: composio-connected-accounts.postconnectedaccounts
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/connected-accounts/link
+      name: api-v3-connected-accounts-link
+      description: REST surface for api-v3-connected_accounts-link.
+      operations:
+      - method: POST
+        name: postconnectedaccountslink
+        description: Create a new auth link session
+        call: composio-connected-accounts.postconnectedaccountslink
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/connected-accounts/{nanoid}/status
+      name: api-v3-connected-accounts-nanoid-status
+      description: REST surface for api-v3-connected_accounts-nanoId-status.
+      operations:
+      - method: PATCH
+        name: patchconnectedaccountsbynanoidstatus
+        description: Enable or disable a connected account
+        call: composio-connected-accounts.patchconnectedaccountsbynanoidstatus
+        with:
+          nanoId: rest.nanoId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/connected-accounts/{nanoid}
+      name: api-v3-connected-accounts-nanoid
+      description: REST surface for api-v3-connected_accounts-nanoid.
+      operations:
+      - method: GET
+        name: getconnectedaccountsbynanoid
+        description: Get connected account details by ID
+        call: composio-connected-accounts.getconnectedaccountsbynanoid
+        with:
+          nanoid: rest.nanoid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteconnectedaccountsbynanoid
+        description: Delete a connected account
+        call: composio-connected-accounts.deleteconnectedaccountsbynanoid
+        with:
+          nanoid: rest.nanoid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchconnectedaccountsbynanoid
+        description: Update a connected account
+        call: composio-connected-accounts.patchconnectedaccountsbynanoid
+        with:
+          nanoid: rest.nanoid
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/connected-accounts/{nanoid}/refresh
+      name: api-v3-connected-accounts-nanoid-refresh
+      description: REST surface for api-v3-connected_accounts-nanoid-refresh.
+      operations:
+      - method: POST
+        name: postconnectedaccountsbynanoidrefresh
+        description: Refresh authentication for a connected account
+        call: composio-connected-accounts.postconnectedaccountsbynanoidrefresh
+        with:
+          nanoid: rest.nanoid
+          redirect_url: rest.redirect_url
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/org/consumer/connected-toolkits
+      name: api-v3-org-consumer-connected-toolkits
+      description: REST surface for api-v3-org-consumer-connected_toolkits.
+      operations:
+      - method: GET
+        name: getorgconsumerconnectedtoolkits
+        description: List active connected toolkits for a consumer user
+        call: composio-connected-accounts.getorgconsumerconnectedtoolkits
+        with:
+          user_id: rest.user_id
+          x-user-api-key: rest.x-user-api-key
+          x-org-id: rest.x-org-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-connected-accounts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Connected Accounts. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-connected-accounts-optional-filters
+      description: List connected accounts with optional filters
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-connected-accounts.getconnectedaccounts
+      with:
+        toolkit_slugs: tools.toolkit_slugs
+        statuses: tools.statuses
+        cursor: tools.cursor
+        limit: tools.limit
+        user_ids: tools.user_ids
+        auth_config_ids: tools.auth_config_ids
+        connected_account_ids: tools.connected_account_ids
+        order_by: tools.order_by
+        order_direction: tools.order_direction
+        account_type: tools.account_type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-connected-account
+      description: Create a new connected account
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-connected-accounts.postconnectedaccounts
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-auth-link-session
+      description: Create a new auth link session
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-connected-accounts.postconnectedaccountslink
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-disable-connected-account
+      description: Enable or disable a connected account
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: composio-connected-accounts.patchconnectedaccountsbynanoidstatus
+      with:
+        nanoId: tools.nanoId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-connected-account-details-id
+      description: Get connected account details by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-connected-accounts.getconnectedaccountsbynanoid
+      with:
+        nanoid: tools.nanoid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-connected-account
+      description: Delete a connected account
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: composio-connected-accounts.deleteconnectedaccountsbynanoid
+      with:
+        nanoid: tools.nanoid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-connected-account
+      description: Update a connected account
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: composio-connected-accounts.patchconnectedaccountsbynanoid
+      with:
+        nanoid: tools.nanoid
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: refresh-authentication-connected-account
+      description: Refresh authentication for a connected account
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-connected-accounts.postconnectedaccountsbynanoidrefresh
+      with:
+        nanoid: tools.nanoid
+        redirect_url: tools.redirect_url
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-active-connected-toolkits-consumer
+      description: List active connected toolkits for a consumer user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-connected-accounts.getorgconsumerconnectedtoolkits
+      with:
+        user_id: tools.user_id
+        x-user-api-key: tools.x-user-api-key
+        x-org-id: tools.x-org-id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,272 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Composio Platform API — Toolkits
+  description: 'Composio Platform API — Toolkits. 5 operations. Lead operation: List available toolkits. Self-contained Naftiko
+    capability covering one Composio business surface.'
+  tags:
+  - Composio
+  - Toolkits
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio-toolkits
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Toolkits business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-toolkits
+      path: /api/v3/toolkits
+      operations:
+      - name: gettoolkits
+        method: GET
+        description: List available toolkits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: category
+          in: query
+          type: string
+          description: Filter toolkits by category
+        - name: managed_by
+          in: query
+          type: string
+          description: Filter toolkits by who manages them
+        - name: sort_by
+          in: query
+          type: string
+          description: Sort order for returned toolkits
+        - name: include_deprecated
+          in: query
+          type: boolean
+          description: Include deprecated toolkits in the response
+        - name: search
+          in: query
+          type: string
+          description: Search query to filter toolkits by name, slug, or description
+        - name: limit
+          in: query
+          type: number
+          description: Number of items per page, max allowed is 1000
+        - name: cursor
+          in: query
+          type: string
+          description: Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the
+            page number and the limit is the number of items per page. T
+    - name: api-v3-toolkits-categories
+      path: /api/v3/toolkits/categories
+      operations:
+      - name: gettoolkitscategories
+        method: GET
+        description: List toolkit categories
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v3-toolkits-changelog
+      path: /api/v3/toolkits/changelog
+      operations:
+      - name: gettoolkitschangelog
+        method: GET
+        description: Get toolkits changelog
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v3-toolkits-multi
+      path: /api/v3/toolkits/multi
+      operations:
+      - name: posttoolkitsmulti
+        method: POST
+        description: Fetch multiple toolkits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v3-toolkits-slug
+      path: /api/v3/toolkits/{slug}
+      operations:
+      - name: gettoolkitsbyslug
+        method: GET
+        description: Get toolkit by slug
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: slug
+          in: path
+          type: string
+          description: Toolkit slug identifier
+          required: true
+        - name: version
+          in: query
+          type: string
+          description: Version of the toolkit
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: composio-toolkits-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Toolkits. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/toolkits
+      name: api-v3-toolkits
+      description: REST surface for api-v3-toolkits.
+      operations:
+      - method: GET
+        name: gettoolkits
+        description: List available toolkits
+        call: composio-toolkits.gettoolkits
+        with:
+          category: rest.category
+          managed_by: rest.managed_by
+          sort_by: rest.sort_by
+          include_deprecated: rest.include_deprecated
+          search: rest.search
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/toolkits/categories
+      name: api-v3-toolkits-categories
+      description: REST surface for api-v3-toolkits-categories.
+      operations:
+      - method: GET
+        name: gettoolkitscategories
+        description: List toolkit categories
+        call: composio-toolkits.gettoolkitscategories
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/toolkits/changelog
+      name: api-v3-toolkits-changelog
+      description: REST surface for api-v3-toolkits-changelog.
+      operations:
+      - method: GET
+        name: gettoolkitschangelog
+        description: Get toolkits changelog
+        call: composio-toolkits.gettoolkitschangelog
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/toolkits/multi
+      name: api-v3-toolkits-multi
+      description: REST surface for api-v3-toolkits-multi.
+      operations:
+      - method: POST
+        name: posttoolkitsmulti
+        description: Fetch multiple toolkits
+        call: composio-toolkits.posttoolkitsmulti
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/toolkits/{slug}
+      name: api-v3-toolkits-slug
+      description: REST surface for api-v3-toolkits-slug.
+      operations:
+      - method: GET
+        name: gettoolkitsbyslug
+        description: Get toolkit by slug
+        call: composio-toolkits.gettoolkitsbyslug
+        with:
+          slug: rest.slug
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-toolkits-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Toolkits. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-available-toolkits
+      description: List available toolkits
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-toolkits.gettoolkits
+      with:
+        category: tools.category
+        managed_by: tools.managed_by
+        sort_by: tools.sort_by
+        include_deprecated: tools.include_deprecated
+        search: tools.search
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-toolkit-categories
+      description: List toolkit categories
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-toolkits.gettoolkitscategories
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-toolkits-changelog
+      description: Get toolkits changelog
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-toolkits.gettoolkitschangelog
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fetch-multiple-toolkits
+      description: Fetch multiple toolkits
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: composio-toolkits.posttoolkitsmulti
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-toolkit-slug
+      description: Get toolkit by slug
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-toolkits.gettoolkitsbyslug
+      with:
+        slug: tools.slug
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,131 +1,326 @@
-naftiko: "1.0.0-alpha2"
-
+naftiko: 1.0.0-alpha2
 info:
-  title: Composio Auth Configs
-  description: >-
-    Manages Composio AuthConfigs — reusable developer-owned OAuth client
-    profiles per toolkit (OAuth client ID/secret/scopes, API key, basic
-    auth). Lets Naftiko declare per-toolkit auth intent in capability
-    YAML and have Composio provision the AuthConfig that ConnectedAccounts
-    will inherit from. White-label OAuth at the spec layer.
+  label: Composio Platform API — Auth Configs
+  description: 'Composio Platform API — Auth Configs. 6 operations. Lead operation: Create new authentication configuration.
+    Self-contained Naftiko capability covering one Composio business surface.'
   tags:
-    - Naftiko
-    - Composio
-    - Partnership
-    - Auth
-    - OAuth
-    - White-Label
-  created: '2026-05-15'
-  modified: '2026-05-15'
-
+  - Composio
+  - Auth Configs
+  created: '2026-05-19'
+  modified: '2026-05-19'
 binds:
-  - namespace: composio-env
-    description: Composio Platform API key.
-    keys:
-      COMPOSIO_API_KEY: COMPOSIO_API_KEY
-
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
 capability:
   consumes:
-    - namespace: composio
-      type: http
-      baseUri: https://backend.composio.dev/api/v3
-      authentication:
-        type: bearer
-        token: '{{COMPOSIO_API_KEY}}'
-      resources:
-        - name: list-auth-configs
-          path: '/authConfigs'
-          operations:
-            - name: list-auth-configs
-              method: GET
-              inputParameters:
-                - { name: toolkit, in: query, type: string, required: false }
-            - name: create-auth-config
-              method: POST
-        - name: auth-config
-          path: '/authConfigs/{{auth_config_id}}'
-          operations:
-            - name: get-auth-config
-              method: GET
-              inputParameters:
-                - { name: auth_config_id, in: path, required: true }
-            - name: update-auth-config
-              method: PATCH
-              inputParameters:
-                - { name: auth_config_id, in: path, required: true }
-            - name: delete-auth-config
-              method: DELETE
-              inputParameters:
-                - { name: auth_config_id, in: path, required: true }
-
+  - type: http
+    namespace: composio-auth-configs
+    baseUri: https://backend.composio.dev
+    description: Composio Platform API — Auth Configs business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-auth_configs
+      path: /api/v3/auth_configs
+      operations:
+      - name: postauthconfigs
+        method: POST
+        description: Create new authentication configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: getauthconfigs
+        method: GET
+        description: List authentication configurations with optional filters
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: is_composio_managed
+          in: query
+          type: string
+          description: Whether to filter by composio managed auth configs
+        - name: toolkit_slug
+          in: query
+          type: string
+          description: Comma-separated list of toolkit slugs to filter auth configs by
+        - name: deprecated_app_id
+          in: query
+          type: string
+          description: The app id to filter by
+        - name: deprecated_status
+          in: query
+          type: string
+        - name: show_disabled
+          in: query
+          type: boolean
+          description: Show disabled auth configs
+        - name: search
+          in: query
+          type: string
+          description: Search auth configs by name or id
+        - name: limit
+          in: query
+          type: number
+          description: Number of items per page, max allowed is 1000
+        - name: cursor
+          in: query
+          type: string
+          description: Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the
+            page number and the limit is the number of items per page. T
+    - name: api-v3-auth_configs-nanoid
+      path: /api/v3/auth_configs/{nanoid}
+      operations:
+      - name: getauthconfigsbynanoid
+        method: GET
+        description: Get single authentication configuration by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier of the authentication configuration to retrieve
+          required: true
+      - name: patchauthconfigsbynanoid
+        method: PATCH
+        description: Update an authentication configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier of the authentication configuration to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteauthconfigsbynanoid
+        method: DELETE
+        description: Delete an authentication configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier of the authentication configuration to delete
+          required: true
+    - name: api-v3-auth_configs-nanoid-status
+      path: /api/v3/auth_configs/{nanoid}/{status}
+      operations:
+      - name: patchauthconfigsbynanoidbystatus
+        method: PATCH
+        description: Enable or disable an authentication configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: nanoid
+          in: path
+          type: string
+          description: The unique identifier of the authentication configuration to update
+          required: true
+        - name: status
+          in: path
+          type: string
+          description: The new status to set for the auth configuration
+          required: true
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.COMPOSIO_API_KEY}}'
+      placement: header
   exposes:
-    - type: rest
-      address: 0.0.0.0
-      port: 8080
-      namespace: composio-auth-configs-rest
-      description: REST surface for managing Composio AuthConfigs.
-      resources:
-        - name: auth-configs
-          path: '/auth-configs'
-          operations:
-            - name: list-auth-configs
-              method: GET
-              inputParameters:
-                - { name: toolkit, in: query, type: string, required: false }
-              call: composio.list-auth-configs
-            - name: create-auth-config
-              method: POST
-              call: composio.create-auth-config
-        - name: auth-config
-          path: '/auth-configs/{auth_config_id}'
-          operations:
-            - name: get-auth-config
-              method: GET
-              inputParameters:
-                - { name: auth_config_id, in: path, type: string, required: true }
-              call: composio.get-auth-config
-            - name: update-auth-config
-              method: PATCH
-              inputParameters:
-                - { name: auth_config_id, in: path, type: string, required: true }
-              call: composio.update-auth-config
-            - name: delete-auth-config
-              method: DELETE
-              inputParameters:
-                - { name: auth_config_id, in: path, type: string, required: true }
-              call: composio.delete-auth-config
-
-    - type: mcp
-      address: 0.0.0.0
-      port: 3010
-      namespace: composio-auth-configs-mcp
-      description: MCP server for managing Composio AuthConfigs from Naftiko spec.
-      tools:
-        - name: list-auth-configs
-          description: List Composio AuthConfigs (developer OAuth client profiles per toolkit).
-          hints: { readOnly: true }
-          inputParameters:
-            - { name: toolkit, type: string, required: false, description: Filter to a specific toolkit. }
-          call: composio.list-auth-configs
-        - name: create-auth-config
-          description: Create a new Composio AuthConfig.
-          hints: { destructiveHint: false }
-          call: composio.create-auth-config
-        - name: get-auth-config
-          description: Get a Composio AuthConfig by ID.
-          hints: { readOnly: true }
-          inputParameters:
-            - { name: auth_config_id, type: string, required: true, description: AuthConfig UUID. }
-          call: composio.get-auth-config
-        - name: update-auth-config
-          description: Patch a Composio AuthConfig.
-          hints: { destructiveHint: true }
-          inputParameters:
-            - { name: auth_config_id, type: string, required: true, description: AuthConfig UUID. }
-          call: composio.update-auth-config
-        - name: delete-auth-config
-          description: Delete a Composio AuthConfig.
-          hints: { destructiveHint: true }
-          inputParameters:
-            - { name: auth_config_id, type: string, required: true, description: AuthConfig UUID. }
-          call: composio.delete-auth-config
+  - type: rest
+    namespace: composio-auth-configs-rest
+    port: 8080
+    description: REST adapter for Composio Platform API — Auth Configs. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/auth-configs
+      name: api-v3-auth-configs
+      description: REST surface for api-v3-auth_configs.
+      operations:
+      - method: POST
+        name: postauthconfigs
+        description: Create new authentication configuration
+        call: composio-auth-configs.postauthconfigs
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getauthconfigs
+        description: List authentication configurations with optional filters
+        call: composio-auth-configs.getauthconfigs
+        with:
+          is_composio_managed: rest.is_composio_managed
+          toolkit_slug: rest.toolkit_slug
+          deprecated_app_id: rest.deprecated_app_id
+          deprecated_status: rest.deprecated_status
+          show_disabled: rest.show_disabled
+          search: rest.search
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/auth-configs/{nanoid}
+      name: api-v3-auth-configs-nanoid
+      description: REST surface for api-v3-auth_configs-nanoid.
+      operations:
+      - method: GET
+        name: getauthconfigsbynanoid
+        description: Get single authentication configuration by ID
+        call: composio-auth-configs.getauthconfigsbynanoid
+        with:
+          nanoid: rest.nanoid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchauthconfigsbynanoid
+        description: Update an authentication configuration
+        call: composio-auth-configs.patchauthconfigsbynanoid
+        with:
+          nanoid: rest.nanoid
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteauthconfigsbynanoid
+        description: Delete an authentication configuration
+        call: composio-auth-configs.deleteauthconfigsbynanoid
+        with:
+          nanoid: rest.nanoid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/auth-configs/{nanoid}/{status}
+      name: api-v3-auth-configs-nanoid-status
+      description: REST surface for api-v3-auth_configs-nanoid-status.
+      operations:
+      - method: PATCH
+        name: patchauthconfigsbynanoidbystatus
+        description: Enable or disable an authentication configuration
+        call: composio-auth-configs.patchauthconfigsbynanoidbystatus
+        with:
+          nanoid: rest.nanoid
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: composio-auth-configs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Composio Platform API — Auth Configs. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: create-new-authentication-configuration
+      description: Create new authentication configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: composio-auth-configs.postauthconfigs
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-authentication-configurations-optional-filters
+      description: List authentication configurations with optional filters
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-auth-configs.getauthconfigs
+      with:
+        is_composio_managed: tools.is_composio_managed
+        toolkit_slug: tools.toolkit_slug
+        deprecated_app_id: tools.deprecated_app_id
+        deprecated_status: tools.deprecated_status
+        show_disabled: tools.show_disabled
+        search: tools.search
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-single-authentication-configuration-id
+      description: Get single authentication configuration by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: composio-auth-configs.getauthconfigsbynanoid
+      with:
+        nanoid: tools.nanoid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-authentication-configuration
+      description: Update an authentication configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: composio-auth-configs.patchauthconfigsbynanoid
+      with:
+        nanoid: tools.nanoid
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-authentication-configuration
+      description: Delete an authentication configuration
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: composio-auth-configs.deleteauthconfigsbynanoid
+      with:
+        nanoid: tools.nanoid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-disable-authentication-configuration
+      description: Enable or disable an authentication configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: composio-auth-configs.patchauthconfigsbynanoidbystatus
+      with:
+        nanoid: tools.nanoid
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
