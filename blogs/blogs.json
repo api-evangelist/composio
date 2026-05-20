@@ -5,11 +5,12 @@
       "source": "https://composio.dev/blog",
       "feed_url": "",
       "title": "Composio Blog",
-      "saved": 2,
-      "note": "No public RSS/Atom feed; posts enumerated manually from blog index page."
+      "saved": 0,
+      "note": "No public RSS/Atom feed; posts enumerated manually from blog index page.",
+      "error": "no_feed"
     }
   ],
-  "fetched": "2026-05-15T00:00:00Z",
+  "fetched": "2026-05-17T20:48:52Z",
   "post_count": 2,
   "posts": [
     {
