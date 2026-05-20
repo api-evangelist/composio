@@ -1,0 +1,139 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Broker Composio Notion toolkit through a single MCP surface
+  description: Provision the Composio Notion connected account, then expose Notion's database / page / block tools to an agent as one consolidated MCP namespace.
+  tags:
+  - Composio
+  - Integration
+  - Productivity
+  - notion
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    NOTION_API_KEY: NOTION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: connectedaccounts
+      path: /connectedAccounts
+      operations:
+      - name: createconnectedaccount
+        method: POST
+        description: Connect the user's Notion workspace.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a brokered Notion tool call.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: notion
+    baseUri: https://api.notion.com
+    description: Notion API operations consumed by this integration.
+    resources:
+    - name: v1-pages
+      path: /v1/pages
+      operations:
+      - name: createpage
+        method: POST
+        description: 'Notion API: createPage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-databases-database-id-query
+      path: /v1/databases/{database_id}/query
+      operations:
+      - name: querydatabase
+        method: POST
+        description: 'Notion API: queryDatabase'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: database_id
+          in: path
+          type: string
+          description: Path parameter database_id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-notion-mcp
+    description: MCP adapter for the composio-notion integration.
+    tools:
+    - name: composio_notion
+      description: Execute the composio notion integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-notion-rest
+    port: 8080
+    description: REST adapter for the composio-notion integration.
+    resources:
+    - path: /composio-notion
+      name: composio-notion
+      description: REST surface for the composio-notion integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-notion integration.
+        call: composio_notion
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

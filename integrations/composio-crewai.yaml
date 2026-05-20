@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Provision CrewAI agents with Composio tools
+  description: Spin up a CrewAI Agent whose `tools` array is hydrated from a Composio toolkit; agent tool calls round-trip through Composio executeTool.
+  tags:
+  - Composio
+  - Integration
+  - Agent framework
+  - crewai
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    CREWAI_API_KEY: CREWAI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: toolkits
+      path: /toolkits
+      operations:
+      - name: listtoolkits
+        method: GET
+        description: List Composio toolkits to attach to a CrewAI agent.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a CrewAI tool call via Composio.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: crewai
+    baseUri: https://app.crewai.com
+    description: CrewAI Cloud API operations consumed by this integration.
+    resources:
+    - name: api-v1-crews
+      path: /api/v1/crews
+      operations:
+      - name: createcrew
+        method: POST
+        description: 'CrewAI Cloud API: createCrew'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-crewai-mcp
+    description: MCP adapter for the composio-crewai integration.
+    tools:
+    - name: composio_crewai
+      description: Execute the composio crewai integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-crewai-rest
+    port: 8080
+    description: REST adapter for the composio-crewai integration.
+    resources:
+    - path: /composio-crewai
+      name: composio-crewai
+      description: REST surface for the composio-crewai integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-crewai integration.
+        call: composio_crewai
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

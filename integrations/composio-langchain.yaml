@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Register Composio tools as LangChain Tools
+  description: For each Composio tool, emit a LangChain BaseTool wrapper whose _run delegates back to Composio executeTool; supports both sync and async agent loops.
+  tags:
+  - Composio
+  - Integration
+  - Agent framework
+  - langchain
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    LANGCHAIN_API_KEY: LANGCHAIN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: tools
+      path: /tools
+      operations:
+      - name: listtools
+        method: GET
+        description: List Composio tools to wrap as LangChain Tools.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute the wrapped Composio tool.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: langchain
+    baseUri: https://api.smith.langchain.com
+    description: LangSmith API operations consumed by this integration.
+    resources:
+    - name: runs
+      path: /runs
+      operations:
+      - name: createrun
+        method: POST
+        description: 'LangSmith API: createRun'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: runs-run-id-feedback
+      path: /runs/{run_id}/feedback
+      operations:
+      - name: createfeedback
+        method: POST
+        description: 'LangSmith API: createFeedback'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: run_id
+          in: path
+          type: string
+          description: Path parameter run_id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-langchain-mcp
+    description: MCP adapter for the composio-langchain integration.
+    tools:
+    - name: composio_langchain
+      description: Execute the composio langchain integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-langchain-rest
+    port: 8080
+    description: REST adapter for the composio-langchain integration.
+    resources:
+    - path: /composio-langchain
+      name: composio-langchain
+      description: REST surface for the composio-langchain integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-langchain integration.
+        call: composio_langchain
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

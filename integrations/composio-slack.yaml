@@ -1,0 +1,141 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Route Composio Slack tool calls to the Slack Web API
+  description: Connect Slack via Composio auth, list Slack-tagged tools, and execute messaging / channel ops through Composio while preserving Slack rate-limit semantics.
+  tags:
+  - Composio
+  - Integration
+  - Productivity
+  - slack
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    SLACK_API_KEY: SLACK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: connectedaccounts
+      path: /connectedAccounts
+      operations:
+      - name: createconnectedaccount
+        method: POST
+        description: Connect the workspace's Slack account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tools
+      path: /tools
+      operations:
+      - name: listtools
+        method: GET
+        description: List Slack-tagged tools available via Composio.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a Slack tool call (post message, lookup user, etc).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: slack
+    baseUri: https://slack.com
+    description: Slack Web API operations consumed by this integration.
+    resources:
+    - name: api-chat-postmessage
+      path: /api/chat.postMessage
+      operations:
+      - name: postmessage
+        method: POST
+        description: 'Slack Web API: postMessage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-conversations-list
+      path: /api/conversations.list
+      operations:
+      - name: listconversations
+        method: GET
+        description: 'Slack Web API: listConversations'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  exposes:
+  - type: mcp
+    namespace: composio-slack-mcp
+    description: MCP adapter for the composio-slack integration.
+    tools:
+    - name: composio_slack
+      description: Execute the composio slack integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-slack-rest
+    port: 8080
+    description: REST adapter for the composio-slack integration.
+    resources:
+    - path: /composio-slack
+      name: composio-slack
+      description: REST surface for the composio-slack integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-slack integration.
+        call: composio_slack
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

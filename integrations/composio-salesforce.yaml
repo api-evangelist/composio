@@ -1,0 +1,151 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Wrap Composio Salesforce toolkit with auth + execute lifecycle
+  description: Provision Salesforce via Composio connected account + auth config, then expose Account / Contact / Opportunity ops as Naftiko-typed tools.
+  tags:
+  - Composio
+  - Integration
+  - CRM
+  - salesforce
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    SALESFORCE_API_KEY: SALESFORCE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: authconfigs
+      path: /authConfigs
+      operations:
+      - name: createauthconfig
+        method: POST
+        description: Create the Salesforce auth config.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: connectedaccounts
+      path: /connectedAccounts
+      operations:
+      - name: createconnectedaccount
+        method: POST
+        description: Connect a Salesforce org.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a brokered Salesforce tool call.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: salesforce
+    baseUri: https://yourinstance.my.salesforce.com
+    description: Salesforce REST API operations consumed by this integration.
+    resources:
+    - name: services-data-v60-0-sobjects-contact
+      path: /services/data/v60.0/sobjects/Contact
+      operations:
+      - name: createcontact
+        method: POST
+        description: 'Salesforce REST API: createContact'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: services-data-v60-0-sobjects-opportunity
+      path: /services/data/v60.0/sobjects/Opportunity
+      operations:
+      - name: createopportunity
+        method: POST
+        description: 'Salesforce REST API: createOpportunity'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-salesforce-mcp
+    description: MCP adapter for the composio-salesforce integration.
+    tools:
+    - name: composio_salesforce
+      description: Execute the composio salesforce integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-salesforce-rest
+    port: 8080
+    description: REST adapter for the composio-salesforce integration.
+    resources:
+    - path: /composio-salesforce
+      name: composio-salesforce
+      description: REST surface for the composio-salesforce integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-salesforce integration.
+        call: composio_salesforce
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

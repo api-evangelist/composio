@@ -1,0 +1,65 @@
+- slug: composio-openai
+  label: Expose Composio tools to OpenAI Assistants
+  partner: openai
+  category: Agent framework
+  use_case: Materialize Composio's listTools output as OpenAI Assistants function-calling tool definitions, then proxy tool_calls back to Composio executeTool for actual execution.
+- slug: composio-anthropic
+  label: Bridge Composio tool catalog to Anthropic Claude tool use
+  partner: anthropic
+  category: Agent framework
+  use_case: Translate Composio's tool catalog into Anthropic Claude tool definitions and route Claude tool_use blocks back through Composio executeTool.
+- slug: composio-langchain
+  label: Register Composio tools as LangChain Tools
+  partner: langchain
+  category: Agent framework
+  use_case: For each Composio tool, emit a LangChain BaseTool wrapper whose _run delegates back to Composio executeTool; supports both sync and async agent loops.
+- slug: composio-llamaindex
+  label: Mount Composio toolkits as LlamaIndex Tools
+  partner: llamaindex
+  category: Agent framework
+  use_case: For a selected Composio toolkit, generate matching LlamaIndex FunctionTool instances and stream tool-call results back through executeTool.
+- slug: composio-crewai
+  label: Provision CrewAI agents with Composio tools
+  partner: crewai
+  category: Agent framework
+  use_case: Spin up a CrewAI Agent whose `tools` array is hydrated from a Composio toolkit; agent tool calls round-trip through Composio executeTool.
+- slug: composio-notion
+  label: Broker Composio Notion toolkit through a single MCP surface
+  partner: notion
+  category: Productivity
+  use_case: Provision the Composio Notion connected account, then expose Notion's database / page / block tools to an agent as one consolidated MCP namespace.
+- slug: composio-slack
+  label: Route Composio Slack tool calls to the Slack Web API
+  partner: slack
+  category: Productivity
+  use_case: Connect Slack via Composio auth, list Slack-tagged tools, and execute messaging / channel ops through Composio while preserving Slack rate-limit semantics.
+- slug: composio-gmail
+  label: Expose Composio Gmail toolkit to an agent as one MCP tool
+  partner: gmail
+  category: Productivity
+  use_case: Use the Composio Gmail connected account to send / search / label messages; agents call a single MCP tool that Composio fans out to the right Gmail op.
+- slug: composio-github
+  label: Front the Composio GitHub toolkit as a typed REST + MCP surface
+  partner: github
+  category: Developer tools
+  use_case: Provision GitHub via Composio, then expose issue / PR / repo tools to agents as a single typed surface that round-trips through executeTool.
+- slug: composio-linear
+  label: Broker Composio Linear toolkit into a Naftiko capability
+  partner: linear
+  category: Project management
+  use_case: Connect Linear via Composio auth, list Linear-scoped tools, and execute issue create / update ops through executeTool with typed parameters.
+- slug: composio-salesforce
+  label: Wrap Composio Salesforce toolkit with auth + execute lifecycle
+  partner: salesforce
+  category: CRM
+  use_case: Provision Salesforce via Composio connected account + auth config, then expose Account / Contact / Opportunity ops as Naftiko-typed tools.
+- slug: composio-hubspot
+  label: Surface Composio HubSpot toolkit as a unified MCP adapter
+  partner: hubspot
+  category: CRM
+  use_case: Use Composio to connect HubSpot and route CRM tool calls (contacts, deals, companies) through executeTool with consistent error semantics.
+- slug: composio-webhooks
+  label: Forward Composio triggers to a downstream agent webhook
+  partner: webhooks
+  category: Eventing
+  use_case: Configure a Composio trigger (e.g. new email, new Slack message), then forward each fired event to the agent's webhook endpoint with the connected account context.

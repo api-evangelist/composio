@@ -1,0 +1,171 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Front the Composio GitHub toolkit as a typed REST + MCP surface
+  description: Provision GitHub via Composio, then expose issue / PR / repo tools to agents as a single typed surface that round-trips through executeTool.
+  tags:
+  - Composio
+  - Integration
+  - Developer tools
+  - github
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    GITHUB_API_KEY: GITHUB_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: connectedaccounts
+      path: /connectedAccounts
+      operations:
+      - name: createconnectedaccount
+        method: POST
+        description: Connect a GitHub account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: toolkits-toolkitslug
+      path: /toolkits/{toolkitSlug}
+      operations:
+      - name: gettoolkit
+        method: GET
+        description: Fetch the GitHub toolkit catalog.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolkitSlug
+          in: path
+          type: string
+          description: Path parameter toolkitSlug.
+          required: true
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a GitHub tool call via Composio.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: github
+    baseUri: https://api.github.com
+    description: GitHub REST API operations consumed by this integration.
+    resources:
+    - name: repos-owner-repo-issues
+      path: /repos/{owner}/{repo}/issues
+      operations:
+      - name: createissue
+        method: POST
+        description: 'GitHub REST API: createIssue'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: repos-owner-repo-pulls
+      path: /repos/{owner}/{repo}/pulls
+      operations:
+      - name: createpullrequest
+        method: POST
+        description: 'GitHub REST API: createPullRequest'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: owner
+          in: path
+          type: string
+          description: Path parameter owner.
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: Path parameter repo.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-github-mcp
+    description: MCP adapter for the composio-github integration.
+    tools:
+    - name: composio_github
+      description: Execute the composio github integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-github-rest
+    port: 8080
+    description: REST adapter for the composio-github integration.
+    resources:
+    - path: /composio-github
+      name: composio-github
+      description: REST surface for the composio-github integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-github integration.
+        call: composio_github
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

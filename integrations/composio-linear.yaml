@@ -1,0 +1,117 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Broker Composio Linear toolkit into a Naftiko capability
+  description: Connect Linear via Composio auth, list Linear-scoped tools, and execute issue create / update ops through executeTool with typed parameters.
+  tags:
+  - Composio
+  - Integration
+  - Project management
+  - linear
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    LINEAR_API_KEY: LINEAR_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: connectedaccounts
+      path: /connectedAccounts
+      operations:
+      - name: createconnectedaccount
+        method: POST
+        description: Connect the Linear workspace.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute the brokered Linear tool call.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: linear
+    baseUri: https://api.linear.app
+    description: Linear GraphQL API operations consumed by this integration.
+    resources:
+    - name: graphql
+      path: /graphql
+      operations:
+      - name: graphqlquery
+        method: POST
+        description: 'Linear GraphQL API: graphqlQuery'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-linear-mcp
+    description: MCP adapter for the composio-linear integration.
+    tools:
+    - name: composio_linear
+      description: Execute the composio linear integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-linear-rest
+    port: 8080
+    description: REST adapter for the composio-linear integration.
+    resources:
+    - path: /composio-linear
+      name: composio-linear
+      description: REST surface for the composio-linear integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-linear integration.
+        call: composio_linear
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

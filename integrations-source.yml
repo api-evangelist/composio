@@ -1,0 +1,313 @@
+# Curated Composio integrations grouped by category.
+# Each entry becomes one Naftiko capability YAML in integrations/.
+# Composio is the MCP / tool-calling broker for AI agents — 1000+ pre-built tools.
+# Each capability frames Composio as the broker and a partner SDK / API as the
+# downstream consumer of the brokered tool calls.
+
+# Agent frameworks / LLM SDKs (5)
+- partner: openai
+  name: Expose Composio tools to OpenAI Assistants
+  category: Agent framework
+  use_case: Materialize Composio's listTools output as OpenAI Assistants function-calling tool definitions, then proxy tool_calls back to Composio executeTool for actual execution.
+  partner_baseUri: https://api.openai.com
+  partner_api: OpenAI API
+  provider_ops:
+    - method: GET
+      path: /tools
+      name: listTools
+      description: List the Composio tools available to the agent.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a Composio tool by id.
+  partner_ops:
+    - method: POST
+      path: /v1/assistants
+      name: createAssistant
+    - method: POST
+      path: /v1/threads/{thread_id}/runs
+      name: createRun
+
+- partner: anthropic
+  name: Bridge Composio tool catalog to Anthropic Claude tool use
+  category: Agent framework
+  use_case: Translate Composio's tool catalog into Anthropic Claude tool definitions and route Claude tool_use blocks back through Composio executeTool.
+  partner_baseUri: https://api.anthropic.com
+  partner_api: Anthropic Messages API
+  provider_ops:
+    - method: GET
+      path: /tools
+      name: listTools
+      description: List the Composio tools available to Claude.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a Composio tool by id.
+  partner_ops:
+    - method: POST
+      path: /v1/messages
+      name: createMessage
+
+- partner: langchain
+  name: Register Composio tools as LangChain Tools
+  category: Agent framework
+  use_case: For each Composio tool, emit a LangChain BaseTool wrapper whose _run delegates back to Composio executeTool; supports both sync and async agent loops.
+  partner_baseUri: https://api.smith.langchain.com
+  partner_api: LangSmith API
+  provider_ops:
+    - method: GET
+      path: /tools
+      name: listTools
+      description: List Composio tools to wrap as LangChain Tools.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute the wrapped Composio tool.
+  partner_ops:
+    - method: POST
+      path: /runs
+      name: createRun
+    - method: POST
+      path: /runs/{run_id}/feedback
+      name: createFeedback
+
+- partner: llamaindex
+  name: Mount Composio toolkits as LlamaIndex Tools
+  category: Agent framework
+  use_case: For a selected Composio toolkit, generate matching LlamaIndex FunctionTool instances and stream tool-call results back through executeTool.
+  partner_baseUri: https://api.cloud.llamaindex.ai
+  partner_api: LlamaCloud API
+  provider_ops:
+    - method: GET
+      path: /toolkits
+      name: listToolkits
+      description: List Composio toolkits to mount.
+    - method: GET
+      path: /toolkits/{toolkitSlug}
+      name: getToolkit
+      description: Fetch a specific toolkit's tools.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a brokered tool call.
+  partner_ops:
+    - method: POST
+      path: /api/v1/pipelines
+      name: createPipeline
+
+- partner: crewai
+  name: Provision CrewAI agents with Composio tools
+  category: Agent framework
+  use_case: Spin up a CrewAI Agent whose `tools` array is hydrated from a Composio toolkit; agent tool calls round-trip through Composio executeTool.
+  partner_baseUri: https://app.crewai.com
+  partner_api: CrewAI Cloud API
+  provider_ops:
+    - method: GET
+      path: /toolkits
+      name: listToolkits
+      description: List Composio toolkits to attach to a CrewAI agent.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a CrewAI tool call via Composio.
+  partner_ops:
+    - method: POST
+      path: /api/v1/crews
+      name: createCrew
+
+# Productivity / collaboration tools (4)
+- partner: notion
+  name: Broker Composio Notion toolkit through a single MCP surface
+  category: Productivity
+  use_case: Provision the Composio Notion connected account, then expose Notion's database / page / block tools to an agent as one consolidated MCP namespace.
+  partner_baseUri: https://api.notion.com
+  partner_api: Notion API
+  provider_ops:
+    - method: POST
+      path: /connectedAccounts
+      name: createConnectedAccount
+      description: Connect the user's Notion workspace.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a brokered Notion tool call.
+  partner_ops:
+    - method: POST
+      path: /v1/pages
+      name: createPage
+    - method: POST
+      path: /v1/databases/{database_id}/query
+      name: queryDatabase
+
+- partner: slack
+  name: Route Composio Slack tool calls to the Slack Web API
+  category: Productivity
+  use_case: Connect Slack via Composio auth, list Slack-tagged tools, and execute messaging / channel ops through Composio while preserving Slack rate-limit semantics.
+  partner_baseUri: https://slack.com
+  partner_api: Slack Web API
+  provider_ops:
+    - method: POST
+      path: /connectedAccounts
+      name: createConnectedAccount
+      description: Connect the workspace's Slack account.
+    - method: GET
+      path: /tools
+      name: listTools
+      description: List Slack-tagged tools available via Composio.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a Slack tool call (post message, lookup user, etc).
+  partner_ops:
+    - method: POST
+      path: /api/chat.postMessage
+      name: postMessage
+    - method: GET
+      path: /api/conversations.list
+      name: listConversations
+
+- partner: gmail
+  name: Expose Composio Gmail toolkit to an agent as one MCP tool
+  category: Productivity
+  use_case: Use the Composio Gmail connected account to send / search / label messages; agents call a single MCP tool that Composio fans out to the right Gmail op.
+  partner_baseUri: https://gmail.googleapis.com
+  partner_api: Gmail API
+  provider_ops:
+    - method: POST
+      path: /connectedAccounts
+      name: createConnectedAccount
+      description: Connect the user's Gmail account.
+    - method: GET
+      path: /toolkits/{toolkitSlug}
+      name: getToolkit
+      description: Fetch the Gmail toolkit definition.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute the brokered Gmail tool call.
+  partner_ops:
+    - method: POST
+      path: /gmail/v1/users/{userId}/messages/send
+      name: sendMessage
+    - method: GET
+      path: /gmail/v1/users/{userId}/messages
+      name: listMessages
+
+- partner: github
+  name: Front the Composio GitHub toolkit as a typed REST + MCP surface
+  category: Developer tools
+  use_case: Provision GitHub via Composio, then expose issue / PR / repo tools to agents as a single typed surface that round-trips through executeTool.
+  partner_baseUri: https://api.github.com
+  partner_api: GitHub REST API
+  provider_ops:
+    - method: POST
+      path: /connectedAccounts
+      name: createConnectedAccount
+      description: Connect a GitHub account.
+    - method: GET
+      path: /toolkits/{toolkitSlug}
+      name: getToolkit
+      description: Fetch the GitHub toolkit catalog.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a GitHub tool call via Composio.
+  partner_ops:
+    - method: POST
+      path: /repos/{owner}/{repo}/issues
+      name: createIssue
+    - method: POST
+      path: /repos/{owner}/{repo}/pulls
+      name: createPullRequest
+
+# CRM / business apps (3)
+- partner: linear
+  name: Broker Composio Linear toolkit into a Naftiko capability
+  category: Project management
+  use_case: Connect Linear via Composio auth, list Linear-scoped tools, and execute issue create / update ops through executeTool with typed parameters.
+  partner_baseUri: https://api.linear.app
+  partner_api: Linear GraphQL API
+  provider_ops:
+    - method: POST
+      path: /connectedAccounts
+      name: createConnectedAccount
+      description: Connect the Linear workspace.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute the brokered Linear tool call.
+  partner_ops:
+    - method: POST
+      path: /graphql
+      name: graphqlQuery
+
+- partner: salesforce
+  name: Wrap Composio Salesforce toolkit with auth + execute lifecycle
+  category: CRM
+  use_case: Provision Salesforce via Composio connected account + auth config, then expose Account / Contact / Opportunity ops as Naftiko-typed tools.
+  partner_baseUri: https://yourinstance.my.salesforce.com
+  partner_api: Salesforce REST API
+  provider_ops:
+    - method: POST
+      path: /authConfigs
+      name: createAuthConfig
+      description: Create the Salesforce auth config.
+    - method: POST
+      path: /connectedAccounts
+      name: createConnectedAccount
+      description: Connect a Salesforce org.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a brokered Salesforce tool call.
+  partner_ops:
+    - method: POST
+      path: /services/data/v60.0/sobjects/Contact
+      name: createContact
+    - method: POST
+      path: /services/data/v60.0/sobjects/Opportunity
+      name: createOpportunity
+
+- partner: hubspot
+  name: Surface Composio HubSpot toolkit as a unified MCP adapter
+  category: CRM
+  use_case: Use Composio to connect HubSpot and route CRM tool calls (contacts, deals, companies) through executeTool with consistent error semantics.
+  partner_baseUri: https://api.hubapi.com
+  partner_api: HubSpot CRM API
+  provider_ops:
+    - method: POST
+      path: /connectedAccounts
+      name: createConnectedAccount
+      description: Connect the HubSpot portal.
+    - method: POST
+      path: /tools/{toolId}/execute
+      name: executeTool
+      description: Execute a HubSpot tool call via Composio.
+  partner_ops:
+    - method: POST
+      path: /crm/v3/objects/contacts
+      name: createContact
+    - method: POST
+      path: /crm/v3/objects/deals
+      name: createDeal
+
+# Event-driven / triggers (1)
+- partner: webhooks
+  name: Forward Composio triggers to a downstream agent webhook
+  category: Eventing
+  use_case: Configure a Composio trigger (e.g. new email, new Slack message), then forward each fired event to the agent's webhook endpoint with the connected account context.
+  partner_baseUri: https://agent.example.com
+  partner_api: Agent Webhook Receiver
+  provider_ops:
+    - method: POST
+      path: /triggers
+      name: createTrigger
+      description: Register a Composio trigger to fire on an upstream event.
+    - method: GET
+      path: /triggers
+      name: listTriggers
+      description: List configured Composio triggers.
+  partner_ops:
+    - method: POST
+      path: /webhooks/composio
+      name: receiveTriggerEvent

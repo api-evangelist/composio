@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bridge Composio tool catalog to Anthropic Claude tool use
+  description: Translate Composio's tool catalog into Anthropic Claude tool definitions and route Claude tool_use blocks back through Composio executeTool.
+  tags:
+  - Composio
+  - Integration
+  - Agent framework
+  - anthropic
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    ANTHROPIC_API_KEY: ANTHROPIC_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: tools
+      path: /tools
+      operations:
+      - name: listtools
+        method: GET
+        description: List the Composio tools available to Claude.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a Composio tool by id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: anthropic
+    baseUri: https://api.anthropic.com
+    description: Anthropic Messages API operations consumed by this integration.
+    resources:
+    - name: v1-messages
+      path: /v1/messages
+      operations:
+      - name: createmessage
+        method: POST
+        description: 'Anthropic Messages API: createMessage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-anthropic-mcp
+    description: MCP adapter for the composio-anthropic integration.
+    tools:
+    - name: composio_anthropic
+      description: Execute the composio anthropic integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-anthropic-rest
+    port: 8080
+    description: REST adapter for the composio-anthropic integration.
+    resources:
+    - path: /composio-anthropic
+      name: composio-anthropic
+      description: REST surface for the composio-anthropic integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-anthropic integration.
+        call: composio_anthropic
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

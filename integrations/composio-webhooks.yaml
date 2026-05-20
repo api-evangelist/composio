@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Forward Composio triggers to a downstream agent webhook
+  description: Configure a Composio trigger (e.g. new email, new Slack message), then forward each fired event to the agent's webhook endpoint with the connected account context.
+  tags:
+  - Composio
+  - Integration
+  - Eventing
+  - webhooks
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    WEBHOOKS_API_KEY: WEBHOOKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: triggers
+      path: /triggers
+      operations:
+      - name: createtrigger
+        method: POST
+        description: Register a Composio trigger to fire on an upstream event.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: triggers
+      path: /triggers
+      operations:
+      - name: listtriggers
+        method: GET
+        description: List configured Composio triggers.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+  - type: http
+    namespace: webhooks
+    baseUri: https://agent.example.com
+    description: Agent Webhook Receiver operations consumed by this integration.
+    resources:
+    - name: webhooks-composio
+      path: /webhooks/composio
+      operations:
+      - name: receivetriggerevent
+        method: POST
+        description: 'Agent Webhook Receiver: receiveTriggerEvent'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-webhooks-mcp
+    description: MCP adapter for the composio-webhooks integration.
+    tools:
+    - name: composio_webhooks
+      description: Execute the composio webhooks integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-webhooks-rest
+    port: 8080
+    description: REST adapter for the composio-webhooks integration.
+    resources:
+    - path: /composio-webhooks
+      name: composio-webhooks
+      description: REST surface for the composio-webhooks integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-webhooks integration.
+        call: composio_webhooks
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

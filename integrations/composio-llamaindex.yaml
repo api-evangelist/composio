@@ -1,0 +1,129 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Mount Composio toolkits as LlamaIndex Tools
+  description: For a selected Composio toolkit, generate matching LlamaIndex FunctionTool instances and stream tool-call results back through executeTool.
+  tags:
+  - Composio
+  - Integration
+  - Agent framework
+  - llamaindex
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    LLAMAINDEX_API_KEY: LLAMAINDEX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: toolkits
+      path: /toolkits
+      operations:
+      - name: listtoolkits
+        method: GET
+        description: List Composio toolkits to mount.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: toolkits-toolkitslug
+      path: /toolkits/{toolkitSlug}
+      operations:
+      - name: gettoolkit
+        method: GET
+        description: Fetch a specific toolkit's tools.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolkitSlug
+          in: path
+          type: string
+          description: Path parameter toolkitSlug.
+          required: true
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a brokered tool call.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: llamaindex
+    baseUri: https://api.cloud.llamaindex.ai
+    description: LlamaCloud API operations consumed by this integration.
+    resources:
+    - name: api-v1-pipelines
+      path: /api/v1/pipelines
+      operations:
+      - name: createpipeline
+        method: POST
+        description: 'LlamaCloud API: createPipeline'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-llamaindex-mcp
+    description: MCP adapter for the composio-llamaindex integration.
+    tools:
+    - name: composio_llamaindex
+      description: Execute the composio llamaindex integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-llamaindex-rest
+    port: 8080
+    description: REST adapter for the composio-llamaindex integration.
+    resources:
+    - path: /composio-llamaindex
+      name: composio-llamaindex
+      description: REST surface for the composio-llamaindex integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-llamaindex integration.
+        call: composio_llamaindex
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

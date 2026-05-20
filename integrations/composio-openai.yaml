@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Expose Composio tools to OpenAI Assistants
+  description: Materialize Composio's listTools output as OpenAI Assistants function-calling tool definitions, then proxy tool_calls back to Composio executeTool for actual execution.
+  tags:
+  - Composio
+  - Integration
+  - Agent framework
+  - openai
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    OPENAI_API_KEY: OPENAI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: tools
+      path: /tools
+      operations:
+      - name: listtools
+        method: GET
+        description: List the Composio tools available to the agent.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters: []
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a Composio tool by id.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: openai
+    baseUri: https://api.openai.com
+    description: OpenAI API operations consumed by this integration.
+    resources:
+    - name: v1-assistants
+      path: /v1/assistants
+      operations:
+      - name: createassistant
+        method: POST
+        description: 'OpenAI API: createAssistant'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-threads-thread-id-runs
+      path: /v1/threads/{thread_id}/runs
+      operations:
+      - name: createrun
+        method: POST
+        description: 'OpenAI API: createRun'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: thread_id
+          in: path
+          type: string
+          description: Path parameter thread_id.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-openai-mcp
+    description: MCP adapter for the composio-openai integration.
+    tools:
+    - name: composio_openai
+      description: Execute the composio openai integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-openai-rest
+    port: 8080
+    description: REST adapter for the composio-openai integration.
+    resources:
+    - path: /composio-openai
+      name: composio-openai
+      description: REST surface for the composio-openai integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-openai integration.
+        call: composio_openai
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

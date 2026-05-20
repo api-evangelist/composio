@@ -1,0 +1,156 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Expose Composio Gmail toolkit to an agent as one MCP tool
+  description: Use the Composio Gmail connected account to send / search / label messages; agents call a single MCP tool that Composio fans out to the right Gmail op.
+  tags:
+  - Composio
+  - Integration
+  - Productivity
+  - gmail
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    GMAIL_API_KEY: GMAIL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: connectedaccounts
+      path: /connectedAccounts
+      operations:
+      - name: createconnectedaccount
+        method: POST
+        description: Connect the user's Gmail account.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: toolkits-toolkitslug
+      path: /toolkits/{toolkitSlug}
+      operations:
+      - name: gettoolkit
+        method: GET
+        description: Fetch the Gmail toolkit definition.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolkitSlug
+          in: path
+          type: string
+          description: Path parameter toolkitSlug.
+          required: true
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute the brokered Gmail tool call.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: gmail
+    baseUri: https://gmail.googleapis.com
+    description: Gmail API operations consumed by this integration.
+    resources:
+    - name: gmail-v1-users-userid-messages-send
+      path: /gmail/v1/users/{userId}/messages/send
+      operations:
+      - name: sendmessage
+        method: POST
+        description: 'Gmail API: sendMessage'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: Path parameter userId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: gmail-v1-users-userid-messages
+      path: /gmail/v1/users/{userId}/messages
+      operations:
+      - name: listmessages
+        method: GET
+        description: 'Gmail API: listMessages'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          description: Path parameter userId.
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-gmail-mcp
+    description: MCP adapter for the composio-gmail integration.
+    tools:
+    - name: composio_gmail
+      description: Execute the composio gmail integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-gmail-rest
+    port: 8080
+    description: REST adapter for the composio-gmail integration.
+    resources:
+    - path: /composio-gmail
+      name: composio-gmail
+      description: REST surface for the composio-gmail integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-gmail integration.
+        call: composio_gmail
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.

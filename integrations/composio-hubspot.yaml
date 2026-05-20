@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Surface Composio HubSpot toolkit as a unified MCP adapter
+  description: Use Composio to connect HubSpot and route CRM tool calls (contacts, deals, companies) through executeTool with consistent error semantics.
+  tags:
+  - Composio
+  - Integration
+  - CRM
+  - hubspot
+  created: '2026-05-20'
+  modified: '2026-05-20'
+binds:
+- namespace: env
+  keys:
+    COMPOSIO_API_KEY: COMPOSIO_API_KEY
+    HUBSPOT_API_KEY: HUBSPOT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: composio
+    baseUri: https://backend.composio.dev/api/v1
+    description: Composio API operations consumed by this integration.
+    resources:
+    - name: connectedaccounts
+      path: /connectedAccounts
+      operations:
+      - name: createconnectedaccount
+        method: POST
+        description: Connect the HubSpot portal.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tools-toolid-execute
+      path: /tools/{toolId}/execute
+      operations:
+      - name: executetool
+        method: POST
+        description: Execute a HubSpot tool call via Composio.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: toolId
+          in: path
+          type: string
+          description: Path parameter toolId.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  - type: http
+    namespace: hubspot
+    baseUri: https://api.hubapi.com
+    description: HubSpot CRM API operations consumed by this integration.
+    resources:
+    - name: crm-v3-objects-contacts
+      path: /crm/v3/objects/contacts
+      operations:
+      - name: createcontact
+        method: POST
+        description: 'HubSpot CRM API: createContact'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: crm-v3-objects-deals
+      path: /crm/v3/objects/deals
+      operations:
+      - name: createdeal
+        method: POST
+        description: 'HubSpot CRM API: createDeal'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: mcp
+    namespace: composio-hubspot-mcp
+    description: MCP adapter for the composio-hubspot integration.
+    tools:
+    - name: composio_hubspot
+      description: Execute the composio hubspot integration end-to-end.
+      inputSchema:
+        type: object
+        properties:
+          trigger_event:
+            type: object
+            description: Triggering event payload.
+        required:
+        - trigger_event
+  - type: rest
+    namespace: composio-hubspot-rest
+    port: 8080
+    description: REST adapter for the composio-hubspot integration.
+    resources:
+    - path: /composio-hubspot
+      name: composio-hubspot
+      description: REST surface for the composio-hubspot integration.
+      operations:
+      - method: POST
+        name: trigger
+        description: Trigger the composio-hubspot integration.
+        call: composio_hubspot
+        with:
+          trigger_event: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
