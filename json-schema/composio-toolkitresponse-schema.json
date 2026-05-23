@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ToolkitResponse",
+  "title": "ToolkitResponse",
+  "type": "object",
+  "properties": {
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier for the toolkit."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the toolkit."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the toolkit."
+    },
+    "logo": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the toolkit's logo."
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authSchemes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Supported authentication schemes."
+    },
+    "toolCount": {
+      "type": "integer",
+      "description": "Number of tools in this toolkit."
+    }
+  }
+}

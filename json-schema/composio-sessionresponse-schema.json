@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SessionResponse",
+  "title": "SessionResponse",
+  "type": "object",
+  "properties": {
+    "sessionId": {
+      "type": "string",
+      "description": "Unique identifier for the session."
+    },
+    "status": {
+      "type": "string",
+      "description": "Session status."
+    }
+  }
+}

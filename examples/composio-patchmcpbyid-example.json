@@ -1,0 +1,78 @@
+{
+  "operationId": "patchMcpById",
+  "method": "PATCH",
+  "path": "/api/v3/mcp/{id}",
+  "summary": "Update MCP server configuration",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Update Server Name",
+      "example": {
+        "name": "Updated GitHub Integration Server"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Update Single Auth Config",
+      "example": {
+        "auth_config_ids": [
+          "ac_1a2b3c4d5e6f"
+        ],
+        "toolkits": [
+          "gmail"
+        ],
+        "allowed_tools": [
+          "GMAIL_ADD_LABEL_TO_EMAIL"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Update Multiple Auth Configs",
+      "example": {
+        "auth_config_ids": [
+          "ac_1a2b3c4d5e6f",
+          "ac_7g8h9i0j1k2l"
+        ],
+        "toolkits": [
+          "gmail",
+          "notion"
+        ],
+        "allowed_tools": [
+          "GMAIL_ADD_LABEL_TO_EMAIL",
+          "NOTION_CREATE_NOTION_PAGE"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Update Toolkits Only",
+      "example": {
+        "toolkits": [
+          "gmail",
+          "notion"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Full Update",
+      "example": {
+        "name": "Production Multi-App MCP Server",
+        "auth_config_ids": [
+          "ac_1a2b3c4d5e6f",
+          "ac_7g8h9i0j1k2l"
+        ],
+        "toolkits": [
+          "gmail",
+          "notion"
+        ],
+        "allowed_tools": [
+          "GMAIL_ADD_LABEL_TO_EMAIL",
+          "NOTION_CREATE_NOTION_PAGE"
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

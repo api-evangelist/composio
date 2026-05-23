@@ -1,0 +1,61 @@
+name: Composio Domain Vocabulary
+provider: Composio
+providerId: composio
+description: Tag-derived vocabulary for the Composio API surface; sourced from openapi/ tags.
+terms:
+- term: Authentication
+  description: Authentication related endpoints
+- term: Auth Configs
+  description: Authentication configuration management
+- term: CLI
+  description: CLI integration endpoints
+- term: Connected Accounts
+  description: Connected account management
+- term: Logs
+  description: Logging and monitoring
+- term: OpenAPI
+  description: OpenAPI specification management
+- term: Organization
+  description: Organization management
+- term: API Keys
+  description: API key management
+- term: Webhooks
+  description: Webhook configuration
+- term: Webhook Endpoints
+  description: Per-OAuth-app webhook ingress endpoints. Inbound URLs the provider posts to, plus signing secret storage and
+    verification.
+- term: Webhook Subscriptions
+  description: Webhook delivery subscriptions. Outbound URLs Composio posts trigger events to, plus signing secret rotation
+    and event-type filters.
+- term: Team
+  description: Team member management
+- term: Toolkits
+  description: Toolkit and tool management
+- term: Tools
+  description: Tool execution endpoints
+- term: Recipes
+  description: Recipe management and execution. Recipes are reusable code modules that combine multiple tools.
+- term: Triggers
+  description: Trigger management and execution
+- term: Payments
+  description: Payment and subscription management
+- term: Billing
+  description: Dashboard billing state — usage, subscription, contract (cookie-auth only)
+- term: Files
+  description: File management
+- term: MCP
+  description: MCP server management
+- term: Migration
+  description: Endpoints to help with migration from v1 to v3
+- term: MCP Partner
+  description: MCP partner management
+- term: Profiling
+  description: Profiling endpoints
+- term: Recipe
+  description: Recipe endpoints
+- term: Tool Router
+  description: (Labs) Tool router endpoints
+- term: Admin
+  description: Admin endpoints
+- term: User
+  description: User API key management

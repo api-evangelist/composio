@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateConnectedAccountRequest",
+  "title": "CreateConnectedAccountRequest",
+  "type": "object",
+  "required": [
+    "toolkit"
+  ],
+  "properties": {
+    "toolkit": {
+      "type": "string",
+      "description": "The toolkit to connect to."
+    },
+    "authConfigId": {
+      "type": "string",
+      "description": "Optional auth config to use for this connection."
+    },
+    "entityId": {
+      "type": "string",
+      "description": "Identifier for the end user entity."
+    }
+  }
+}

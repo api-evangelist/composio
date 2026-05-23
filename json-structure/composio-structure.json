@@ -1,0 +1,985 @@
+{
+  "provider": "Composio",
+  "providerId": "composio",
+  "kind": "json-structure",
+  "description": "Structural overview of the Composio API surface; extracted from openapi/.",
+  "schemaCount": 6,
+  "operationCount": 94,
+  "schemas": [
+    {
+      "name": "Error",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "name": "PatchConnectedAccountBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "DeprecatedToolkitInfo",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "toolkitId"
+      ]
+    },
+    {
+      "name": "Tool",
+      "type": "object",
+      "propertyCount": 15,
+      "required": [
+        "slug",
+        "name",
+        "description",
+        "toolkit",
+        "input_parameters",
+        "no_auth",
+        "available_versions",
+        "version",
+        "output_parameters",
+        "scopes",
+        "scope_requirements",
+        "tags",
+        "is_deprecated",
+        "deprecated"
+      ]
+    },
+    {
+      "name": "ToolsPaginated",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "items",
+        "total_pages",
+        "current_page",
+        "total_items"
+      ]
+    },
+    {
+      "name": "ToolRouterToolkitsListResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "items",
+        "total_pages",
+        "current_page",
+        "total_items"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/api/v3/auth/session/info",
+      "operationId": "getAuthSessionInfo",
+      "summary": "Get current user session information",
+      "tags": [
+        "Authentication",
+        "User",
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/auth/session/logout",
+      "operationId": "postAuthSessionLogout",
+      "summary": "End user session and clear authentication",
+      "tags": [
+        "Authentication",
+        "Session",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/auth_configs",
+      "operationId": "getAuthConfigs",
+      "summary": "List authentication configurations with optional filters",
+      "tags": [
+        "Auth Configs"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/auth_configs",
+      "operationId": "postAuthConfigs",
+      "summary": "Create new authentication configuration",
+      "tags": [
+        "Auth Configs"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/auth_configs/{nanoid}",
+      "operationId": "getAuthConfigsByNanoid",
+      "summary": "Get single authentication configuration by ID",
+      "tags": [
+        "Auth Configs"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v3/auth_configs/{nanoid}",
+      "operationId": "deleteAuthConfigsByNanoid",
+      "summary": "Delete an authentication configuration",
+      "tags": [
+        "Auth Configs"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/auth_configs/{nanoid}",
+      "operationId": "patchAuthConfigsByNanoid",
+      "summary": "Update an authentication configuration",
+      "tags": [
+        "Auth Configs"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/auth_configs/{nanoid}/{status}",
+      "operationId": "patchAuthConfigsByNanoidByStatus",
+      "summary": "Enable or disable an authentication configuration",
+      "tags": [
+        "Auth Configs"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/cli/create-session",
+      "operationId": "postCliCreateSession",
+      "summary": "Create a new CLI session with auth code",
+      "tags": [
+        "CLI Authentication",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/cli/codact_failures",
+      "operationId": "postCliCodactFailures",
+      "summary": "Ingest CLI codact failures",
+      "tags": [
+        "CLI"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/cli/get-session",
+      "operationId": "getCliGetSession",
+      "summary": "Get CLI session details by ID or code",
+      "tags": [
+        "CLI Authentication",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/cli/realtime/credentials",
+      "operationId": "getCliRealtimeCredentials",
+      "summary": "Get credentials for CLI realtime events",
+      "tags": [
+        "Triggers",
+        "Realtime",
+        "CLI",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/cli/realtime/auth",
+      "operationId": "postCliRealtimeAuth",
+      "summary": "Authenticate CLI Pusher channel access",
+      "tags": [
+        "Triggers",
+        "Realtime",
+        "CLI",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/connected_accounts",
+      "operationId": "getConnectedAccounts",
+      "summary": "List connected accounts with optional filters",
+      "tags": [
+        "Connected Accounts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/connected_accounts",
+      "operationId": "postConnectedAccounts",
+      "summary": "Create a new connected account",
+      "tags": [
+        "Connected Accounts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/connected_accounts/{nanoid}",
+      "operationId": "getConnectedAccountsByNanoid",
+      "summary": "Get connected account details by ID",
+      "tags": [
+        "Connected Accounts",
+        "Account Management"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v3/connected_accounts/{nanoid}",
+      "operationId": "deleteConnectedAccountsByNanoid",
+      "summary": "Delete a connected account",
+      "tags": [
+        "Connected Accounts",
+        "Account Management"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/connected_accounts/{nanoid}",
+      "operationId": "patchConnectedAccountsByNanoid",
+      "summary": "Update a connected account",
+      "tags": [
+        "Connected Accounts",
+        "Account Management"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/connected_accounts/{nanoId}/status",
+      "operationId": "patchConnectedAccountsByNanoIdStatus",
+      "summary": "Enable or disable a connected account",
+      "tags": [
+        "Connected Accounts",
+        "Account Management"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/connected_accounts/{nanoid}/refresh",
+      "operationId": "postConnectedAccountsByNanoidRefresh",
+      "summary": "Refresh authentication for a connected account",
+      "tags": [
+        "Connected Accounts",
+        "Authentication"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/connected_accounts/link",
+      "operationId": "postConnectedAccountsLink",
+      "summary": "Create a new auth link session",
+      "tags": [
+        "Connected Accounts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/internal/trigger/logs",
+      "operationId": "postInternalTriggerLogs",
+      "summary": "Search and retrieve trigger event logs",
+      "tags": [
+        "Logs",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/internal/trigger/log/{id}",
+      "operationId": "getInternalTriggerLogById",
+      "summary": "Get detailed trigger log by ID",
+      "tags": [
+        "Logs",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/internal/action_execution/logs",
+      "operationId": "postInternalActionExecutionLogs",
+      "summary": "Search and retrieve action execution logs",
+      "tags": [
+        "Logs",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/internal/action_execution/fields",
+      "operationId": "getInternalActionExecutionFields",
+      "summary": "Get action log fields for filtering",
+      "tags": [
+        "Logs",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/internal/action_execution/log/{id}",
+      "operationId": "getInternalActionExecutionLogById",
+      "summary": "Get detailed execution log by ID",
+      "tags": [
+        "Logs",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/org/project/config",
+      "operationId": "getOrgProjectConfig",
+      "summary": "Get project configuration",
+      "tags": [
+        "Projects",
+        "Configuration"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/org/project/config",
+      "operationId": "patchOrgProjectConfig",
+      "summary": "Update project configuration",
+      "tags": [
+        "Projects",
+        "Configuration"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/org/owner/project/new",
+      "operationId": "postOrgOwnerProjectNew",
+      "summary": "Create a new project",
+      "tags": [
+        "Projects",
+        "Organization"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/org/owner/project/list",
+      "operationId": "getOrgOwnerProjectList",
+      "summary": "List all projects",
+      "tags": [
+        "Projects",
+        "Organization Management"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/org/owner/project/{nano_id}",
+      "operationId": "getOrgOwnerProjectByNanoId",
+      "summary": "Get project details by ID With Org Api key",
+      "tags": [
+        "Projects",
+        "Organization Management"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v3/org/owner/project/{nano_id}",
+      "operationId": "deleteOrgOwnerProjectByNanoId",
+      "summary": "Delete a project",
+      "tags": [
+        "Projects",
+        "Organization Management"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/org/owner/project/{nano_id}/regenerate_api_key",
+      "operationId": "postOrgOwnerProjectByNanoIdRegenerateApiKey",
+      "summary": "Delete and generate new API key for project",
+      "tags": [
+        "Projects",
+        "API Keys",
+        "Organization Management"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/org/consumer/project/resolve",
+      "operationId": "postOrgConsumerProjectResolve",
+      "summary": "Resolve the organization consumer project",
+      "tags": [
+        "Projects",
+        "Organization Management",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/org/consumer/connected_toolkits",
+      "operationId": "getOrgConsumerConnectedToolkits",
+      "summary": "List active connected toolkits for a consumer user",
+      "tags": [
+        "Organization Management",
+        "Connected Accounts",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/webhook_subscriptions",
+      "operationId": "getWebhookSubscriptions",
+      "summary": "List webhook subscriptions",
+      "tags": [
+        "Webhook Subscriptions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/webhook_subscriptions",
+      "operationId": "postWebhookSubscriptions",
+      "summary": "Create webhook subscription",
+      "tags": [
+        "Webhook Subscriptions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/webhook_subscriptions/{id}",
+      "operationId": "getWebhookSubscriptionsById",
+      "summary": "Get webhook subscription",
+      "tags": [
+        "Webhook Subscriptions"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v3/webhook_subscriptions/{id}",
+      "operationId": "deleteWebhookSubscriptionsById",
+      "summary": "Delete webhook subscription",
+      "tags": [
+        "Webhook Subscriptions"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/webhook_subscriptions/{id}",
+      "operationId": "patchWebhookSubscriptionsById",
+      "summary": "Update webhook subscription",
+      "tags": [
+        "Webhook Subscriptions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/webhook_subscriptions/{id}/rotate_secret",
+      "operationId": "postWebhookSubscriptionsByIdRotateSecret",
+      "summary": "Rotate webhook secret",
+      "tags": [
+        "Webhook Subscriptions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/webhook_subscriptions/event_types",
+      "operationId": "getWebhookSubscriptionsEventTypes",
+      "summary": "List available event types",
+      "tags": [
+        "Webhook Subscriptions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/webhook_endpoints",
+      "operationId": "getWebhookEndpoints",
+      "summary": "List webhook endpoints",
+      "tags": [
+        "Webhook Endpoints"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/webhook_endpoints",
+      "operationId": "postWebhookEndpoints",
+      "summary": "Create webhook endpoint",
+      "tags": [
+        "Webhook Endpoints"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/webhook_endpoints/{nano_id}",
+      "operationId": "getWebhookEndpointsByNanoId",
+      "summary": "Get webhook endpoint",
+      "tags": [
+        "Webhook Endpoints"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/webhook_endpoints/{nano_id}",
+      "operationId": "postWebhookEndpointsByNanoId",
+      "summary": "Put webhook endpoint configuration",
+      "tags": [
+        "Webhook Endpoints"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/webhook_endpoints/{nano_id}",
+      "operationId": "patchWebhookEndpointsByNanoId",
+      "summary": "Update webhook endpoint configuration",
+      "tags": [
+        "Webhook Endpoints"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/toolkits",
+      "operationId": "getToolkits",
+      "summary": "List available toolkits",
+      "tags": [
+        "Toolkits",
+        "Integration"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/toolkits/categories",
+      "operationId": "getToolkitsCategories",
+      "summary": "List toolkit categories",
+      "tags": [
+        "Toolkits",
+        "Categories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/toolkits/{slug}",
+      "operationId": "getToolkitsBySlug",
+      "summary": "Get toolkit by slug",
+      "tags": [
+        "Toolkits",
+        "Integration"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/tools",
+      "operationId": "getTools",
+      "summary": "List available tools",
+      "tags": [
+        "Tools"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/tools/enum",
+      "operationId": "getToolsEnum",
+      "summary": "Get tool enum list",
+      "tags": [
+        "Tools"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/tools/{tool_slug}",
+      "operationId": "getToolsByToolSlug",
+      "summary": "Get tool by slug",
+      "tags": [
+        "Tools"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/toolkits/multi",
+      "operationId": "postToolkitsMulti",
+      "summary": "Fetch multiple toolkits",
+      "tags": [
+        "Toolkits",
+        "Integration"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tools/execute/{tool_slug}",
+      "operationId": "postToolsExecuteByToolSlug",
+      "summary": "Execute tool",
+      "tags": [
+        "Tools",
+        "Execution"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tools/execute/{tool_slug}/input",
+      "operationId": "postToolsExecuteByToolSlugInput",
+      "summary": "Generate tool inputs from natural language",
+      "tags": [
+        "Tools",
+        "AI",
+        "Natural Language Processing"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tools/execute/proxy",
+      "operationId": "postToolsExecuteProxy",
+      "summary": "Execute proxy request",
+      "tags": [
+        "Tools",
+        "Proxy"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/trigger_instances/{slug}/upsert",
+      "operationId": "postTriggerInstancesBySlugUpsert",
+      "summary": "Create or update a trigger",
+      "tags": [
+        "Triggers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/trigger_instances/active",
+      "operationId": "getTriggerInstancesActive",
+      "summary": "List active triggers",
+      "tags": [
+        "Triggers"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v3/trigger_instances/manage/{triggerId}",
+      "operationId": "deleteTriggerInstancesManageByTriggerId",
+      "summary": "Delete a trigger",
+      "tags": [
+        "Triggers"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/trigger_instances/manage/{triggerId}",
+      "operationId": "patchTriggerInstancesManageByTriggerId",
+      "summary": "Enable or disable a trigger",
+      "tags": [
+        "Triggers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/triggers_types/list/enum",
+      "operationId": "getTriggersTypesListEnum",
+      "summary": "List trigger type enums",
+      "tags": [
+        "Triggers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/triggers_types/{slug}",
+      "operationId": "getTriggersTypesBySlug",
+      "summary": "Get trigger type by slug",
+      "tags": [
+        "Triggers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/triggers_types",
+      "operationId": "getTriggersTypes",
+      "summary": "List trigger types",
+      "tags": [
+        "Triggers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/mcp/servers",
+      "operationId": "getMcpServers",
+      "summary": "List MCP servers with optional filters and pagination",
+      "tags": [
+        "MCP",
+        "Servers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/mcp/servers",
+      "operationId": "postMcpServers",
+      "summary": "Create a new MCP server",
+      "tags": [
+        "MCP",
+        "Servers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/mcp/servers/custom",
+      "operationId": "postMcpServersCustom",
+      "summary": "Create a new custom MCP server with multiple apps",
+      "tags": [
+        "MCP",
+        "Servers",
+        "Custom"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/mcp/servers/generate",
+      "operationId": "postMcpServersGenerate",
+      "summary": "Generate MCP URL with custom parameters",
+      "tags": [
+        "MCP",
+        "Servers",
+        "URL Generation"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/mcp/{id}",
+      "operationId": "getMcpById",
+      "summary": "Get MCP server details by ID",
+      "tags": [
+        "MCP",
+        "Servers"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v3/mcp/{id}",
+      "operationId": "deleteMcpById",
+      "summary": "Delete an MCP server",
+      "tags": [
+        "MCP",
+        "Servers"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/mcp/{id}",
+      "operationId": "patchMcpById",
+      "summary": "Update MCP server configuration",
+      "tags": [
+        "MCP",
+        "Servers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/mcp/app/{appKey}",
+      "operationId": "getMcpAppByAppKey",
+      "summary": "List MCP servers for a specific app",
+      "tags": [
+        "MCP",
+        "Servers",
+        "Applications"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/mcp/servers/{serverId}/instances",
+      "operationId": "getMcpServersByServerIdInstances",
+      "summary": "List all instances for an MCP server",
+      "tags": [
+        "MCP",
+        "Servers",
+        "Instances"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/mcp/servers/{serverId}/instances",
+      "operationId": "postMcpServersByServerIdInstances",
+      "summary": "Create a new MCP server instance",
+      "tags": [
+        "MCP",
+        "Servers",
+        "Instances"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v3/mcp/servers/{serverId}/instances/{instanceId}",
+      "operationId": "deleteMcpServersByServerIdInstancesByInstanceId",
+      "summary": "Delete an MCP server instance and associated connected accounts",
+      "tags": [
+        "MCP",
+        "Servers",
+        "Instances"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/files/list",
+      "operationId": "getFilesList",
+      "summary": "List files with optional app and action filters",
+      "tags": [
+        "Files"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/files/upload/request",
+      "operationId": "postFilesUploadRequest",
+      "summary": "Create presigned URL for request file upload to S3",
+      "tags": [
+        "Files",
+        "Upload"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/migration/get-nanoid",
+      "operationId": "getMigrationGetNanoid",
+      "summary": "Get NanoId from UUID",
+      "tags": [
+        "Migration",
+        "UUID Conversion"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/labs/tool_router/session",
+      "operationId": "postLabsToolRouterSession",
+      "summary": "Create a new tool router session (Legacy)",
+      "tags": [
+        "Tool Router",
+        "x-internal"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session",
+      "operationId": "postToolRouterSession",
+      "summary": "Create a new tool router session",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/execute",
+      "operationId": "postToolRouterSessionBySessionIdExecute",
+      "summary": "Execute a tool within a tool router session",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/execute_meta",
+      "operationId": "postToolRouterSessionBySessionIdExecuteMeta",
+      "summary": "Execute a meta tool within a tool router session",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/tool_router/session/{session_id}",
+      "operationId": "getToolRouterSessionBySessionId",
+      "summary": "Get a tool router session by ID",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v3/tool_router/session/{session_id}",
+      "operationId": "patchToolRouterSessionBySessionId",
+      "summary": "Patch a tool router session config",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/link",
+      "operationId": "postToolRouterSessionBySessionIdLink",
+      "summary": "Create a link session for a toolkit in a tool router session",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/proxy_execute",
+      "operationId": "postToolRouterSessionBySessionIdProxyExecute",
+      "summary": "Execute proxy request within a tool router session",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/tool_router/session/{session_id}/toolkits",
+      "operationId": "getToolRouterSessionBySessionIdToolkits",
+      "summary": "Get toolkits for a tool router session",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/tool_router/session/{session_id}/tools",
+      "operationId": "getToolRouterSessionBySessionIdTools",
+      "summary": "List tools with schemas for a tool router session",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/search",
+      "operationId": "postToolRouterSessionBySessionIdSearch",
+      "summary": "Search for tools using a query",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/tool_router/session/{session_id}/mounts/{mount_id}/items",
+      "operationId": "getToolRouterSessionBySessionIdMountsByMountIdItems",
+      "summary": "List files in a session mount",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/mounts/{mount_id}/download_url",
+      "operationId": "postToolRouterSessionBySessionIdMountsByMountIdDownloadUrl",
+      "summary": "Create a presigned download URL for a mount file",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/mounts/{mount_id}/upload_url",
+      "operationId": "postToolRouterSessionBySessionIdMountsByMountIdUploadUrl",
+      "summary": "Create a presigned upload URL for a mount file",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v3/tool_router/session/{session_id}/mounts/{mount_id}/delete",
+      "operationId": "postToolRouterSessionBySessionIdMountsByMountIdDelete",
+      "summary": "Delete a file from a session mount",
+      "tags": [
+        "Tool Router"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v3/toolkits/changelog",
+      "operationId": "getToolkitsChangelog",
+      "summary": "Get toolkits changelog",
+      "tags": [
+        "Toolkits"
+      ]
+    }
+  ]
+}

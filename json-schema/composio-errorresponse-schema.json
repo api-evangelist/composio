@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ErrorResponse",
+  "title": "ErrorResponse",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "string",
+      "description": "Error message."
+    },
+    "code": {
+      "type": "string",
+      "description": "Machine-readable error code."
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

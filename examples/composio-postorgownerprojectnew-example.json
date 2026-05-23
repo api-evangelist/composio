@@ -1,0 +1,16 @@
+{
+  "operationId": "postOrgOwnerProjectNew",
+  "method": "POST",
+  "path": "/api/v3/org/owner/project/new",
+  "summary": "Create a new project",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Simple project",
+      "example": {
+        "name": "my_production_api"
+      }
+    }
+  ],
+  "responseExamples": []
+}

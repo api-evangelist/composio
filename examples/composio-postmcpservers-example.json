@@ -1,0 +1,42 @@
+{
+  "operationId": "postMcpServers",
+  "method": "POST",
+  "path": "/api/v3/mcp/servers",
+  "summary": "Create a new MCP server",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Basic MCP Server",
+      "example": {
+        "name": "GitHub Integration Server",
+        "auth_config_ids": [
+          "ac_1a2b3c4d5e6f"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Server with Limited Tools",
+      "example": {
+        "name": "GitHub Issues Only",
+        "auth_config_ids": [
+          "ac_1a2b3c4d5e6f"
+        ],
+        "allowed_tools": [
+          "GMAIL_ADD_LABEL_TO_EMAIL"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Server with Expiration",
+      "example": {
+        "name": "Temporary Integration Server",
+        "auth_config_ids": [
+          "ac_1a2b3c4d5e6f"
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

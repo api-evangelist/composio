@@ -1,0 +1,30 @@
+{
+  "operationId": "patchConnectedAccountsByNanoid",
+  "method": "PATCH",
+  "path": "/api/v3/connected_accounts/{nanoid}",
+  "summary": "Update a connected account",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "credentials",
+      "example": {
+        "connection": {
+          "state": {
+            "authScheme": "BEARER_TOKEN",
+            "val": {
+              "token": "new_access_token"
+            }
+          }
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "alias",
+      "example": {
+        "alias": "work-gmail"
+      }
+    }
+  ],
+  "responseExamples": []
+}

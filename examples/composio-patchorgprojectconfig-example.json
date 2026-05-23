@@ -1,0 +1,23 @@
+{
+  "operationId": "patchOrgProjectConfig",
+  "method": "PATCH",
+  "path": "/api/v3/org/project/config",
+  "summary": "Update project configuration",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Enable 2FA",
+      "example": {
+        "is_2FA_enabled": true
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Disable 2FA",
+      "example": {
+        "is_2FA_enabled": false
+      }
+    }
+  ],
+  "responseExamples": []
+}

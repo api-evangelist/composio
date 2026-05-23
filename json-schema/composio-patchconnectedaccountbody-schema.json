@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PatchConnectedAccountBody",
+  "title": "PatchConnectedAccountBody",
+  "type": "object",
+  "properties": {
+    "alias": {
+      "type": "string",
+      "description": "A human-readable alias for this connected account. Pass an empty string to clear the alias. Must be unique per entity and toolkit within the project."
+    },
+    "connection": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "object",
+          "properties": {
+            "authScheme": {
+              "type": "string",
+              "enum": [
+                "BEARER_TOKEN",
+                "API_KEY",
+                "BASIC",
+                "BASIC_WITH_JWT",
+                "GOOGLE_SERVICE_ACCOUNT",
+                "SERVICE_ACCOUNT"
+              ],
+              "description": "The auth scheme of the connected account. Must match the connection's actual auth scheme."
+            },
+            "val": {
+              "type": "object",
+              "properties": {
+                "subdomain": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "your-domain": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "region": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "shop": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "account_url": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "COMPANYDOMAIN": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "extension": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "form_api_base_url": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "instanceEndpoint": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "api_url": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "borneo_dashboard_url": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "proxy_username": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "proxy_password": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "domain": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "version": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "dc": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "site_name": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "instanceName": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "account_id": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "your_server": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "server_location": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "base_url": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "token": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "generic_api_key": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "api_key": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "bearer_token": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "basic_encoded": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "username": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "password": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "credentials_json": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "application_id": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "installation_id": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "private_key": {
+                  "type": "string",
+                  "nullable": true
+                }
+              },
+              "additionalProperties": {
+                "nullable": true
+              },
+              "description": "Credential fields to update. Only provided fields are changed \u2014 omitted fields are preserved. Set a field to null to remove it."
+            }
+          },
+          "required": [
+            "authScheme",
+            "val"
+          ]
+        }
+      },
+      "required": [
+        "state"
+      ]
+    },
+    "experimental": {
+      "type": "object",
+      "properties": {
+        "acl_config_for_shared": {
+          "type": "object",
+          "properties": {
+            "allow_all_users": {
+              "type": "boolean",
+              "description": "Wildcard \"any user_id in the project\" allow toggle. Only valid on SHARED connections."
+            },
+            "allowed_user_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "maxItems": 1000,
+              "description": "Explicit allow list of user_ids who can use this SHARED connection."
+            },
+            "not_allowed_user_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "maxItems": 1000,
+              "description": "Explicit deny list. Wins on conflict with allow_all_users and allowed_user_ids."
+            }
+          },
+          "description": "Access control for SHARED connections. Resolution rule (only fires when caller != creator): user in not_allowed_user_ids \u2192 DENY; allow_all_users=true \u2192 ALLOW; user in allowed_user_ids \u2192 ALLOW; else DENY. Default state (omitted or {}) is deny-by-default \u2014 only the creator can use.",
+          "x-experimental": true
+        }
+      },
+      "description": "Experimental features - not stable, may be modified or removed in future versions.",
+      "x-experimental": true
+    }
+  }
+}

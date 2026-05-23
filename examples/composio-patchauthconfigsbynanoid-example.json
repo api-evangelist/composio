@@ -1,0 +1,25 @@
+{
+  "operationId": "patchAuthConfigsByNanoid",
+  "method": "PATCH",
+  "path": "/api/v3/auth_configs/{nanoid}",
+  "summary": "Update an authentication configuration",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "standardUpdate",
+      "example": {
+        "auth_config": {
+          "credentials": {
+            "api_key": "YOUR_NEW_API_KEY",
+            "client_secret": "YOUR_NEW_CLIENT_SECRET"
+          },
+          "restrict_to_following_tools": [
+            "GMAIL_SEND_EMAIL",
+            "GMAIL_FETCH_EMAILS"
+          ]
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

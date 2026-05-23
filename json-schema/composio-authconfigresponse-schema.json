@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AuthConfigResponse",
+  "title": "AuthConfigResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the auth config."
+    },
+    "toolkit": {
+      "type": "string",
+      "description": "The toolkit this auth config applies to."
+    },
+    "authScheme": {
+      "type": "string",
+      "description": "The authentication scheme.",
+      "enum": [
+        "OAUTH2",
+        "API_KEY",
+        "BASIC",
+        "BEARER_TOKEN"
+      ]
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "OAuth scopes requested."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

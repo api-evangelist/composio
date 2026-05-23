@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DeprecatedToolkitInfo",
+  "title": "DeprecatedToolkitInfo",
+  "type": "object",
+  "properties": {
+    "toolkitId": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "toolkitId"
+  ],
+  "description": "Deprecated toolkit ID",
+  "deprecated": true,
+  "example": {
+    "toolkitId": "550e8400-e29b-41d4-a716-446655440000"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "operationId": "postFilesUploadRequest",
+  "method": "POST",
+  "path": "/api/v3/files/upload/request",
+  "summary": "Create presigned URL for request file upload to S3",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Gmail Email Attachment",
+      "example": {
+        "toolkit_slug": "gmail",
+        "tool_slug": "GMAIL_SEND_EMAIL",
+        "filename": "quarterly_report.pdf",
+        "mimetype": "application/pdf",
+        "md5": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Slack File Upload",
+      "example": {
+        "toolkit_slug": "slack",
+        "tool_slug": "SLACK_SEND_MESSAGE",
+        "filename": "meeting_notes.docx",
+        "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "md5": "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "GitHub Issue Screenshot",
+      "example": {
+        "toolkit_slug": "github",
+        "tool_slug": "GITHUB_CREATE_AN_ISSUE",
+        "filename": "bug_screenshot.png",
+        "mimetype": "image/png",
+        "md5": "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Notion Page Image",
+      "example": {
+        "toolkit_slug": "notion",
+        "tool_slug": "NOTION_ADD_PAGE_CONTENT",
+        "filename": "diagram.svg",
+        "mimetype": "image/svg+xml",
+        "md5": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Jira Attachment",
+      "example": {
+        "toolkit_slug": "jira",
+        "tool_slug": "JIRA_ADD_ATTACHMENT_TO_ISSUE",
+        "filename": "error_logs.txt",
+        "mimetype": "text/plain",
+        "md5": "e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,35 @@
+{
+  "operationId": "postMcpServersCustom",
+  "method": "POST",
+  "path": "/api/v3/mcp/servers/custom",
+  "summary": "Create a new custom MCP server with multiple apps",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Basic Multi-App Server",
+      "example": {
+        "name": "Development Integration Server",
+        "toolkits": [
+          "github",
+          "jira"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Advanced Multi-App Server",
+      "example": {
+        "name": "Complete Workflow Integration",
+        "toolkits": [
+          "github",
+          "jira",
+          "slack"
+        ],
+        "custom_tools": [
+          "SLACK_SEND_MESSAGE"
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

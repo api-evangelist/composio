@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ToolsPaginated",
+  "title": "ToolsPaginated",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Tool"
+      }
+    },
+    "next_cursor": {
+      "type": "string",
+      "nullable": true
+    },
+    "total_pages": {
+      "type": "number"
+    },
+    "current_page": {
+      "type": "number"
+    },
+    "total_items": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "items",
+    "total_pages",
+    "current_page",
+    "total_items"
+  ]
+}

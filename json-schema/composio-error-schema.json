@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Error",
+  "title": "Error",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "number"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "status": {
+          "type": "number"
+        },
+        "request_id": {
+          "type": "string"
+        },
+        "suggested_fix": {
+          "type": "string"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "message",
+        "code",
+        "slug",
+        "status"
+      ]
+    }
+  },
+  "required": [
+    "error"
+  ]
+}

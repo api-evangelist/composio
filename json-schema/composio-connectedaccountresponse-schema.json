@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ConnectedAccountResponse",
+  "title": "ConnectedAccountResponse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the connected account."
+    },
+    "toolkit": {
+      "type": "string",
+      "description": "The toolkit this account is connected to."
+    },
+    "status": {
+      "type": "string",
+      "description": "Connection status.",
+      "enum": [
+        "active",
+        "expired",
+        "pending"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

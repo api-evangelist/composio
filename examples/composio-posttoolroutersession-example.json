@@ -1,0 +1,218 @@
+{
+  "operationId": "postToolRouterSession",
+  "method": "POST",
+  "path": "/api/v3/tool_router/session",
+  "summary": "Create a new tool router session",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Session with all toolkits",
+      "example": {
+        "user_id": "user_123456789"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with only specific toolkits",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "gmail",
+            "slack"
+          ]
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with only specific toolkits disabled",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "disable": [
+            "gmail",
+            "slack"
+          ]
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with connection manager enabled",
+      "example": {
+        "user_id": "user_123456789",
+        "manage_connections": {
+          "enable": true
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with connection manager and specific toolkits",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "gmail",
+            "slack"
+          ]
+        },
+        "manage_connections": {
+          "enable": true
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with custom callback URL",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "github",
+            "slack"
+          ]
+        },
+        "manage_connections": {
+          "enable": true,
+          "callback_url": "https://your-app.com/auth/callback"
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with workbench configuration",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "gmail"
+          ]
+        },
+        "workbench": {
+          "enable_proxy_execution": true,
+          "auto_offload_threshold": 10000
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with global tags filter",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "gmail",
+            "slack"
+          ]
+        },
+        "tags": [
+          "readOnlyHint",
+          "idempotentHint"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with auth config overrides",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "gmail",
+            "slack"
+          ]
+        },
+        "auth_configs": {
+          "gmail": "ac_1a2b3c4d5e6f",
+          "slack": "ac_7g8h9i0j1k2l"
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with connected account overrides",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "gmail",
+            "slack"
+          ]
+        },
+        "connected_accounts": {
+          "gmail": "ca_1a2b3c4d5e6f",
+          "slack": "ca_7g8h9i0j1k2l"
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with comprehensive configuration",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "enable": [
+            "gmail",
+            "slack",
+            "github"
+          ]
+        },
+        "auth_configs": {
+          "gmail": "ac_1a2b3c4d5e6f",
+          "slack": "ac_7g8h9i0j1k2l"
+        },
+        "connected_accounts": {
+          "github": "ca_3m4n5o6p7q8r"
+        },
+        "manage_connections": {
+          "enable": true,
+          "callback_url": "https://your-app.com/auth/callback"
+        },
+        "tools": {
+          "gmail": {
+            "enable": [
+              "GMAIL_SEND_EMAIL",
+              "GMAIL_FETCH_EMAILS"
+            ]
+          },
+          "slack": {
+            "disable": [
+              "SLACK_ADD_EMOJI"
+            ]
+          },
+          "slackbot": {
+            "tags": [
+              "destructiveHint"
+            ]
+          }
+        },
+        "tags": [
+          "destructiveHint",
+          "idempotentHint"
+        ],
+        "workbench": {
+          "enable_proxy_execution": true,
+          "auto_offload_threshold": 10000
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with disabled toolkits and global tags",
+      "example": {
+        "user_id": "user_123456789",
+        "toolkits": {
+          "disable": [
+            "gmail"
+          ]
+        },
+        "tags": [
+          "readOnlyHint"
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

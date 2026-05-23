@@ -1,0 +1,53 @@
+{
+  "operationId": "postLabsToolRouterSession",
+  "method": "POST",
+  "path": "/api/v3/labs/tool_router/session",
+  "summary": "Create a new tool router session (Legacy)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Session with multiple toolkits",
+      "example": {
+        "user_id": "user_123456789",
+        "config": {
+          "toolkits": [
+            {
+              "toolkit": "gmail",
+              "auth_config_id": "ac_1a2b3c4d5e6f"
+            },
+            {
+              "toolkit": "slack",
+              "auth_config_id": "ac_7g8h9i0j1k2l"
+            },
+            {
+              "toolkit": "github"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Minimal session",
+      "example": {
+        "user_id": "user_123456789",
+        "config": {}
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Session with single toolkit",
+      "example": {
+        "user_id": "user_123456789",
+        "config": {
+          "toolkits": [
+            {
+              "toolkit": "gmail"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

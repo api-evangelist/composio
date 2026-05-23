@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExecuteToolResponse",
+  "title": "ExecuteToolResponse",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "Whether the execution succeeded."
+    },
+    "output": {
+      "description": "The output from the tool execution."
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message if execution failed."
+    }
+  }
+}

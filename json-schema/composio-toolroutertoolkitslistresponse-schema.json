@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ToolRouterToolkitsListResponse",
+  "title": "ToolRouterToolkitsListResponse",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Display name of the toolkit"
+          },
+          "slug": {
+            "type": "string",
+            "description": "Unique slug identifier"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the toolkit is enabled"
+          },
+          "is_no_auth": {
+            "type": "boolean",
+            "description": "Whether the toolkit is no-auth"
+          },
+          "composio_managed_auth_schemes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Available Composio-managed auth schemes"
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "logo": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL to the toolkit logo"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the toolkit"
+              }
+            },
+            "required": [
+              "logo",
+              "description"
+            ],
+            "description": "Toolkit metadata"
+          },
+          "connected_account": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "connectedAccountId",
+                "description": "Connected account identifier"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "User identifier"
+              },
+              "status": {
+                "type": "string",
+                "description": "Connection status"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Creation timestamp"
+              },
+              "auth_config": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Auth config identifier"
+                  },
+                  "auth_scheme": {
+                    "type": "string",
+                    "description": "Authentication scheme type"
+                  },
+                  "is_composio_managed": {
+                    "type": "boolean",
+                    "description": "Whether this is a Composio-managed auth config"
+                  }
+                },
+                "required": [
+                  "id",
+                  "auth_scheme",
+                  "is_composio_managed"
+                ],
+                "description": "Auth config details"
+              }
+            },
+            "required": [
+              "id",
+              "user_id",
+              "status",
+              "created_at",
+              "auth_config"
+            ],
+            "description": "Connected account if available"
+          }
+        },
+        "required": [
+          "name",
+          "slug",
+          "enabled",
+          "is_no_auth",
+          "composio_managed_auth_schemes",
+          "meta",
+          "connected_account"
+        ]
+      }
+    },
+    "next_cursor": {
+      "type": "string",
+      "nullable": true
+    },
+    "total_pages": {
+      "type": "number"
+    },
+    "current_page": {
+      "type": "number"
+    },
+    "total_items": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "items",
+    "total_pages",
+    "current_page",
+    "total_items"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateAuthConfigRequest",
+  "title": "CreateAuthConfigRequest",
+  "type": "object",
+  "required": [
+    "toolkit",
+    "authScheme"
+  ],
+  "properties": {
+    "toolkit": {
+      "type": "string",
+      "description": "The toolkit to configure authentication for."
+    },
+    "authScheme": {
+      "type": "string",
+      "description": "The authentication scheme to use.",
+      "enum": [
+        "OAUTH2",
+        "API_KEY",
+        "BASIC",
+        "BEARER_TOKEN"
+      ]
+    },
+    "credentials": {
+      "type": "object",
+      "description": "Developer credentials for the authentication scheme.",
+      "additionalProperties": true
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "OAuth scopes to request."
+    }
+  }
+}

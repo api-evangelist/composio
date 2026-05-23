@@ -1,0 +1,39 @@
+{
+  "operationId": "postMcpServersGenerate",
+  "method": "POST",
+  "path": "/api/v3/mcp/servers/generate",
+  "summary": "Generate MCP URL with custom parameters",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Basic URL Generation",
+      "example": {
+        "mcp_server_id": "550e8400-e29b-41d4-a716-446655440000",
+        "user_ids": [
+          "user_123456"
+        ],
+        "connected_account_ids": [
+          "ca_1a2b3c4d5e6f",
+          "ca_7g8h9i0j1k2l"
+        ]
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "Managed Auth Configuration",
+      "example": {
+        "mcp_server_id": "550e8400-e29b-41d4-a716-446655440000",
+        "user_ids": [
+          "user_123456",
+          "user_789012"
+        ],
+        "connected_account_ids": [
+          "ca_1a2b3c4d5e6f",
+          "ca_7g8h9i0j1k2l",
+          "ca_3m4n5o6p7q8r"
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,16 @@
+{
+  "operationId": "postMcpServersByServerIdInstances",
+  "method": "POST",
+  "path": "/api/v3/mcp/servers/{serverId}/instances",
+  "summary": "Create a new MCP server instance",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "Create Instance",
+      "example": {
+        "user_id": "user_123456"
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,30 @@
+{
+  "operationId": "postCliCodactFailures",
+  "method": "POST",
+  "path": "/api/v3/cli/codact_failures",
+  "summary": "Ingest CLI codact failures",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "failure_type": "wrong_tool_slug",
+        "tool_info": {
+          "toolkit": "github",
+          "tool": {
+            "slug": "GITHUB_CREATE_AN_ISSUE",
+            "version": "2026.03.23"
+          }
+        },
+        "ctx": {
+          "invalid_tool_slug": "GITHUB_MAKE_ISSUE"
+        },
+        "session": {
+          "id": "sess_123",
+          "source": "cli"
+        },
+        "request_id": "req_123"
+      }
+    }
+  ],
+  "responseExamples": []
+}

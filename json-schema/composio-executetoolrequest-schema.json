@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExecuteToolRequest",
+  "title": "ExecuteToolRequest",
+  "type": "object",
+  "required": [
+    "connectedAccountId"
+  ],
+  "properties": {
+    "connectedAccountId": {
+      "type": "string",
+      "description": "The connected account to execute on behalf of."
+    },
+    "input": {
+      "type": "object",
+      "description": "Input parameters for the tool execution.",
+      "additionalProperties": true
+    }
+  }
+}
