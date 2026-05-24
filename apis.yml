@@ -412,6 +412,8 @@ common:
   url: json-schema/composio-toolkit-schema.json
 - type: JSONSchema
   url: json-schema/composio-connected-account-schema.json
+- type: LLMsTxt
+  url: https://docs.composio.dev/llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
