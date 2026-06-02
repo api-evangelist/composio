@@ -2,15 +2,11 @@
   "repo": "composio",
   "feeds": [
     {
-      "source": "https://composio.dev/blog",
-      "feed_url": "",
-      "title": "Composio Blog",
-      "saved": 0,
-      "note": "No public RSS/Atom feed; posts enumerated manually from blog index page.",
-      "error": "no_feed"
+      "source": "https://docs.composio.dev/faq/api_key/api_key",
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-05-17T20:48:52Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 2,
   "posts": [
     {
