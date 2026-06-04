@@ -1,0 +1,137 @@
+arazzo: 1.0.1
+info:
+  title: Composio Discover and Execute a Tool
+  summary: Browse toolkits, list the tools they expose, and execute one tool for a user.
+  description: >-
+    The canonical Composio agent loop. The workflow lists the available
+    toolkits, narrows to the tools belonging to a chosen toolkit, fetches the
+    full schema of a specific tool to learn its input parameters, and then
+    executes that tool against a connected account for a user. Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: discover-and-execute-tool
+  summary: Find a tool inside a toolkit and execute it for a connected user.
+  description: >-
+    Lists toolkits, lists the tools for the selected toolkit, reads the chosen
+    tool's input schema, and executes the tool with the supplied arguments on
+    behalf of a user and connected account.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - toolkitSlug
+    - toolSlug
+    - userId
+    - arguments
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      toolkitSlug:
+        type: string
+        description: The toolkit slug to scope the tool search to (e.g. "github").
+      toolSlug:
+        type: string
+        description: The slug of the tool to inspect and execute (e.g. "GITHUB_CREATE_AN_ISSUE").
+      userId:
+        type: string
+        description: The end-user identifier the tool runs on behalf of.
+      connectedAccountId:
+        type: string
+        description: Optional connected account id used to authorize the tool execution.
+      arguments:
+        type: object
+        description: The argument map passed to the tool, matching its input parameters.
+  steps:
+  - stepId: listToolkits
+    description: >-
+      List the available toolkits, optionally filtered by a search term, to
+      confirm the requested toolkit exists in the catalog.
+    operationId: getToolkits
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: search
+      in: query
+      value: $inputs.toolkitSlug
+    - name: limit
+      in: query
+      value: 20
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      toolkits: $response.body#/items
+      firstToolkitSlug: $response.body#/items/0/slug
+  - stepId: listTools
+    description: >-
+      List the tools that belong to the selected toolkit so the desired tool can
+      be located before fetching its full schema.
+    operationId: getTools
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: toolkit_slug
+      in: query
+      value: $inputs.toolkitSlug
+    - name: limit
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tools: $response.body#/items
+  - stepId: getToolSchema
+    description: >-
+      Fetch the full definition of the chosen tool, including its input
+      parameters, so the execution arguments can be validated.
+    operationId: getToolsByToolSlug
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: tool_slug
+      in: path
+      value: $inputs.toolSlug
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      inputParameters: $response.body#/input_parameters
+      noAuth: $response.body#/no_auth
+  - stepId: executeTool
+    description: >-
+      Execute the tool with the supplied arguments on behalf of the user and the
+      optional connected account, returning the structured result.
+    operationId: postToolsExecuteByToolSlug
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: tool_slug
+      in: path
+      value: $inputs.toolSlug
+    requestBody:
+      contentType: application/json
+      payload:
+        user_id: $inputs.userId
+        connected_account_id: $inputs.connectedAccountId
+        arguments: $inputs.arguments
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/successful == true
+    outputs:
+      data: $response.body#/data
+      successful: $response.body#/successful
+      logId: $response.body#/log_id
+  outputs:
+    inputParameters: $steps.getToolSchema.outputs.inputParameters
+    data: $steps.executeTool.outputs.data
+    successful: $steps.executeTool.outputs.successful
+    logId: $steps.executeTool.outputs.logId

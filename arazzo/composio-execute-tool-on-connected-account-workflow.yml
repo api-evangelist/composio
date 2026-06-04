@@ -1,0 +1,129 @@
+arazzo: 1.0.1
+info:
+  title: Composio Execute a Tool on a User's Connected Account
+  summary: Resolve a user's active connected account for a toolkit and execute a tool against it.
+  description: >-
+    Runs a real action for a user without recreating any auth. The workflow
+    looks up the user's connected accounts filtered to a toolkit, branches on
+    whether an active account exists, reads the target tool's schema, and then
+    executes the tool against the resolved connected account. Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: execute-tool-on-connected-account
+  summary: Resolve a connected account for a user and execute a tool with it.
+  description: >-
+    Lists the user's connected accounts for a toolkit, requires at least one to
+    exist, fetches the tool schema, and executes the tool bound to the resolved
+    connected account id.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - toolkitSlug
+    - userId
+    - toolSlug
+    - arguments
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      toolkitSlug:
+        type: string
+        description: The toolkit slug to filter connected accounts by (e.g. "googlecalendar").
+      userId:
+        type: string
+        description: The end-user identifier whose connected account is used.
+      toolSlug:
+        type: string
+        description: The slug of the tool to execute (e.g. "GOOGLECALENDAR_CREATE_EVENT").
+      arguments:
+        type: object
+        description: The argument map passed to the tool, matching its input parameters.
+  steps:
+  - stepId: findConnectedAccount
+    description: >-
+      List the user's connected accounts limited to the toolkit and only those
+      with an ACTIVE status so a usable account id can be resolved.
+    operationId: getConnectedAccounts
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: toolkit_slugs
+      in: query
+      value: $inputs.toolkitSlug
+    - name: user_ids
+      in: query
+      value: $inputs.userId
+    - name: statuses
+      in: query
+      value: ACTIVE
+    - name: limit
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/items/0/id != null
+    outputs:
+      connectedAccountId: $response.body#/items/0/id
+      accountStatus: $response.body#/items/0/status
+    onSuccess:
+    - name: accountFound
+      type: goto
+      stepId: getToolSchema
+      criteria:
+      - context: $response.body
+        condition: $.items.length > 0
+        type: jsonpath
+  - stepId: getToolSchema
+    description: >-
+      Fetch the tool definition so its input parameters are known before
+      execution.
+    operationId: getToolsByToolSlug
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: tool_slug
+      in: path
+      value: $inputs.toolSlug
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      inputParameters: $response.body#/input_parameters
+  - stepId: executeTool
+    description: >-
+      Execute the tool against the resolved connected account on behalf of the
+      user, returning the structured result.
+    operationId: postToolsExecuteByToolSlug
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: tool_slug
+      in: path
+      value: $inputs.toolSlug
+    requestBody:
+      contentType: application/json
+      payload:
+        user_id: $inputs.userId
+        connected_account_id: $steps.findConnectedAccount.outputs.connectedAccountId
+        arguments: $inputs.arguments
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/successful == true
+    outputs:
+      data: $response.body#/data
+      successful: $response.body#/successful
+      logId: $response.body#/log_id
+  outputs:
+    connectedAccountId: $steps.findConnectedAccount.outputs.connectedAccountId
+    data: $steps.executeTool.outputs.data
+    successful: $steps.executeTool.outputs.successful
+    logId: $steps.executeTool.outputs.logId

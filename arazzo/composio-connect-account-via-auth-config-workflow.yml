@@ -1,0 +1,148 @@
+arazzo: 1.0.1
+info:
+  title: Composio Connect an Account via a New Auth Config
+  summary: Create an auth config for a toolkit, open a connection, and poll until it becomes active.
+  description: >-
+    The end-to-end onboarding flow for giving a user access to a third-party
+    app. The workflow creates a new authentication configuration for a toolkit,
+    starts a connected account against that auth config, and then polls the
+    connected account until its status leaves the initialization state and
+    becomes active. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: connect-account-via-auth-config
+  summary: Provision an auth config and connect a user account, then wait for it to activate.
+  description: >-
+    Creates an auth config for the named toolkit, opens a connected account
+    using that config, branches on whether the connection needs an OAuth
+    redirect, and polls the connected account until it reports an active status.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - toolkitSlug
+    - authType
+    - userId
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      toolkitSlug:
+        type: string
+        description: The toolkit slug to create the auth config for (e.g. "gmail").
+      authType:
+        type: string
+        description: The auth config type discriminator (e.g. "use_composio_managed_auth").
+      authConfigName:
+        type: string
+        description: Optional human-friendly name for the new auth config.
+      userId:
+        type: string
+        description: The end-user identifier the connected account belongs to.
+  steps:
+  - stepId: createAuthConfig
+    description: >-
+      Create a new authentication configuration for the toolkit so connected
+      accounts can be opened against it.
+    operationId: postAuthConfigs
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        toolkit:
+          slug: $inputs.toolkitSlug
+        auth_config:
+          type: $inputs.authType
+          name: $inputs.authConfigName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      authConfigId: $response.body#/auth_config/id
+      authScheme: $response.body#/auth_config/auth_scheme
+  - stepId: createConnectedAccount
+    description: >-
+      Open a connected account for the user against the freshly created auth
+      config, returning the connection id and any redirect needed to finish OAuth.
+    operationId: postConnectedAccounts
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        auth_config:
+          id: $steps.createAuthConfig.outputs.authConfigId
+        connection:
+          user_id: $inputs.userId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      connectedAccountId: $response.body#/id
+      status: $response.body#/status
+      redirectUrl: $response.body#/redirect_url
+    onSuccess:
+    - name: alreadyActive
+      type: goto
+      stepId: confirmActive
+      criteria:
+      - context: $response.body
+        condition: $.status == "ACTIVE"
+        type: jsonpath
+    - name: needsActivation
+      type: goto
+      stepId: pollConnection
+      criteria:
+      - context: $response.body
+        condition: $.status != "ACTIVE"
+        type: jsonpath
+  - stepId: pollConnection
+    description: >-
+      Poll the connected account until it reports an ACTIVE status, retrying
+      while it remains in an initializing or pending state.
+    operationId: getConnectedAccountsByNanoid
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: nanoid
+      in: path
+      value: $steps.createConnectedAccount.outputs.connectedAccountId
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/status == "ACTIVE"
+    retryAfter: 3
+    retryLimit: 20
+    outputs:
+      status: $response.body#/status
+      data: $response.body#/data
+  - stepId: confirmActive
+    description: >-
+      Read the connected account one final time to capture the authoritative
+      active status and the auth toolkit it is bound to.
+    operationId: getConnectedAccountsByNanoid
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: nanoid
+      in: path
+      value: $steps.createConnectedAccount.outputs.connectedAccountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+      toolkitSlug: $response.body#/toolkit/slug
+  outputs:
+    authConfigId: $steps.createAuthConfig.outputs.authConfigId
+    connectedAccountId: $steps.createConnectedAccount.outputs.connectedAccountId
+    redirectUrl: $steps.createConnectedAccount.outputs.redirectUrl
+    status: $steps.confirmActive.outputs.status

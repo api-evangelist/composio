@@ -1,0 +1,126 @@
+arazzo: 1.0.1
+info:
+  title: Composio Set Up a Trigger
+  summary: Discover a trigger type, create a trigger instance on a connected account, and confirm it is active.
+  description: >-
+    Wires a third-party event source into an application. The workflow lists the
+    trigger types available for a toolkit, reads the chosen trigger type's config
+    schema, upserts a trigger instance bound to a connected account, and confirms
+    the new trigger appears in the active triggers list. Every step spells out
+    its request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: setup-trigger
+  summary: Create a trigger instance for a toolkit event and verify it is active.
+  description: >-
+    Lists trigger types for a toolkit, reads the selected trigger type schema,
+    upserts a trigger instance against a connected account, and lists active
+    triggers to confirm the new trigger id is present.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - toolkitSlug
+    - triggerSlug
+    - connectedAccountId
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      toolkitSlug:
+        type: string
+        description: The toolkit slug to list trigger types for (e.g. "github").
+      triggerSlug:
+        type: string
+        description: The trigger type slug to instantiate (e.g. "GITHUB_STAR_ADDED_EVENT").
+      connectedAccountId:
+        type: string
+        description: The connected account id the trigger fires for.
+      triggerConfig:
+        type: object
+        description: Configuration values matching the trigger type's config schema.
+  steps:
+  - stepId: listTriggerTypes
+    description: >-
+      List the trigger types available for the toolkit to confirm the requested
+      trigger exists.
+    operationId: getTriggersTypes
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: toolkit_slugs
+      in: query
+      value: $inputs.toolkitSlug
+    - name: limit
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      triggerTypes: $response.body#/items
+  - stepId: getTriggerType
+    description: >-
+      Read the chosen trigger type to learn its required config fields before
+      creating the instance.
+    operationId: getTriggersTypesBySlug
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: slug
+      in: path
+      value: $inputs.triggerSlug
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      config: $response.body#/config
+      requiresWebhook: $response.body#/requires_webhook_endpoint_setup
+  - stepId: upsertTrigger
+    description: >-
+      Create or update the trigger instance for the connected account using the
+      supplied trigger configuration.
+    operationId: postTriggerInstancesBySlugUpsert
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: slug
+      in: path
+      value: $inputs.triggerSlug
+    requestBody:
+      contentType: application/json
+      payload:
+        connected_account_id: $inputs.connectedAccountId
+        trigger_config: $inputs.triggerConfig
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      triggerId: $response.body#/trigger_id
+  - stepId: confirmActive
+    description: >-
+      List active triggers filtered to the connected account to confirm the
+      newly created trigger instance is registered.
+    operationId: getTriggerInstancesActive
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: connected_account_ids
+      in: query
+      value: $inputs.connectedAccountId
+    - name: limit
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      activeTriggers: $response.body#/items
+  outputs:
+    triggerId: $steps.upsertTrigger.outputs.triggerId
+    activeTriggers: $steps.confirmActive.outputs.activeTriggers

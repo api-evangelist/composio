@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Composio Refresh a Connected Account
+  summary: Detect an expired connected account and refresh its authentication, then confirm it is active again.
+  description: >-
+    Recovers a connection whose credentials have gone stale. The workflow reads a
+    connected account, branches on whether it is still active, triggers an auth
+    refresh when it is not, and polls the account until it returns to an active
+    status. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: refresh-connected-account
+  summary: Refresh a non-active connected account and wait for it to recover.
+  description: >-
+    Reads a connected account, branches when its status is not active, calls the
+    refresh endpoint to renew credentials, and polls the account until it reports
+    an active status again.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - connectedAccountId
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      connectedAccountId:
+        type: string
+        description: The id of the connected account to inspect and refresh.
+      redirectUrl:
+        type: string
+        description: Optional URL the user returns to if the refresh requires re-authorization.
+  steps:
+  - stepId: readAccount
+    description: >-
+      Read the connected account to determine whether its authentication is
+      still active or needs refreshing.
+    operationId: getConnectedAccountsByNanoid
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: nanoid
+      in: path
+      value: $inputs.connectedAccountId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+      statusReason: $response.body#/status_reason
+    onSuccess:
+    - name: needsRefresh
+      type: goto
+      stepId: refreshAccount
+      criteria:
+      - context: $response.body
+        condition: $.status != "ACTIVE"
+        type: jsonpath
+    - name: alreadyActive
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.status == "ACTIVE"
+        type: jsonpath
+  - stepId: refreshAccount
+    description: >-
+      Trigger an authentication refresh for the connected account, returning a
+      redirect URL if re-authorization is required.
+    operationId: postConnectedAccountsByNanoidRefresh
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: nanoid
+      in: path
+      value: $inputs.connectedAccountId
+    requestBody:
+      contentType: application/json
+      payload:
+        redirect_url: $inputs.redirectUrl
+        validate_credentials: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+      redirectUrl: $response.body#/redirect_url
+  - stepId: pollRecovery
+    description: >-
+      Poll the connected account until its status returns to ACTIVE after the
+      refresh has been triggered.
+    operationId: getConnectedAccountsByNanoid
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: nanoid
+      in: path
+      value: $inputs.connectedAccountId
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/status == "ACTIVE"
+    retryAfter: 3
+    retryLimit: 20
+    outputs:
+      status: $response.body#/status
+  outputs:
+    refreshRedirectUrl: $steps.refreshAccount.outputs.redirectUrl
+    status: $steps.pollRecovery.outputs.status

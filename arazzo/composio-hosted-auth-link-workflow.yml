@@ -1,0 +1,119 @@
+arazzo: 1.0.1
+info:
+  title: Composio Generate a Hosted Auth Link
+  summary: Pick an existing auth config and mint a hosted OAuth link for a user, then wait for the account to connect.
+  description: >-
+    The hosted onboarding flow where Composio renders the OAuth screen. The
+    workflow lists existing auth configs for a toolkit, creates a hosted link
+    session against the selected auth config so the user can authorize in a
+    browser, and then polls the resulting connected account until it activates.
+    Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: hosted-auth-link
+  summary: Mint a hosted authorization link for a user from an existing auth config.
+  description: >-
+    Finds an auth config for the toolkit, creates a hosted link session that
+    returns a redirect URL for the user to authorize, and polls the connected
+    account created by the link until it becomes active.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - toolkitSlug
+    - userId
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      toolkitSlug:
+        type: string
+        description: The toolkit slug whose auth config should be used (e.g. "slack").
+      userId:
+        type: string
+        description: The end-user identifier the connection belongs to.
+      callbackUrl:
+        type: string
+        description: Optional URL the user is redirected to after authorizing.
+  steps:
+  - stepId: findAuthConfig
+    description: >-
+      List auth configs filtered to the toolkit so an existing configuration can
+      be reused for the hosted link.
+    operationId: getAuthConfigs
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: toolkit_slug
+      in: query
+      value: $inputs.toolkitSlug
+    - name: limit
+      in: query
+      value: 10
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      authConfigId: $response.body#/items/0/id
+      authConfigs: $response.body#/items
+    onSuccess:
+    - name: hasConfig
+      type: goto
+      stepId: createLink
+      criteria:
+      - context: $response.body
+        condition: $.items.length > 0
+        type: jsonpath
+  - stepId: createLink
+    description: >-
+      Create a hosted link session against the chosen auth config, returning a
+      redirect URL the user opens to authorize and the connected account id that
+      will be created.
+    operationId: postConnectedAccountsLink
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        auth_config_id: $steps.findAuthConfig.outputs.authConfigId
+        user_id: $inputs.userId
+        callback_url: $inputs.callbackUrl
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      linkToken: $response.body#/link_token
+      redirectUrl: $response.body#/redirect_url
+      connectedAccountId: $response.body#/connected_account_id
+      expiresAt: $response.body#/expires_at
+  - stepId: awaitConnection
+    description: >-
+      Poll the connected account created by the link session until the user has
+      finished authorizing and the status becomes ACTIVE.
+    operationId: getConnectedAccountsByNanoid
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: nanoid
+      in: path
+      value: $steps.createLink.outputs.connectedAccountId
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/status == "ACTIVE"
+    retryAfter: 5
+    retryLimit: 24
+    outputs:
+      status: $response.body#/status
+      userId: $response.body#/user_id
+  outputs:
+    redirectUrl: $steps.createLink.outputs.redirectUrl
+    linkToken: $steps.createLink.outputs.linkToken
+    connectedAccountId: $steps.createLink.outputs.connectedAccountId
+    status: $steps.awaitConnection.outputs.status

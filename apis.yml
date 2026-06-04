@@ -364,6 +364,42 @@ apis:
   - title: Server-Side Event Routing
     description: Route Composio events into a consumer's own backend for processing and persistence.
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/composio-connect-account-via-auth-config-workflow.yml
+    name: Composio Connect an Account via a New Auth Config
+    summary: Create an auth config for a toolkit, open a connection, and poll until it becomes active.
+  - url: arazzo/composio-disable-active-trigger-workflow.yml
+    name: Composio Disable an Active Trigger
+    summary: Find a user's active trigger by name and disable it.
+  - url: arazzo/composio-discover-and-execute-tool-workflow.yml
+    name: Composio Discover and Execute a Tool
+    summary: Browse toolkits, list the tools they expose, and execute one tool for a user.
+  - url: arazzo/composio-execute-tool-on-connected-account-workflow.yml
+    name: Composio Execute a Tool on a User's Connected Account
+    summary: Resolve a user's active connected account for a toolkit and execute a tool against it.
+  - url: arazzo/composio-hosted-auth-link-workflow.yml
+    name: Composio Generate a Hosted Auth Link
+    summary: Pick an existing auth config and mint a hosted OAuth link for a user, then wait for the account to connect.
+  - url: arazzo/composio-natural-language-tool-execution-workflow.yml
+    name: Composio Natural Language Tool Execution
+    summary: Turn a plain-English instruction into tool arguments and execute the tool.
+  - url: arazzo/composio-provision-mcp-server-workflow.yml
+    name: Composio Provision an MCP Server
+    summary: Create an auth config, stand up an MCP server bound to it, and create a per-user MCP instance.
+  - url: arazzo/composio-refresh-connected-account-workflow.yml
+    name: Composio Refresh a Connected Account
+    summary: Detect an expired connected account and refresh its authentication, then confirm it is active again.
+  - url: arazzo/composio-setup-trigger-workflow.yml
+    name: Composio Set Up a Trigger
+    summary: Discover a trigger type, create a trigger instance on a connected account, and confirm it is active.
+  - url: arazzo/composio-tool-router-connect-toolkit-workflow.yml
+    name: Composio Tool Router Connect a Toolkit
+    summary: Open a tool router session, inspect its toolkits, and mint an auth link for an unconnected toolkit.
+  - url: arazzo/composio-tool-router-session-workflow.yml
+    name: Composio Tool Router Session
+    summary: Open a tool router session, search for a tool by use case, and execute it.
 - type: LinkedIn
   url: https://www.linkedin.com/company/composiohq
 - type: Portal

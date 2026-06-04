@@ -1,0 +1,130 @@
+arazzo: 1.0.1
+info:
+  title: Composio Tool Router Session
+  summary: Open a tool router session, search for a tool by use case, and execute it.
+  description: >-
+    The agentic tool-router pattern where an LLM session dynamically discovers
+    and runs tools. The workflow creates a tool router session for a user with a
+    set of enabled toolkits, searches the session for tools that match a natural
+    language use case, and executes the best-matching tool within the same
+    session. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: tool-router-session
+  summary: Create a tool router session, search it by use case, and execute a tool.
+  description: >-
+    Opens a tool router session scoped to a user and a set of toolkits, searches
+    the session for tools matching a use case, branches on whether a match was
+    found, and executes the chosen tool within the session.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    - enabledToolkits
+    - useCase
+    - toolSlug
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      userId:
+        type: string
+        description: The end-user identifier the session is created for.
+      enabledToolkits:
+        type: array
+        description: The list of toolkit slugs to enable in the session.
+        items:
+          type: string
+      useCase:
+        type: string
+        description: A natural-language description of what the agent wants to accomplish.
+      toolSlug:
+        type: string
+        description: The slug of the tool to execute once a match is confirmed.
+      arguments:
+        type: object
+        description: The argument map passed to the executed tool.
+  steps:
+  - stepId: createSession
+    description: >-
+      Create a tool router session for the user with the requested toolkits
+      enabled, returning a session id and MCP endpoint.
+    operationId: postToolRouterSession
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        user_id: $inputs.userId
+        toolkits:
+          enable: $inputs.enabledToolkits
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      sessionId: $response.body#/session_id
+      mcpUrl: $response.body#/mcp/url
+  - stepId: searchTools
+    description: >-
+      Search the session for tools matching the natural-language use case so the
+      agent can confirm the desired tool is available.
+    operationId: postToolRouterSessionBySessionIdSearch
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: session_id
+      in: path
+      value: $steps.createSession.outputs.sessionId
+    requestBody:
+      contentType: application/json
+      payload:
+        queries:
+        - use_case: $inputs.useCase
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/success == true
+    outputs:
+      results: $response.body#/results
+      nextStepsGuidance: $response.body#/next_steps_guidance
+    onSuccess:
+    - name: toolsFound
+      type: goto
+      stepId: executeTool
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+  - stepId: executeTool
+    description: >-
+      Execute the chosen tool within the session using the supplied arguments.
+    operationId: postToolRouterSessionBySessionIdExecute
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: session_id
+      in: path
+      value: $steps.createSession.outputs.sessionId
+    requestBody:
+      contentType: application/json
+      payload:
+        tool_slug: $inputs.toolSlug
+        arguments: $inputs.arguments
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      data: $response.body#/data
+      logId: $response.body#/log_id
+  outputs:
+    sessionId: $steps.createSession.outputs.sessionId
+    mcpUrl: $steps.createSession.outputs.mcpUrl
+    data: $steps.executeTool.outputs.data
+    logId: $steps.executeTool.outputs.logId

@@ -1,0 +1,137 @@
+arazzo: 1.0.1
+info:
+  title: Composio Provision an MCP Server
+  summary: Create an auth config, stand up an MCP server bound to it, and create a per-user MCP instance.
+  description: >-
+    Exposes a set of Composio tools to an MCP client. The workflow creates an
+    auth config for a toolkit, creates an MCP server that references that auth
+    config and restricts the exposed tools, and then creates a per-user MCP
+    server instance so an end user gets their own connection-scoped endpoint.
+    Every step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: provision-mcp-server
+  summary: Create an auth config, an MCP server, and a per-user MCP instance.
+  description: >-
+    Creates an auth config for the toolkit, creates an MCP server referencing
+    that auth config with an allowed tool list, reads the server back to capture
+    its MCP URL, and creates a per-user instance of the server.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - toolkitSlug
+    - authType
+    - serverName
+    - userId
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      toolkitSlug:
+        type: string
+        description: The toolkit slug the MCP server exposes (e.g. "linear").
+      authType:
+        type: string
+        description: The auth config type discriminator (e.g. "use_composio_managed_auth").
+      serverName:
+        type: string
+        description: A name for the new MCP server.
+      allowedTools:
+        type: array
+        description: Optional list of tool slugs the MCP server is allowed to expose.
+        items:
+          type: string
+      userId:
+        type: string
+        description: The end-user identifier the MCP server instance is created for.
+  steps:
+  - stepId: createAuthConfig
+    description: >-
+      Create an auth config for the toolkit so the MCP server has an
+      authentication configuration to reference.
+    operationId: postAuthConfigs
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        toolkit:
+          slug: $inputs.toolkitSlug
+        auth_config:
+          type: $inputs.authType
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      authConfigId: $response.body#/auth_config/id
+  - stepId: createServer
+    description: >-
+      Create an MCP server that references the new auth config and restricts the
+      tools it exposes.
+    operationId: postMcpServers
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.serverName
+        auth_config_ids:
+        - $steps.createAuthConfig.outputs.authConfigId
+        allowed_tools: $inputs.allowedTools
+        managed_auth_via_composio: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      serverId: $response.body#/id
+      mcpUrl: $response.body#/mcp_url
+  - stepId: getServer
+    description: >-
+      Read the MCP server back to capture its authoritative MCP URL and client
+      install commands.
+    operationId: getMcpById
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.createServer.outputs.serverId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      mcpUrl: $response.body#/mcp_url
+      commands: $response.body#/commands
+  - stepId: createInstance
+    description: >-
+      Create a per-user instance of the MCP server so the end user gets their
+      own connection-scoped endpoint.
+    operationId: postMcpServersByServerIdInstances
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: serverId
+      in: path
+      value: $steps.createServer.outputs.serverId
+    requestBody:
+      contentType: application/json
+      payload:
+        user_id: $inputs.userId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      instanceId: $response.body#/instance_id
+  outputs:
+    authConfigId: $steps.createAuthConfig.outputs.authConfigId
+    serverId: $steps.createServer.outputs.serverId
+    mcpUrl: $steps.getServer.outputs.mcpUrl
+    instanceId: $steps.createInstance.outputs.instanceId

@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: Composio Tool Router Connect a Toolkit
+  summary: Open a tool router session, inspect its toolkits, and mint an auth link for an unconnected toolkit.
+  description: >-
+    Resolves the just-in-time authentication a tool router agent needs. The
+    workflow creates a tool router session for a user, lists the toolkits in the
+    session along with their connection status, and creates a link session so the
+    user can connect a toolkit that is not yet authorized. Every step spells out
+    its request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: tool-router-connect-toolkit
+  summary: Create a session and generate an auth link for an unconnected toolkit.
+  description: >-
+    Opens a tool router session, lists the session toolkits filtered to the
+    target toolkit, and creates a link session so the user can authorize the
+    toolkit within the running session.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    - toolkitSlug
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      userId:
+        type: string
+        description: The end-user identifier the session and connection belong to.
+      toolkitSlug:
+        type: string
+        description: The toolkit slug to connect within the session (e.g. "notion").
+      callbackUrl:
+        type: string
+        description: Optional URL the user returns to after authorizing the toolkit.
+  steps:
+  - stepId: createSession
+    description: >-
+      Create a tool router session for the user with the target toolkit enabled.
+    operationId: postToolRouterSession
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        user_id: $inputs.userId
+        toolkits:
+          enable:
+          - $inputs.toolkitSlug
+        manage_connections:
+          enable: true
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      sessionId: $response.body#/session_id
+  - stepId: listSessionToolkits
+    description: >-
+      List the session toolkits filtered to the target toolkit, including each
+      toolkit's connection status, to decide whether a link is required.
+    operationId: getToolRouterSessionBySessionIdToolkits
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: session_id
+      in: path
+      value: $steps.createSession.outputs.sessionId
+    - name: toolkits
+      in: query
+      value: $inputs.toolkitSlug
+    - name: limit
+      in: query
+      value: 10
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      toolkits: $response.body#/items
+      connectionStatus: $response.body#/items/0/connected_account/status
+    onSuccess:
+    - name: needsConnection
+      type: goto
+      stepId: createLink
+      criteria:
+      - context: $response.body
+        condition: $.items[0].connected_account.status != "ACTIVE"
+        type: jsonpath
+  - stepId: createLink
+    description: >-
+      Create a link session for the toolkit so the user can authorize it from
+      within the tool router session.
+    operationId: postToolRouterSessionBySessionIdLink
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: session_id
+      in: path
+      value: $steps.createSession.outputs.sessionId
+    requestBody:
+      contentType: application/json
+      payload:
+        toolkit: $inputs.toolkitSlug
+        callback_url: $inputs.callbackUrl
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      linkToken: $response.body#/link_token
+      redirectUrl: $response.body#/redirect_url
+      connectedAccountId: $response.body#/connected_account_id
+  outputs:
+    sessionId: $steps.createSession.outputs.sessionId
+    redirectUrl: $steps.createLink.outputs.redirectUrl
+    connectedAccountId: $steps.createLink.outputs.connectedAccountId

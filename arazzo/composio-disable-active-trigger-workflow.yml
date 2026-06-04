@@ -1,0 +1,92 @@
+arazzo: 1.0.1
+info:
+  title: Composio Disable an Active Trigger
+  summary: Find a user's active trigger by name and disable it.
+  description: >-
+    A lifecycle management flow for turning off an event source. The workflow
+    lists the active triggers for a user, branches on whether a matching trigger
+    exists, and disables the resolved trigger by setting its status. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: disable-active-trigger
+  summary: Resolve an active trigger for a user and set its status to disabled.
+  description: >-
+    Lists the active triggers for a user, requires at least one to be present,
+    captures the first trigger id, and disables it via the manage status
+    endpoint.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - userId
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      userId:
+        type: string
+        description: The end-user identifier whose active triggers are listed.
+      triggerName:
+        type: string
+        description: Optional trigger name filter to narrow the active trigger list.
+  steps:
+  - stepId: listActiveTriggers
+    description: >-
+      List the active triggers for the user, optionally filtered by trigger
+      name, to resolve a trigger id to disable.
+    operationId: getTriggerInstancesActive
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: user_ids
+      in: query
+      value: $inputs.userId
+    - name: trigger_names
+      in: query
+      value: $inputs.triggerName
+    - name: limit
+      in: query
+      value: 50
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      triggers: $response.body#/items
+      firstTriggerId: $response.body#/items/0/id
+    onSuccess:
+    - name: triggerFound
+      type: goto
+      stepId: disableTrigger
+      criteria:
+      - context: $response.body
+        condition: $.items.length > 0
+        type: jsonpath
+  - stepId: disableTrigger
+    description: >-
+      Disable the resolved trigger instance by setting its manage status to
+      disabled.
+    operationId: patchTriggerInstancesManageByTriggerId
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: triggerId
+      in: path
+      value: $steps.listActiveTriggers.outputs.firstTriggerId
+    requestBody:
+      contentType: application/json
+      payload:
+        status: disable
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+  outputs:
+    triggerId: $steps.listActiveTriggers.outputs.firstTriggerId
+    status: $steps.disableTrigger.outputs.status

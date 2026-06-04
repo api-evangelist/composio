@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: Composio Natural Language Tool Execution
+  summary: Turn a plain-English instruction into tool arguments and execute the tool.
+  description: >-
+    The assistive execution path where a natural-language instruction is
+    translated into structured tool arguments before running. The workflow reads
+    the tool schema, asks Composio to generate the argument map from the user's
+    text, and then executes the tool with those generated arguments on a
+    connected account. Every step spells out its request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: composioApi
+  url: ../openapi/composio-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: natural-language-tool-execution
+  summary: Generate tool inputs from text and execute the tool for a user.
+  description: >-
+    Fetches the tool schema, generates the argument map from a natural-language
+    instruction, verifies the generation succeeded, and executes the tool with
+    the generated arguments on the user's connected account.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - toolSlug
+    - text
+    - userId
+    properties:
+      apiKey:
+        type: string
+        description: Composio project API key sent in the x-api-key header.
+      toolSlug:
+        type: string
+        description: The slug of the tool to run (e.g. "GMAIL_SEND_EMAIL").
+      text:
+        type: string
+        description: The natural-language instruction describing what to do.
+      userId:
+        type: string
+        description: The end-user identifier the tool runs on behalf of.
+      connectedAccountId:
+        type: string
+        description: Optional connected account id used to authorize the execution.
+  steps:
+  - stepId: getToolSchema
+    description: >-
+      Fetch the tool definition so its input parameters are available to ground
+      the natural-language argument generation.
+    operationId: getToolsByToolSlug
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: tool_slug
+      in: path
+      value: $inputs.toolSlug
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      inputParameters: $response.body#/input_parameters
+      toolName: $response.body#/name
+  - stepId: generateInputs
+    description: >-
+      Ask Composio to translate the user's instruction into a structured
+      argument map matching the tool's input parameters.
+    operationId: postToolsExecuteByToolSlugInput
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: tool_slug
+      in: path
+      value: $inputs.toolSlug
+    requestBody:
+      contentType: application/json
+      payload:
+        text: $inputs.text
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      arguments: $response.body#/arguments
+    onSuccess:
+    - name: argumentsReady
+      type: goto
+      stepId: executeTool
+      criteria:
+      - context: $response.body
+        condition: $.arguments != null
+        type: jsonpath
+  - stepId: executeTool
+    description: >-
+      Execute the tool using the generated argument map on behalf of the user
+      and the optional connected account.
+    operationId: postToolsExecuteByToolSlug
+    parameters:
+    - name: x-api-key
+      in: header
+      value: $inputs.apiKey
+    - name: tool_slug
+      in: path
+      value: $inputs.toolSlug
+    requestBody:
+      contentType: application/json
+      payload:
+        user_id: $inputs.userId
+        connected_account_id: $inputs.connectedAccountId
+        arguments: $steps.generateInputs.outputs.arguments
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/successful == true
+    outputs:
+      data: $response.body#/data
+      successful: $response.body#/successful
+      logId: $response.body#/log_id
+  outputs:
+    generatedArguments: $steps.generateInputs.outputs.arguments
+    data: $steps.executeTool.outputs.data
+    successful: $steps.executeTool.outputs.successful
+    logId: $steps.executeTool.outputs.logId
