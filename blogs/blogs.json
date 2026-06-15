@@ -2,26 +2,17 @@
   "repo": "composio",
   "feeds": [
     {
+      "source": "https://composio.dev/blog",
+      "feed_url": "https://composio.dev/blog",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
       "source": "https://docs.composio.dev/faq/api_key/api_key",
       "error": "HTTPError"
     }
   ],
-  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 2,
-  "posts": [
-    {
-      "title": "Incident Report: April 28th",
-      "date": "2026-05-04",
-      "author": "Composio",
-      "url": "https://composio.dev/blog/incident-report-april-28",
-      "file": "2026-05-04-incident-report-april-28.md"
-    },
-    {
-      "title": "Your agents can sign up for Composio",
-      "date": "2026-05-04",
-      "author": "Rahul Tarak",
-      "url": "https://composio.dev/blog/your-agents-can-signup-for-composio",
-      "file": "2026-05-04-your-agents-can-signup-for-composio.md"
-    }
-  ]
+  "fetched": "2026-06-14T20:42:17Z"
 }

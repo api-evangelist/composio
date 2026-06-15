@@ -1,0 +1,3006 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current user session information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/auth/session/info",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about the current authenticated user session, including project details, organization membership, and API key information if applicable. This endpoint is useful for verifying authentication status and retrieving contextual information about the authenticated user and their access privileges."
+        },
+        {
+          "info": {
+            "name": "End user session and clear authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/auth/session/logout",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Terminates the current user session by invalidating authentication cookies and tokens. This effectively signs the user out of the application. After logout, the user will need to authenticate again to access protected resources."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Auth Configs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List authentication configurations with optional filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/auth_configs",
+            "params": [
+              {
+                "name": "is_composio_managed",
+                "value": "",
+                "type": "query",
+                "description": "Whether to filter by composio managed auth configs"
+              },
+              {
+                "name": "toolkit_slug",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of toolkit slugs to filter auth configs by"
+              },
+              {
+                "name": "deprecated_app_id",
+                "value": "",
+                "type": "query",
+                "description": "The app id to filter by"
+              },
+              {
+                "name": "deprecated_status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "show_disabled",
+                "value": "",
+                "type": "query",
+                "description": "Show disabled auth configs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search auth configs by name or id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all auth configs for your project. Auth configs define how users authenticate with external services (OAuth, API keys, etc.). Use filters to find configs for specific toolkits or to distinguish between Composio-managed and custom configurations."
+        },
+        {
+          "info": {
+            "name": "Create new authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/auth_configs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new auth config for a toolkit, allowing you to use your own OAuth credentials or API keys instead of Composio-managed authentication. This is required when you want to use custom OAuth apps (bring your own client ID/secret) or configure specific authentication parameters for a toolkit."
+        },
+        {
+          "info": {
+            "name": "Get single authentication configuration by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about a specific authentication configuration using its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update an authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modifies an existing authentication configuration with new credentials or other settings. Only specified fields will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete an authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes an authentication configuration by marking it as deleted in the database. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Enable or disable an authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid/:status",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to update"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "path",
+                "description": "The new status to set for the auth configuration"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the status of an authentication configuration to either enabled or disabled. Disabled configurations cannot be used for new connections."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "CLI Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new CLI session with auth code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/create-session",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a new CLI session with a random 6-character code. This endpoint is the first step in the CLI authentication flow, creating a session that can later be linked to a user account. The generated code is displayed to the user in the CLI and should be entered in the web interface to complete authentication. Optionally accepts a scope ('project' or 'user') and a source string."
+        },
+        {
+          "info": {
+            "name": "Get CLI session details by ID or code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/cli/get-session",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "CLI session ID (UUID format) or 6-character code to check. Both formats are supported for flexibility in client implementations."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves the current state of a CLI session using either the session ID (UUID) or the 6-character code. This endpoint is used by both the CLI client to check if the session has been linked, and by the web interface to display session details before linking."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "CLI",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ingest CLI codact failures",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/codact_failures",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Accepts CLI-reported codact failures authenticated by user API key and stores them in ClickHouse for later analysis."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Triggers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get credentials for CLI realtime events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/credentials",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}."
+        },
+        {
+          "info": {
+            "name": "Authenticate CLI Pusher channel access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticate CLI client access to a private-cli-{nanoId} Pusher channel"
+        },
+        {
+          "info": {
+            "name": "Create or update a trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/:slug/upsert",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the trigger instance. Case-insensitive (internally normalized to uppercase)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new trigger instance or updates an existing one with the same configuration. Triggers listen for events from external services (webhooks or polling) and can invoke your workflows. If a matching trigger already exists and is disabled, it will be re-enabled. Requires a connected account ID to associate the trigger with a specific user connection."
+        },
+        {
+          "info": {
+            "name": "List active triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/active",
+            "params": [
+              {
+                "name": "user_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of user IDs to filter triggers by"
+              },
+              {
+                "name": "connected_account_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of connected account IDs to filter triggers by"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of auth config IDs to filter triggers by"
+              },
+              {
+                "name": "trigger_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of trigger IDs to filter triggers by"
+              },
+              {
+                "name": "trigger_names",
+                "value": "",
+                "type": "query",
+                "description": "Array of trigger names to filter triggers by. Case-insensitive (internally normalized to uppercase)."
+              },
+              {
+                "name": "connectedAccountIds",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use connected_account_ids instead."
+              },
+              {
+                "name": "authConfigIds",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use auth_config_ids instead."
+              },
+              {
+                "name": "triggerIds",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use trigger_ids instead."
+              },
+              {
+                "name": "show_disabled",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, includes disabled triggers in the response."
+              },
+              {
+                "name": "triggerNames",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use trigger_names instead."
+              },
+              {
+                "name": "showDisabled",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use show_disabled instead."
+              },
+              {
+                "name": "deprecatedConnectedAccountUuids",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use connected_account_ids instead."
+              },
+              {
+                "name": "deprecatedAuthConfigUuids",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use auth_config_ids instead."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all active trigger instances for your project. Triggers listen for events from connected accounts (e.g., new emails, Slack messages, GitHub commits) and can invoke webhooks or workflows. Use filters to find triggers for specific users, connected accounts, or trigger types."
+        },
+        {
+          "info": {
+            "name": "Enable or disable a trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/manage/:triggerId",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the trigger instance to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the status of a trigger instance to enable or disable it. Disabling a trigger pauses event listening without deleting the trigger configuration. Re-enabling restores the trigger to its active state. Use this for temporary maintenance or to control trigger execution."
+        },
+        {
+          "info": {
+            "name": "Delete a trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/manage/:triggerId",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the trigger instance to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Permanently deletes a trigger instance. This stops the trigger from listening for events and removes it from your project. Use the PATCH endpoint with status \"disable\" if you want to temporarily pause a trigger instead."
+        },
+        {
+          "info": {
+            "name": "List trigger type enums",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/triggers_types/list/enum",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves a list of all available trigger type enum values that can be used across the API from latest versions of the toolkit only"
+        },
+        {
+          "info": {
+            "name": "Get trigger type by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/triggers_types/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The unique slug identifier for the trigger type. Case-insensitive (internally normalized to uppercase)."
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific trigger type using its slug identifier"
+        },
+        {
+          "info": {
+            "name": "List trigger types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/triggers_types",
+            "params": [
+              {
+                "name": "toolkit_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Array of toolkit slugs to filter triggers by"
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a list of available trigger types with optional filtering by toolkit. Results are paginated and can be filtered by toolkit."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Connected Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connected accounts with optional filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts",
+            "params": [
+              {
+                "name": "toolkit_slugs",
+                "value": "",
+                "type": "query",
+                "description": "The toolkit slugs of the connected accounts"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "The status of the connected account"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to paginate through the connected accounts"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The limit of the connected accounts to return"
+              },
+              {
+                "name": "user_ids",
+                "value": "",
+                "type": "query",
+                "description": "The user ids of the connected accounts"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "The auth config ids of the connected accounts"
+              },
+              {
+                "name": "connected_account_ids",
+                "value": "",
+                "type": "query",
+                "description": "The connected account ids to filter by"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "The order by of the connected accounts"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "The order direction of the connected accounts"
+              },
+              {
+                "name": "account_type",
+                "value": "",
+                "type": "query",
+                "description": "[Experimental] Filter by sharing model. Default (omitted) returns PRIVATE only — shared accounts must be requested explicitly. Pass SHARED for only shared accounts, or ALL for PRIVATE + SHARED."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all connected accounts for your project. Connected accounts represent authenticated user connections to external services (e.g., a user's Gmail account, Slack workspace). Filter by toolkit, status, user ID, or auth config to find specific connections."
+        },
+        {
+          "info": {
+            "name": "Create a new connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a new connection to an external service for a user. For OAuth-based toolkits, this returns a redirect URL to complete authentication. For API key-based toolkits, provide the credentials directly in the request body. Use the `user_id` field to associate the connection with a specific user in your system.\n\n**Deprecated for Composio-managed OAuth:** For Composio-managed auth configs on OAuth1, OAuth2, or DCR_OAUTH schemes, this endpoint is being retired and will start returning `400 BadRe"
+        },
+        {
+          "info": {
+            "name": "Get connected account details by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves comprehensive details of a connected account, including authentication configuration, connection status, and all parameters needed for API requests."
+        },
+        {
+          "info": {
+            "name": "Update a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a connected account. Supports updating the alias and/or credentials. Only specified fields will be updated. Set a credential field to null to remove it. Alias must be unique within the same project, entity, and toolkit scope."
+        },
+        {
+          "info": {
+            "name": "Delete a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Soft-deletes a connected account by marking it as deleted in the database. This prevents the account from being used for API calls but preserves the record for audit purposes."
+        },
+        {
+          "info": {
+            "name": "Enable or disable a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoId/status",
+            "params": [
+              {
+                "name": "nanoId",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier of the connected account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the status of a connected account to either enabled (active) or disabled (inactive). Disabled accounts cannot be used for API calls but remain in the database."
+        },
+        {
+          "info": {
+            "name": "Refresh authentication for a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid/refresh",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier of the connected account"
+              },
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a new authentication flow for a connected account when credentials have expired or become invalid. This may generate a new authentication URL for OAuth flows or refresh tokens for other auth schemes."
+        },
+        {
+          "info": {
+            "name": "Create a new auth link session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new authentication link session that users can use to connect their accounts"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search and retrieve trigger event logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/internal/trigger/logs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Search and retrieve trigger event logs with advanced filtering capabilities including search parameters"
+        },
+        {
+          "info": {
+            "name": "Get detailed trigger log by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/internal/trigger/log/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get detailed trigger log by ID"
+        },
+        {
+          "info": {
+            "name": "Search and retrieve action execution logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/internal/action_execution/logs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Search and retrieve action execution logs"
+        },
+        {
+          "info": {
+            "name": "Get action log fields for filtering",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/internal/action_execution/fields",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get action log fields for filtering"
+        },
+        {
+          "info": {
+            "name": "Get detailed execution log by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/internal/action_execution/log/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get detailed execution log by ID"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get project configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/project/config",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves the current project configuration including 2FA settings."
+        },
+        {
+          "info": {
+            "name": "Update project configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/org/project/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Updates the project configuration settings."
+        },
+        {
+          "info": {
+            "name": "Create a new project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/new",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new project within the authenticated user's organization using the specified name. Projects are isolated environments within your organization, each with their own API keys, webhook configurations, and resources. Use this endpoint to create additional projects for different environments (e.g., development, staging, production) or for separate applications."
+        },
+        {
+          "info": {
+            "name": "List all projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/list",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all projects belonging to the authenticated organization. Projects are returned in descending order of creation date (newest first). This endpoint is useful for displaying project selection in dashboards or for integrations that need to list all available projects."
+        },
+        {
+          "info": {
+            "name": "Get project details by ID With Org Api key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier (Nano ID) of the project to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about a specific project using its unique identifier. This endpoint provides complete project configuration including webhook URLs, creation and update timestamps, and webhook secrets. Use this endpoint to inspect project settings or verify project configuration."
+        },
+        {
+          "info": {
+            "name": "Delete a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier (Nano ID) of the project to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes a project within the organization by its unique identifier. When a project is deleted, it is marked as deleted but not immediately removed from the database. This operation affects all resources associated with the project including API keys, webhook configurations, and connected services. This action cannot be undone through the API."
+        },
+        {
+          "info": {
+            "name": "Delete and generate new API key for project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/:nano_id/regenerate_api_key",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier (Nano ID) of the project to regenerate API key for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a new API key for the specified project, invalidating any existing API keys for that project. This operation creates a fresh API key with a new random name and key value. All existing API keys for this project will be marked as deleted."
+        },
+        {
+          "info": {
+            "name": "Resolve the organization consumer project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/consumer/project/resolve",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              },
+              {
+                "name": "x-org-id",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Finds the authenticated organization's single CONSUMER project and provisions it if absent. This endpoint is idempotent and never returns consumer API keys."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Organization Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List active connected toolkits for a consumer user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/consumer/connected_toolkits",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              },
+              {
+                "name": "x-org-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Consumer user ID to inspect within the consumer project."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resolves the organization's single CONSUMER project and returns the distinct toolkit slugs for which the specified consumer user has an ACTIVE connection."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhook Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List webhook subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/webhook_subscriptions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Lists all webhook subscriptions for the authenticated project with pagination. Currently limited to one subscription per project."
+        },
+        {
+          "info": {
+            "name": "Create webhook subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/webhook_subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a webhook subscription for the authenticated project. Only one subscription is allowed per project. The signing secret is returned in subscription responses."
+        },
+        {
+          "info": {
+            "name": "Get webhook subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/webhook_subscriptions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook subscription ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a webhook subscription by ID."
+        },
+        {
+          "info": {
+            "name": "Update webhook subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/webhook_subscriptions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook subscription ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates a webhook subscription. At least one field must be provided."
+        },
+        {
+          "info": {
+            "name": "Delete webhook subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/webhook_subscriptions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook subscription ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Permanently deletes a webhook subscription. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Rotate webhook secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/webhook_subscriptions/:id/rotate_secret",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook subscription ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a new signing secret for the webhook subscription."
+        },
+        {
+          "info": {
+            "name": "List available event types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/webhook_subscriptions/event_types",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all event types that can be subscribed to, along with their supported webhook versions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhook Endpoints",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List webhook endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints",
+            "params": [
+              {
+                "name": "toolkit_slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by toolkit slug"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Lists webhook endpoints for the authenticated project, optionally filtered by toolkit."
+        },
+        {
+          "info": {
+            "name": "Create webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a shared webhook endpoint for a toolkit + OAuth app + project. Returns the webhook URL that the customer registers in their app dashboard. Idempotent — returns existing endpoint if one already exists for this toolkit + client_id + project."
+        },
+        {
+          "info": {
+            "name": "Get webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint nano ID (e.g., we_abc123)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a single webhook endpoint. Secret values are redacted. Use GET /webhook_endpoints/schema to discover field definitions."
+        },
+        {
+          "info": {
+            "name": "Put webhook endpoint configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint nano ID (e.g., we_abc123)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Full replacement of webhook endpoint configuration. All required setup fields must be provided. Use PATCH to update individual fields."
+        },
+        {
+          "info": {
+            "name": "Update webhook endpoint configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint nano ID (e.g., we_abc123)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates app-specific secrets and credentials. Uses merge semantics — only included fields are updated; omitted fields are preserved. Can be called on active endpoints (e.g., to rotate a signing secret)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Toolkits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available toolkits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/toolkits",
+            "params": [
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Filter toolkits by category"
+              },
+              {
+                "name": "managed_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter toolkits by who manages them"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for returned toolkits"
+              },
+              {
+                "name": "include_deprecated",
+                "value": "",
+                "type": "query",
+                "description": "Include deprecated toolkits in the response"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter toolkits by name, slug, or description"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options."
+        },
+        {
+          "info": {
+            "name": "List toolkit categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/toolkits/categories",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a comprehensive list of all available toolkit categories from their latest versions. These categories can be used to filter toolkits by type or purpose when using the toolkit listing endpoint. Categories help organize toolkits into logical groups based on their functionality or industry focus."
+        },
+        {
+          "info": {
+            "name": "Get toolkit by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/toolkits/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Toolkit slug identifier"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version of the toolkit"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves comprehensive information about a specific toolkit using its unique slug identifier. This endpoint provides detailed metadata, authentication configuration options, and feature counts for the requested toolkit."
+        },
+        {
+          "info": {
+            "name": "Fetch multiple toolkits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/toolkits/multi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options. You can optionally specify a list of toolkit slugs to fetch specific toolkits."
+        },
+        {
+          "info": {
+            "name": "Get toolkits changelog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/toolkits/changelog",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the last 10 versions changelog for all toolkits. This endpoint provides version history and changelog information for each toolkit."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tools",
+            "params": [
+              {
+                "name": "toolkit_slug",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the toolkit to filter by"
+              },
+              {
+                "name": "tool_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of specific tool slugs to retrieve (overrides other filters)"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of auth config IDs to filter tools by"
+              },
+              {
+                "name": "important",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only show important/featured tools (set to \"true\" to enable)"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filter tools by one or more tags (can be specified multiple times)"
+              },
+              {
+                "name": "scopes",
+                "value": "",
+                "type": "query",
+                "description": "Array of scopes to filter tools by)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Full-text search query to filter tools by name, slug, or description. Applied as a soft filter on top of other filters."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated: use \"query\" instead. Free-text search query to find tools by name, description, or functionality."
+              },
+              {
+                "name": "include_deprecated",
+                "value": "",
+                "type": "query",
+                "description": "Include deprecated tools in the response"
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a paginated list of available tools with comprehensive filtering, sorting and search capabilities. Use query parameters to narrow down results by toolkit, tags, or search terms."
+        },
+        {
+          "info": {
+            "name": "Get tool enum list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tools/enum",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a list of all available tool enumeration values (tool slugs) from latest version of each toolkit. This endpoint returns a comma-separated string of tool slugs that can be used in other API calls."
+        },
+        {
+          "info": {
+            "name": "Get tool by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tools/:tool_slug",
+            "params": [
+              {
+                "name": "tool_slug",
+                "value": "",
+                "type": "path",
+                "description": "The unique slug identifier of the tool"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Optional version of the tool to retrieve"
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific tool using its slug identifier. This endpoint returns full metadata about a tool including input/output parameters, versions, and toolkit information."
+        },
+        {
+          "info": {
+            "name": "Execute tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tools/execute/:tool_slug",
+            "headers": [
+              {
+                "name": "x-llm-gateway-headers",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tool_slug",
+                "value": "",
+                "type": "path",
+                "description": "The tool slug to execute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Execute a specific tool operation with provided arguments and authentication. This is the primary endpoint for integrating with third-party services and executing tools. You can provide structured arguments or use natural language processing by providing a text description of what you want to accomplish."
+        },
+        {
+          "info": {
+            "name": "Generate tool inputs from natural language",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tools/execute/:tool_slug/input",
+            "params": [
+              {
+                "name": "tool_slug",
+                "value": "",
+                "type": "path",
+                "description": "The tool slug to generate inputs for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Uses AI to translate a natural language description into structured arguments for a specific tool. This endpoint is useful when you want to let users describe what they want to do in plain language instead of providing structured parameters."
+        },
+        {
+          "info": {
+            "name": "Execute proxy request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tools/execute/proxy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Proxy an HTTP request to a third-party API using connected account credentials. This endpoint allows making authenticated API calls to external services while abstracting away authentication details."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "MCP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List MCP servers with optional filters and pagination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter MCP servers by name (case-insensitive partial match)"
+              },
+              {
+                "name": "toolkits",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of toolkit slugs to filter servers by"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of auth config IDs to filter servers by"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of ordering"
+              },
+              {
+                "name": "page_no",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-based)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 10)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a paginated list of MCP servers associated with the authenticated project. Results can be filtered by name, toolkit, or authentication configuration ID. MCP servers are used to provide Model Control Protocol integration points for connecting AI assistants to your applications and services."
+        },
+        {
+          "info": {
+            "name": "Create a new MCP server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new Model Control Protocol (MCP) server instance for the authenticated project. An MCP server provides a connection point for AI assistants to access your applications and services. The server is configured with specific authentication and tool permissions that determine what actions the connected assistants can perform."
+        },
+        {
+          "info": {
+            "name": "Create a new custom MCP server with multiple apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new Model Control Protocol (MCP) server instance that can integrate with multiple applications or toolkits simultaneously. This endpoint allows you to create a server that can access tools from different applications, making it suitable for complex workflows that span multiple services."
+        },
+        {
+          "info": {
+            "name": "Generate MCP URL with custom parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a Model Control Protocol (MCP) URL for an existing server with custom query parameters. The URL includes user-specific parameters and configuration flags that control the behavior of the MCP connection."
+        },
+        {
+          "info": {
+            "name": "Get MCP server details by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed configuration information for a specific Model Control Protocol (MCP) server. The returned data includes connection details, associated applications, enabled tools, and authentication configuration."
+        },
+        {
+          "info": {
+            "name": "Update MCP server configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/mcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the configuration of an existing Model Control Protocol (MCP) server. You can modify the server name, associated applications, and enabled tools. Only the fields included in the request will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete an MCP server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/mcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Performs a soft delete on a Model Control Protocol (MCP) server, making it unavailable for future use. This operation is reversible in the database but cannot be undone through the API. Any applications or services connected to this server will lose access after deletion."
+        },
+        {
+          "info": {
+            "name": "List MCP servers for a specific app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/app/:appKey",
+            "params": [
+              {
+                "name": "appKey",
+                "value": "",
+                "type": "path",
+                "description": "The key of the app to find MCP servers for"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter MCP servers by name (case-insensitive partial match)"
+              },
+              {
+                "name": "toolkits",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of toolkit slugs to filter servers by"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of auth config IDs to filter servers by"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of ordering"
+              },
+              {
+                "name": "page_no",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-based)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 10)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a paginated list of Model Control Protocol (MCP) servers that are configured for a specific application or toolkit. This endpoint allows you to find all MCP server instances that have access to a particular application, such as GitHub, Slack, or Jira."
+        },
+        {
+          "info": {
+            "name": "List all instances for an MCP server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/:serverId/instances",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              },
+              {
+                "name": "page_no",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-based)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 20)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search instances by user ID/instance ID"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of ordering"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a paginated list of user instances (user IDs) associated with a specific Model Control Protocol (MCP) server. This endpoint supports pagination to handle servers with many instances."
+        },
+        {
+          "info": {
+            "name": "Create a new MCP server instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/:serverId/instances",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new instance for a Model Control Protocol (MCP) server. This endpoint validates that the user has connected accounts for all auth configurations associated with the MCP server before creating the instance."
+        },
+        {
+          "info": {
+            "name": "Delete an MCP server instance and associated connected accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/:serverId/instances/:instanceId",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "The instance ID (user ID) to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removes a user instance from the MCP server and deletes all connected accounts for that user that are associated with the auth configurations of this specific MCP server. Connected accounts for other auth configurations are not affected."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List files with optional app and action filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/files/list",
+            "params": [
+              {
+                "name": "toolkit_slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter files by app slug. Example: \"file-converter\""
+              },
+              {
+                "name": "tool_slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter files by action slug. Example: \"convert-to-pdf\""
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of files associated with the authenticated project. Results can be filtered by toolkit and tool slugs."
+        },
+        {
+          "info": {
+            "name": "Create presigned URL for request file upload to S3",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/files/upload/request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a presigned URL for uploading a file to S3. This endpoint handles deduplication by checking if a file with the same MD5 hash already exists."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Migration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get NanoId from UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/migration/get-nanoid",
+            "headers": [
+              {
+                "name": "x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "query",
+                "description": "The legacy UUID that needs to be converted to a NanoId"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The type of resource that the UUID belongs to"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Convert a legacy UUID to its corresponding NanoId for migration purposes. This endpoint facilitates the transition from UUID-based identifiers to the more compact NanoId format used in the v3 API."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tool Router",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new tool router session (Legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/labs/tool_router/session",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new session for the tool router lab feature (Legacy). This endpoint initializes a new session with specified toolkits and their authentication configurations. The session provides an isolated environment for testing and managing tool routing logic with scoped MCP server access."
+        },
+        {
+          "info": {
+            "name": "Create a new tool router session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new session for the tool router feature. This endpoint initializes a new session with specified toolkits and their authentication configurations. The session provides an isolated environment for testing and managing tool routing logic with scoped MCP server access."
+        },
+        {
+          "info": {
+            "name": "Execute a tool within a tool router session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/execute",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Tool router session ID (required for public API, optional for internal - injected by middleware)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Executes a specific tool within a tool router session. This is the primary execution endpoint for both meta tools and app tools exposed by the session. The toolkit is automatically inferred from the tool slug. For app tools, the tool must belong to an allowed toolkit and must not be disabled in the session configuration. The endpoint validates permissions, resolves connected accounts when needed, and executes the tool with the session context. The top-level account field applies only to direct a"
+        },
+        {
+          "info": {
+            "name": "Execute a meta tool within a tool router session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/execute_meta",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Tool router session ID (required for public API, optional for internal - injected by middleware)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Executes a Composio meta tool (COMPOSIO_*) within a tool router session. This endpoint is kept for meta-tool compatibility; clients can also use the primary /execute endpoint."
+        },
+        {
+          "info": {
+            "name": "Get a tool router session by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves an existing tool router session by its ID. Returns the session configuration, MCP server URL, and available tools."
+        },
+        {
+          "info": {
+            "name": "Patch a tool router session config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Partially updates the configuration of an existing tool router session. Only the fields provided in the request body will be updated. Uses optimistic concurrency control to prevent lost updates. The previous config is stored in config history."
+        },
+        {
+          "info": {
+            "name": "Create a link session for a toolkit in a tool router session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/link",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates an authentication link session for a specific toolkit within a tool router session. Returns a link token and redirect URL that users can use to complete the OAuth flow."
+        },
+        {
+          "info": {
+            "name": "Execute proxy request within a tool router session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/proxy_execute",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Tool router session ID (required for public API, optional for internal - injected by middleware)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Execute any native API call on a toolkit with authentication automatically injected from Composio. This endpoint proxies HTTP requests to third-party APIs using connected account credentials resolved from the session context. Provide the toolkit slug, API endpoint, and HTTP method — Composio handles authentication injection, abstracting away credential management. Supports all HTTP methods, custom headers/query parameters, and binary request/response bodies."
+        },
+        {
+          "info": {
+            "name": "Get toolkits for a tool router session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/toolkits",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 50"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              },
+              {
+                "name": "toolkits",
+                "value": "",
+                "type": "query",
+                "description": "Optional comma-separated list of toolkit slugs to filter by. If provided, only these toolkits will be returned, overriding the session configuration."
+              },
+              {
+                "name": "is_connected",
+                "value": "",
+                "type": "query",
+                "description": "Whether to filter by connected toolkits. If provided, only connected toolkits will be returned."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter toolkits by name, slug, or description"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a cursor-paginated list of toolkits available in the tool router session. Includes toolkit metadata, composio-managed auth schemes, and connected accounts if available. Optionally filter by specific toolkit slugs."
+        },
+        {
+          "info": {
+            "name": "List tools with schemas for a tool router session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/tools",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Tool router session ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the tools available in a tool router session with their complete schemas. This includes both meta tools and any preloaded app tools exposed by the session."
+        },
+        {
+          "info": {
+            "name": "Search for tools using a query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/search",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "Tool router session ID (trs_*)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Search for tools matching a given use case query within a tool router session. Returns matching tool slugs, full tool schemas, toolkit connection statuses, and workflow guidance in a predictable format."
+        },
+        {
+          "info": {
+            "name": "List files in a session mount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/mounts/:mount_id/items",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              },
+              {
+                "name": "mount_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage mount"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from the previous response next_cursor field"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of files to return per page (1-500)"
+              },
+              {
+                "name": "mount_relative_prefix",
+                "value": "",
+                "type": "query",
+                "description": "Relative path prefix within the mount for filtering"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Lists files in a workbench session storage mount with cursor-based pagination. Use the download_url endpoint with the returned mount_relative_path to get a presigned download URL."
+        },
+        {
+          "info": {
+            "name": "Create a presigned download URL for a mount file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/mounts/:mount_id/download_url",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              },
+              {
+                "name": "mount_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage mount"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a presigned download URL for a file in a workbench session mount. Accepts a relative path within the mount."
+        },
+        {
+          "info": {
+            "name": "Create a presigned upload URL for a mount file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/mounts/:mount_id/upload_url",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              },
+              {
+                "name": "mount_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage mount"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a presigned upload URL for uploading a file to a workbench session mount. The caller should PUT the file content directly to the returned URL."
+        },
+        {
+          "info": {
+            "name": "Delete a file from a session mount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tool_router/session/:session_id/mounts/:mount_id/delete",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool router session"
+              },
+              {
+                "name": "mount_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage mount"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a file from a workbench session storage mount. S3 delete is idempotent — deleting a non-existent file succeeds silently."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
