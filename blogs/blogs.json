@@ -3,16 +3,12 @@
   "feeds": [
     {
       "source": "https://composio.dev/blog",
-      "feed_url": "https://composio.dev/blog",
-      "title": "",
+      "feed_url": "",
       "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://docs.composio.dev/faq/api_key/api_key",
-      "error": "HTTPError"
+      "method": "agent-scrape"
     }
   ],
   "post_count": 2,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:33:41Z",
+  "agent_pulled": "2026-06-27"
 }
