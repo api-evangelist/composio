@@ -1,0 +1,39 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/composio-openapi-original.json, openapi/composio-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - cookie
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: Project API key authentication
+  sources:
+  - openapi/composio-openapi-original.json
+  - openapi/composio-openapi-original.yml
+- name: UserApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-user-api-key
+  description: User API key authentication
+  sources:
+  - openapi/composio-openapi-original.json
+- name: CookieAuth
+  type: apiKey
+  in: cookie
+  parameter: authToken
+  description: Cookie-based session authentication
+  sources:
+  - openapi/composio-openapi-original.json
+- name: OrgApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-org-api-key
+  description: Organization API key authentication
+  sources:
+  - openapi/composio-openapi-original.json

@@ -284,6 +284,12 @@ apis:
       - title: Server-Side Event Routing
         description: Route Composio events into a consumer's own backend for processing and persistence.
 common:
+  - type: VulnerabilityDisclosure
+    url: security/composio-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/composio-domain-security.yml
+  - type: Authentication
+    url: authentication/composio-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/composio/overview
   - type: Arazzo
