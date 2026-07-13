@@ -2,13 +2,11 @@
   "repo": "composio",
   "feeds": [
     {
-      "source": "https://composio.dev/blog",
-      "feed_url": "",
-      "saved": 0,
-      "method": "agent-scrape"
+      "source": "https://docs.composio.dev/faq/api_key/api_key",
+      "error": "HTTPError"
     }
   ],
   "post_count": 2,
-  "fetched": "2026-06-27T12:33:41Z",
-  "agent_pulled": "2026-06-27"
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }
