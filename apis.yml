@@ -284,6 +284,8 @@ apis:
       - title: Server-Side Event Routing
         description: Route Composio events into a consumer's own backend for processing and persistence.
 common:
+  - type: AgenticAccess
+    url: agentic-access/composio-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/composio-vulnerability-disclosure.yml
   - type: DomainSecurity
