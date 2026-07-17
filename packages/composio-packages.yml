@@ -1,0 +1,83 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.composio.dev/docs/troubleshooting/sdks
+description: >-
+  First-party Composio client SDKs and framework provider packages. The core SDKs
+  are `composio` (Python) and `@composio/core` (TypeScript). `@composio/client` is
+  the lower-level generated API client. Provider packages adapt the core SDK to a
+  specific agent framework or model provider. The legacy `composio-core` PyPI
+  package is deprecated in favor of `composio`.
+packages:
+  - language: python
+    registry: pypi
+    name: composio
+    url: https://pypi.org/project/composio/
+    install: pip install composio
+    official: true
+    role: core-sdk
+  - language: python
+    registry: pypi
+    name: composio-core
+    url: https://pypi.org/project/composio-core/
+    install: pip install composio-core
+    official: true
+    deprecated: true
+    note: Deprecated; use the `composio` package instead.
+  - language: javascript
+    registry: npm
+    name: "@composio/core"
+    url: https://www.npmjs.com/package/@composio/core
+    install: npm install @composio/core
+    official: true
+    role: core-sdk
+  - language: javascript
+    registry: npm
+    name: "@composio/client"
+    url: https://www.npmjs.com/package/@composio/client
+    install: npm install @composio/client
+    official: true
+    role: generated-api-client
+  # Framework / model-provider adapter packages (first-party)
+  - language: python
+    registry: pypi
+    name: composio-openai
+    url: https://pypi.org/project/composio-openai/
+    install: pip install composio-openai
+    official: true
+    role: provider
+  - language: python
+    registry: pypi
+    name: composio-anthropic
+    url: https://pypi.org/project/composio-anthropic/
+    install: pip install composio-anthropic
+    official: true
+    role: provider
+  - language: python
+    registry: pypi
+    name: composio-langchain
+    url: https://pypi.org/project/composio-langchain/
+    install: pip install composio-langchain
+    official: true
+    role: provider
+  - language: python
+    registry: pypi
+    name: composio-crewai
+    url: https://pypi.org/project/composio-crewai/
+    install: pip install composio-crewai
+    official: true
+    role: provider
+  - language: javascript
+    registry: npm
+    name: "@composio/openai"
+    url: https://www.npmjs.com/package/@composio/openai
+    install: npm install @composio/openai
+    official: true
+    role: provider
+  # CLI binary (command surface catalogued in cli/composio-cli.yml)
+  - language: shell
+    registry: install-script
+    name: composio-cli
+    url: https://composio.dev/cli
+    install: curl -fsSL https://composio.dev/install | bash
+    official: true
+    role: cli

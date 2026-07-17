@@ -1,0 +1,46 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  https://docs.composio.dev/reference/rate-limits,
+  openapi/composio-openapi-original.json
+description: >-
+  Cross-cutting request/response semantics for the Composio v3 platform API,
+  captured from the docs and derived from the OpenAPI.
+authentication:
+  style: api-key
+  headers: [x-api-key, x-user-api-key, x-org-api-key]
+  cookie: authToken
+  scoped_keys: API keys can carry scoped permissions (e.g. MCP, files, realtime routes).
+  detail: authentication/composio-authentication.yml
+versioning:
+  style: uri-path
+  current: v3
+  detail: lifecycle/composio-lifecycle.yml
+pagination:
+  style: cursor
+  request_params: [cursor, limit]
+  also_seen: [page_no]
+  order_params: [order_by, order_direction]
+  note: >-
+    List endpoints accept a `cursor` and `limit`; some legacy list routes accept
+    `page_no`. Filtering params (search, toolkit_slug, user_ids, connected_account_ids,
+    include_deprecated) are common across list operations.
+rate_limiting:
+  window: per-organization, 1-minute
+  response_headers: [X-RateLimit, X-RateLimit-Remaining, X-RateLimit-Window-Size, Retry-After]
+  exhausted_status: 429
+  detail: rate-limits/composio-rate-limits.yml
+request_tracing:
+  request_id: Returned inside the error envelope as error.request_id.
+error_envelope:
+  format: custom-envelope
+  shape: '{ "error": { "message", "code", "slug", "status", "request_id?", "suggested_fix?", "errors?[] } }'
+  rfc9457: false
+  detail: errors/composio-problem-types.yml
+webhooks:
+  signing: Deliveries are signed; verify the `webhook-signature` header.
+  constraints: Webhook URLs must be publicly reachable (internal/loopback rejected).
+  secret_rotation: openapi/composio-openapi-original.json#postWebhookSubscriptionsByIdRotateSecret
+idempotency:
+  documented: false
+  note: No idempotency-key header is documented in the v3 API.

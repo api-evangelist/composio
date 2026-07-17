@@ -21,7 +21,7 @@ tags:
   - Unified_API
   - Webhooks
 created: '2026-03-03'
-modified: '2026-05-19'
+modified: '2026-06-20'
 url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 kind: company
@@ -284,6 +284,32 @@ apis:
       - title: Server-Side Event Routing
         description: Route Composio events into a consumer's own backend for processing and persistence.
 common:
+  - type: Packages
+    url: packages/composio-packages.yml
+  - type: WellKnown
+    url: well-known/composio-well-known.yml
+  - type: MCPServer
+    url: mcp/composio-mcp.yml
+  - type: LLMsTxt
+    url: llms/composio-llms.txt
+  - type: LLMsTxt
+    url: llms/composio-llms-full.txt
+  - type: Overlay
+    url: overlays/composio-openapi-original-overlay.yaml
+  - type: Conformance
+    url: conformance/composio-conformance.yml
+  - type: ErrorCatalog
+    url: errors/composio-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/composio-lifecycle.yml
+  - type: Conventions
+    url: conventions/composio-conventions.yml
+  - type: ChangeLog
+    url: changelog/composio-changelog.yml
+  - type: CLI
+    url: cli/composio-cli.yml
+  - type: DataModel
+    url: data-model/composio-data-model.yml
   - type: AgenticAccess
     url: agentic-access/composio-agentic-access.yml
   - type: VulnerabilityDisclosure

@@ -1,6 +1,14 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-06-20'
+method: searched
 source: openapi/composio-openapi-original.json, openapi/composio-openapi-original.yml
+docs: https://docs.composio.dev/faq/api_key/api_key
+notes: >-
+  The Composio platform API is API-key authenticated (project, user, and org keys via
+  header, plus a cookie session for the dashboard). API keys can carry scoped
+  permissions (e.g. MCP, files, realtime routes). Distinct from this, Composio manages
+  OAuth2 flows on behalf of end users to connect third-party toolkits (delegated auth);
+  those tokens are held by Composio and never exposed to the agent, so they are not a
+  securityScheme on this API.
 summary:
   types:
   - apiKey

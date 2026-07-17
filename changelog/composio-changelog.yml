@@ -1,0 +1,55 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.composio.dev/docs/changelog
+description: >-
+  Composio publishes a dated changelog covering the platform API, SDKs, and
+  toolkits. The changelog is date-based (entries at /docs/changelog/YYYY/MM/DD);
+  SDK releases follow semver (Python and TypeScript SDKs versioned independently)
+  and toolkits use date-based versions (YYYYMMDD_XX).
+scheme: date-based
+docs: https://docs.composio.dev/docs/changelog
+current:
+  python_sdk: 0.18.0
+  typescript_sdk: 0.14.0
+  api: v3
+entries:
+  - date: '2026-07-16'
+    highlights: Python SDK 0.18.0 hardens file uploads and provider schemas.
+    breaking: false
+  - date: '2026-07-15'
+    highlights: TypeScript SDK 0.14.0 hardens file uploads and tool execution.
+    breaking: false
+  - date: '2026-07-03'
+    highlights: >-
+      Composio-managed OAuth connections cutover from initiate to link for
+      remaining organizations; POST /api/v3/connected_accounts retired for
+      Composio-managed OAuth connections.
+    breaking: true
+  - date: '2026-06-28'
+    highlights: Python SDK 0.17.1 enables session deletion.
+    breaking: false
+  - date: '2026-06-27'
+    highlights: Python SDK 0.17.0 makes sessions first-class.
+    breaking: false
+  - date: '2026-06-26'
+    highlights: TypeScript SDK 0.13.0 introduces sessions; 0.13.1 adds session deletion.
+    breaking: false
+  - date: '2026-06-25'
+    highlights: TypeScript SDK 0.12.0 and Python SDK 0.16.0 released.
+    breaking: false
+  - date: '2026-06-19'
+    highlights: TypeScript SDK 0.11.0 moves custom tools to the Tool Router.
+    breaking: true
+  - date: '2026-06-18'
+    highlights: Python SDK 0.15.0 supports trigger 2FA ownership verification (user_id forwarded on triggers.create).
+    breaking: false
+  - date: '2026-06'
+    highlights: >-
+      Scoped API-key permissions added for MCP, files, and realtime routes;
+      improved provider tool-call argument handling.
+    breaking: false
+undated_recent:
+  - Legacy v1 and v2 API endpoints (deprecated previously) have been removed.
+  - Per-IP rate limits now apply; requests over the limit receive 429 responses.
+  - Webhook deliveries are now signed (verify the webhook-signature header); a new composio.trigger.disabled event was added; internal/loopback webhook targets are rejected.
+  - Remote workbench code execution (COMPOSIO_REMOTE_WORKBENCH / COMPOSIO_REMOTE_BASH_TOOL) now runs only inside a Composio session.

@@ -1,0 +1,79 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/composio-openapi-original.json
+format: custom-envelope
+description: >-
+  Composio does not use RFC 9457 application/problem+json. Errors are returned as a
+  JSON envelope with a nested `error` object. The status codes below are the 4xx/5xx
+  responses declared across the v3 OpenAPI (74 paths / 94 operations); counts are the
+  number of operations declaring each status.
+envelope:
+  primary:
+    shape: '{ "error": { "message", "code", "slug", "status", "request_id?", "suggested_fix?", "errors?[] } }'
+    required: [message, code, slug, status]
+    fields:
+      message: Human-readable error message.
+      code: Numeric internal error code.
+      slug: Machine-readable error slug.
+      status: HTTP status code (echoed).
+      request_id: Correlation id for support / tracing.
+      suggested_fix: Remediation hint when available.
+      errors: Array of field-level validation messages.
+    schema: json-schema/composio-error-schema.json
+  alternate:
+    shape: '{ "error": string, "code": string, "details": object }'
+    schema: json-schema/composio-errorresponse-schema.json
+problems:
+  - status: 400
+    title: Bad Request
+    operations: 86
+    remediation: Fix malformed parameters or request body; check `errors[]` for field detail.
+  - status: 401
+    title: Unauthorized
+    operations: 91
+    remediation: Provide a valid x-api-key / x-user-api-key / x-org-api-key or session auth.
+  - status: 403
+    title: Forbidden
+    operations: 30
+    remediation: The key lacks scope/permission for this route (scoped API-key permissions).
+  - status: 404
+    title: Not Found
+    operations: 73
+    remediation: The referenced nanoid/slug/id does not exist or is not in this project.
+  - status: 408
+    title: Request Timeout
+    operations: 4
+  - status: 409
+    title: Conflict
+    operations: 8
+    remediation: Resource already exists or is in a conflicting state.
+  - status: 410
+    title: Gone
+    operations: 6
+    remediation: Endpoint or resource has been removed (e.g. retired v1/v2 route).
+  - status: 413
+    title: Payload Too Large
+    operations: 6
+  - status: 422
+    title: Unprocessable Entity
+    operations: 7
+    remediation: Semantic validation failed; inspect `errors[]`.
+  - status: 429
+    title: Too Many Requests
+    operations: 10
+    remediation: Respect Retry-After; monitor X-RateLimit-Remaining (see rate-limits/composio-rate-limits.yml).
+  - status: 500
+    title: Internal Server Error
+    operations: 92
+  - status: 501
+    title: Not Implemented
+    operations: 8
+  - status: 502
+    title: Bad Gateway
+    operations: 7
+  - status: 503
+    title: Service Unavailable
+    operations: 1
+  - status: 504
+    title: Gateway Timeout
+    operations: 1

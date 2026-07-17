@@ -1,0 +1,49 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.composio.dev/docs/cli
+description: >-
+  Composio ships a first-party universal CLI that lets agents and developers search,
+  execute, and connect tools from the terminal. By default it installs as a skill for
+  Claude Code. The binary is catalogued in packages/composio-packages.yml (composio-cli).
+package: composio-cli
+docs: https://docs.composio.dev/docs/cli
+install:
+  - method: install-script
+    command: curl -fsSL https://composio.dev/install | bash
+  - method: skill
+    command: composio --install-skill
+auth:
+  login: composio login
+  non_interactive: composio login -y
+  whoami: composio whoami
+commands:
+  - name: search
+    description: Find relevant tools by natural-language query (start here).
+    usage: composio search <query> [--toolkits text] [--limit integer]
+  - name: execute
+    description: Run a known tool with parameters; validates input and checks auth.
+  - name: link
+    description: Connect an app account (e.g. composio link github).
+  - name: proxy
+    description: Call provider APIs with Composio-managed authentication.
+  - name: run
+    description: Execute multi-step workflows in TypeScript/JavaScript.
+  - name: dev
+    description: Developer-platform features (projects, auth configs, logs, connected-accounts).
+  - name: generate
+    description: Create TypeScript or Python type definitions from schemas.
+  - name: init
+    description: Initialize a Composio project in the current directory.
+  - name: login
+    description: Authenticate with Composio.
+  - name: whoami
+    description: Check local authentication state.
+  - name: upgrade
+    description: Update the CLI to the latest version.
+key_flows:
+  - flow: Discover then execute
+    steps: [composio search "<intent>", composio execute <tool_slug>]
+  - flow: Connect an account
+    steps: [composio link <toolkit>]
+  - flow: List connected accounts
+    steps: ["composio dev connected-accounts list --toolkits github --status ACTIVE"]

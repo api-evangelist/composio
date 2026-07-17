@@ -1,0 +1,25 @@
+generated: '2026-06-20'
+method: searched
+source: probe of /.well-known/* on Composio hosts
+note: >-
+  No /.well-known/ discovery documents are published on the API host
+  (backend.composio.dev) or the marketing host (composio.dev). The docs host
+  publishes an llms.txt (captured in llms/composio-llms.txt), not a well-known
+  document. Absence of these documents is a valid, recorded result.
+hosts:
+  - host: https://backend.composio.dev
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+  - host: https://composio.dev
+    documents:
+      - path: /.well-known/security.txt
+        status: 404

@@ -1,0 +1,86 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/composio-openapi-original.json
+description: >-
+  Entity-relationship graph for the Composio v3 platform, derived from the OpenAPI
+  resource paths and id-reference fields. Composio's control-plane objects are
+  scoped under an Organization and Project; runtime objects hang off a Session /
+  Connected Account. Most resources are keyed by a `nanoid`.
+entities:
+  - name: Organization
+    id: org
+    description: Top-level tenant that owns projects, members, and billing.
+  - name: Project
+    id: nano_id
+    description: Isolation boundary carrying its own API key, auth configs, and connected accounts.
+    relationships:
+      - belongs_to: Organization
+  - name: AuthConfig
+    id: nanoid
+    description: Reusable developer credentials + app-level settings (scopes, auth method) per toolkit.
+    relationships:
+      - belongs_to: Project
+      - has_many: ConnectedAccount
+        via: auth_config
+  - name: Toolkit
+    id: slug
+    description: An integrated application (GitHub, Gmail, Slack, ...) exposing a set of tools.
+    relationships:
+      - has_many: Tool
+  - name: Tool
+    id: tool_slug
+    description: An executable action within a toolkit.
+    relationships:
+      - belongs_to: Toolkit
+        via: toolkit_slug
+  - name: ConnectedAccount
+    id: nanoid
+    description: An authenticated connection between an end user and a toolkit via an auth config.
+    relationships:
+      - belongs_to: AuthConfig
+        via: auth_config
+      - belongs_to: Toolkit
+        via: toolkit_slug
+      - belongs_to: User
+        via: user_id
+  - name: Session
+    id: session_id
+    description: Tool Router session scoping an agent's tool discovery + execution (optionally MCP-exposed).
+    relationships:
+      - belongs_to: ConnectedAccount
+      - has_many: Mount
+        via: mount_id
+  - name: TriggerInstance
+    id: triggerId
+    description: An active webhook/event subscription from a connected application.
+    relationships:
+      - belongs_to: ConnectedAccount
+      - belongs_to: TriggerType
+        via: slug
+  - name: TriggerType
+    id: slug
+    description: Catalog of subscribable event types per toolkit.
+  - name: WebhookEndpoint
+    id: nano_id
+    description: Consumer-owned HTTP endpoint registered to receive Composio events.
+    relationships:
+      - belongs_to: Project
+  - name: WebhookSubscription
+    id: id
+    description: Binds a webhook endpoint to specific event categories with a signing secret.
+    relationships:
+      - belongs_to: WebhookEndpoint
+  - name: McpServer
+    id: id
+    description: A named/managed MCP server exposing selected toolkits over MCP.
+    relationships:
+      - has_many: McpServerInstance
+        via: instanceId
+      - references: Toolkit
+        via: appKey
+  - name: User
+    id: user_id
+    description: End user on whose behalf connected accounts and executions are scoped.
+    relationships:
+      - has_many: ConnectedAccount
+        via: user_id

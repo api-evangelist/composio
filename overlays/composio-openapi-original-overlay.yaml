@@ -1,0 +1,39 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Composio Platform API
+  version: 1.0.0
+extends: openapi/composio-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: composio
+      x-apievangelist-provider: Composio
+      x-apievangelist-position: Consumer
+      x-apievangelist-artifacts:
+        packages: packages/composio-packages.yml
+        mcp: mcp/composio-mcp.yml
+        authentication: authentication/composio-authentication.yml
+        errors: errors/composio-problem-types.yml
+        conventions: conventions/composio-conventions.yml
+        lifecycle: lifecycle/composio-lifecycle.yml
+        changelog: changelog/composio-changelog.yml
+        cli: cli/composio-cli.yml
+        data-model: data-model/composio-data-model.yml
+        conformance: conformance/composio-conformance.yml
+        rate-limits: rate-limits/composio-rate-limits.yml
+  - target: $.info
+    update:
+      x-apievangelist-auth-model: >-
+        API-key authentication (x-api-key / x-user-api-key / x-org-api-key). Composio
+        manages OAuth2 on behalf of end users to third-party toolkits; the platform
+        API itself is key-authenticated. No OAuth2 scopes on the platform API.
+  - target: $.info
+    update:
+      x-apievangelist-mcp: >-
+        Toolkits are exposed over MCP via a hosted per-session Tool Router endpoint
+        (session.mcp.url, HTTP transport). See mcp/composio-mcp.yml.
+  - target: $.info
+    update:
+      x-apievangelist-rate-limits: >-
+        Per-org, 1-minute window. Headers: X-RateLimit, X-RateLimit-Remaining,
+        X-RateLimit-Window-Size, Retry-After. 429 on exhaustion.

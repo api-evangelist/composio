@@ -1,0 +1,46 @@
+generated: '2026-06-20'
+method: derived
+source: >-
+  openapi/composio-openapi-original.json, docs.composio.dev,
+  conventions/composio-conventions.yml
+description: >-
+  Industry / cross-cutting standards conformance for the Composio v3 platform API,
+  asserted from the OpenAPI, the docs, and the derived convention artifacts.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: Published OpenAPI 3.0.0 at backend.composio.dev/api/v3/openapi.json.
+  - id: mcp
+    conforms: true
+    evidence: Hosted per-session MCP server (Tool Router) over HTTP transport; see mcp/composio-mcp.yml.
+  - id: oauth2
+    conforms: partial
+    evidence: >-
+      Composio manages OAuth2 flows on behalf of end users to third-party toolkits
+      (delegated auth), but its own platform API is authenticated with API keys, not
+      OAuth2 securitySchemes.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a custom nested `error` envelope, not application/problem+json.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No documented Sunset/Deprecation header contract; migrations communicated via changelog.
+  - id: cursor-pagination
+    conforms: true
+    evidence: List operations expose cursor + limit query parameters.
+  - id: webhook-signing
+    conforms: true
+    evidence: Webhook deliveries signed; verify webhook-signature header.
+  - id: soc2
+    conforms: true
+    evidence: MCP Gateway documented as SOC 2 / ISO certified for enterprise (marketing claim; not independently verified here).
+  - id: fhir-r4
+    conforms: false
+  - id: scim2
+    conforms: false
+  - id: json-api
+    conforms: false
+  - id: odata
+    conforms: false

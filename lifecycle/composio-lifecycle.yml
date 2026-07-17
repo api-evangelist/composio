@@ -1,0 +1,37 @@
+generated: '2026-06-20'
+method: searched
+source: https://docs.composio.dev/docs/migration-guide/toolkit-versioning
+description: >-
+  Composio's current platform API is v3 (URI-path versioned under /api/v3). Legacy
+  v1 and v2 endpoints were deprecated and have since been removed. Toolkits carry
+  their own date-based versions and can be pinned; the SDKs are versioned
+  independently via semver. Composio publishes migration guides rather than a formal
+  Sunset/Deprecation-header contract.
+versioning:
+  scheme: uri-path
+  current: v3
+  base_path: /api/v3
+  docs: https://docs.composio.dev/docs/migration-guide/toolkit-versioning
+toolkit_versioning:
+  scheme: date-based
+  format: YYYYMMDD_XX
+  pinning:
+    - SDK-level via toolkit_versions parameter
+    - Per-call via version parameter
+    - Environment variable e.g. COMPOSIO_TOOLKIT_VERSION_GITHUB
+  note: >-
+    As of Python SDK 0.9.0 / TypeScript SDK 0.2.0, manual tool execution requires
+    explicit version specification.
+deprecation:
+  policy_url: https://docs.composio.dev/docs/changelog
+  sunset_header: false
+  removed_versions: [v1, v2]
+  notes: >-
+    Deprecations are communicated via the dated changelog and migration guides. The
+    OpenAPI exposes include_deprecated / deprecated_status filters on toolkit and
+    tool listings; RFC 8594 Sunset/Deprecation headers are not documented.
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.composio.dev
+changelog: changelog/composio-changelog.yml
