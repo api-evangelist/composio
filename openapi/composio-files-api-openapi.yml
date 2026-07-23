@@ -1,0 +1,349 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Files API
+  description: File management
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Files
+  description: File management
+paths:
+  /api/v3/files/list:
+    get:
+      summary: List files with optional app and action filters
+      description: Retrieves a list of files associated with the authenticated project. Results can be filtered by toolkit and tool slugs.
+      tags:
+      - Files
+      operationId: getFilesList
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: 'Filter files by app slug. Example: "file-converter"'
+        required: false
+        description: 'Filter files by app slug. Example: "file-converter"'
+        name: toolkit_slug
+        in: query
+      - schema:
+          type: string
+          description: 'Filter files by action slug. Example: "convert-to-pdf"'
+        required: false
+        description: 'Filter files by action slug. Example: "convert-to-pdf"'
+        name: tool_slug
+        in: query
+      - schema:
+          type: number
+          nullable: true
+        required: false
+        description: Number of items per page, max allowed is 1000
+        name: limit
+        in: query
+      - schema:
+          type: string
+        required: false
+        description: Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page.
+        name: cursor
+        in: query
+      responses:
+        '200':
+          description: Successfully retrieved files
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        toolkit_slug:
+                          type: string
+                          description: 'Slug of the app where this file belongs to. Example: "file-converter"'
+                        tool_slug:
+                          type: string
+                          description: 'Slug of the action where this file belongs to. Example: "convert-to-pdf"'
+                        filename:
+                          type: string
+                          description: 'Name of the original file. Example: "document.docx"'
+                        mimetype:
+                          type: string
+                          description: 'Mime type of the original file. Example: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"'
+                        md5:
+                          type: string
+                          description: 'MD5 hash of the file for integrity verification. Example: "d41d8cd98f00b204e9800998ecf8427e"'
+                      required:
+                      - toolkit_slug
+                      - tool_slug
+                      - filename
+                      - mimetype
+                      - md5
+                  next_cursor:
+                    type: string
+                    nullable: true
+                  total_pages:
+                    type: number
+                  current_page:
+                    type: number
+                  total_items:
+                    type: number
+                required:
+                - items
+                - total_pages
+                - current_page
+                - total_items
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/files/upload/request:
+    post:
+      summary: Create presigned URL for request file upload to S3
+      description: Generates a presigned URL for uploading a file to S3. This endpoint handles deduplication by checking if a file with the same MD5 hash already exists.
+      tags:
+      - Files
+      operationId: postFilesUploadRequest
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                toolkit_slug:
+                  type: string
+                  description: 'Slug of the app where this file belongs to. Example: "gmail", "slack", "github"'
+                tool_slug:
+                  type: string
+                  description: 'Slug of the action where this file belongs to. Example: "GMAIL_SEND_EMAIL", "SLACK_UPLOAD_FILE"'
+                filename:
+                  type: string
+                  description: 'Name of the original file. Example: "quarterly_report.pdf"'
+                mimetype:
+                  type: string
+                  description: 'Mime type of the original file. Example: "application/pdf", "image/png"'
+                md5:
+                  type: string
+                  description: 'MD5 hash of the file for deduplication and integrity verification. Example: "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"'
+              required:
+              - toolkit_slug
+              - tool_slug
+              - filename
+              - mimetype
+              - md5
+            examples:
+              Gmail Email Attachment:
+                value:
+                  toolkit_slug: gmail
+                  tool_slug: GMAIL_SEND_EMAIL
+                  filename: quarterly_report.pdf
+                  mimetype: application/pdf
+                  md5: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6
+              Slack File Upload:
+                value:
+                  toolkit_slug: slack
+                  tool_slug: SLACK_SEND_MESSAGE
+                  filename: meeting_notes.docx
+                  mimetype: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  md5: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7
+              GitHub Issue Screenshot:
+                value:
+                  toolkit_slug: github
+                  tool_slug: GITHUB_CREATE_AN_ISSUE
+                  filename: bug_screenshot.png
+                  mimetype: image/png
+                  md5: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8
+              Notion Page Image:
+                value:
+                  toolkit_slug: notion
+                  tool_slug: NOTION_ADD_PAGE_CONTENT
+                  filename: diagram.svg
+                  mimetype: image/svg+xml
+                  md5: d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9
+              Jira Attachment:
+                value:
+                  toolkit_slug: jira
+                  tool_slug: JIRA_ADD_ATTACHMENT_TO_ISSUE
+                  filename: error_logs.txt
+                  mimetype: text/plain
+                  md5: e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0
+      responses:
+        '200':
+          description: Successfully created upload URL for request file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: 'ID of the request file. Example: "req_file_9mZn4qR8sXwT"'
+                  key:
+                    type: string
+                    description: 'Object storage upload location. Example: "projects/pr_1a2b3c4d5e6f/requests/slack/SLACK_UPLOAD_FILE/document_9mZn4q.docx"'
+                  new_presigned_url:
+                    type: string
+                    description: 'Presigned URL for upload. Example: "https://storage.composio.dev/projects/pr_1a2b3c4d5e6f/requests/slack/document_9mZn4q.docx?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600..."'
+                  newPresignedUrl:
+                    type: string
+                    description: '[DEPRECATED] Use new_presigned_url instead. Presigned URL for upload. Example: "https://storage.composio.dev/projects/pr_1a2b3c4d5e6f/requests/slack/document_9mZn4q.docx?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Expires=3600..."'
+                    deprecated: true
+                  type:
+                    type: string
+                    enum:
+                    - new
+                    description: '[DEPRECATED] Indicates this is a new file that needs to be uploaded'
+                    deprecated: true
+                  metadata:
+                    type: object
+                    properties:
+                      storage_backend:
+                        type: string
+                        enum:
+                        - s3
+                        - azure_blob_storage
+                        description: Storage backend used for the file. If this is azure, use `x-ms-blob-type` header to set the blob type to `BlockBlob` while uploading the file
+                    required:
+                    - storage_backend
+                required:
+                - id
+                - key
+                - new_presigned_url
+                - newPresignedUrl
+                - type
+                - metadata
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '410':
+          description: Gone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

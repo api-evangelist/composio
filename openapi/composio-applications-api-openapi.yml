@@ -1,0 +1,339 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Applications API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Applications
+paths:
+  /api/v3/mcp/app/{appKey}:
+    get:
+      summary: List MCP servers for a specific app
+      description: Retrieves a paginated list of Model Control Protocol (MCP) servers that are configured for a specific application or toolkit. This endpoint allows you to find all MCP server instances that have access to a particular application, such as GitHub, Slack, or Jira.
+      tags:
+      - Applications
+      operationId: getMcpAppByAppKey
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: Toolkit or application slug identifier to filter MCP servers by
+          example: github
+        required: true
+        description: The key of the app to find MCP servers for
+        name: appKey
+        in: path
+      - schema:
+          type: string
+          description: Name substring to filter servers by
+          example: github
+        required: false
+        description: Filter MCP servers by name (case-insensitive partial match)
+        name: name
+        in: query
+      - schema:
+          type: string
+        required: false
+        description: Comma-separated list of toolkit slugs to filter servers by
+        in: query
+        name: toolkits
+      - schema:
+          type: string
+        required: false
+        description: Comma-separated list of auth config IDs to filter servers by
+        in: query
+        name: auth_config_ids
+      - schema:
+          type: string
+          enum:
+          - created_at
+          - updated_at
+          default: updated_at
+          description: Field to use for ordering the results
+          example: updated_at
+        required: false
+        description: Field to order results by
+        name: order_by
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+          description: Sort direction (ascending or descending)
+          example: desc
+        required: false
+        description: Direction of ordering
+        name: order_direction
+        in: query
+      - schema:
+          type: number
+          nullable: true
+          default: 1
+          description: Page number to retrieve
+          example: 1
+        required: false
+        description: Page number for pagination (1-based)
+        name: page_no
+        in: query
+      - schema:
+          type: number
+          nullable: true
+          default: 10
+          description: Number of servers to return per page
+          example: 10
+        required: false
+        description: 'Number of items per page (default: 10)'
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Successfully retrieved MCP servers for the specified application. Returns a paginated list of server configurations including connection details and command instructions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: UUID of the MCP server instance
+                          example: 550e8400-e29b-41d4-a716-446655440000
+                        name:
+                          type: string
+                          description: User-defined descriptive name for this MCP server
+                          example: GitHub Integration Server
+                        auth_config_ids:
+                          type: array
+                          items:
+                            type: string
+                          description: ID references to the auth configurations used by this server
+                          example:
+                          - ac_1a2b3c4d5e6f
+                          - ac_7g8h9i0j1k2l
+                        allowed_tools:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of tool slugs that this MCP server is allowed to use
+                          example:
+                          - GITHUB_CREATE_AN_ISSUE
+                          - GITHUB_GET_A_REPOSITORY
+                          - GITHUB_LIST_PULL_REQUESTS
+                        mcp_url:
+                          type: string
+                          description: '[DEPRECATED] Please use the URL with user_id or connected_account_id query param'
+                          deprecated: true
+                          example: https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john
+                        toolkits:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of toolkit slugs that this MCP server is allowed to use
+                          example:
+                          - github
+                          - jira
+                          - slack
+                        toolkit_icons:
+                          type: object
+                          additionalProperties:
+                            type: string
+                          description: Object mapping each toolkit slug to its icon/logo URL for display purposes
+                          example:
+                            github: https://assets.composio.dev/logos/github.png
+                            jira: https://assets.composio.dev/logos/jira.png
+                            slack: https://assets.composio.dev/logos/slack.png
+                        commands:
+                          type: object
+                          properties:
+                            cursor:
+                              type: string
+                              description: Command line instruction for Cursor client setup
+                              deprecated: true
+                              example: npx @composio/mcp@latest setup "https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john" --client cursor
+                            claude:
+                              type: string
+                              description: Command line instruction for Claude client setup
+                              deprecated: true
+                              example: npx @composio/mcp@latest setup "https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john" --client claude
+                            windsurf:
+                              type: string
+                              description: Command line instruction for Windsurf client setup
+                              deprecated: true
+                              example: npx @composio/mcp@latest setup "https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john" --client windsurf
+                          required:
+                          - cursor
+                          - claude
+                          - windsurf
+                          description: Set of command line instructions for connecting various clients to this MCP server
+                          deprecated: true
+                        updated_at:
+                          type: string
+                          description: Date and time when this server configuration was last modified
+                          example: '2023-06-15T14:30:00.000Z'
+                        created_at:
+                          type: string
+                          description: Date and time when this server was initially created
+                          example: '2023-06-10T09:15:00.000Z'
+                        server_instance_count:
+                          type: number
+                          description: Total count of active user instances connected to this server
+                          example: 5
+                        managed_auth_via_composio:
+                          type: boolean
+                          description: Whether the MCP server is managed by Composio
+                          example: true
+                      required:
+                      - id
+                      - name
+                      - auth_config_ids
+                      - allowed_tools
+                      - mcp_url
+                      - toolkits
+                      - toolkit_icons
+                      - commands
+                      - updated_at
+                      - created_at
+                      - server_instance_count
+                      - managed_auth_via_composio
+                      description: MCP server configuration and connection details
+                    description: Array of MCP server configurations
+                    example:
+                    - id: 550e8400-e29b-41d4-a716-446655440000
+                      name: GitHub Integration Server
+                      auth_config_ids:
+                      - ac_1a2b3c4d5e6f
+                      - ac_7g8h9i0j1k2l
+                      allowed_tools:
+                      - GITHUB_CREATE_AN_ISSUE
+                      - GITHUB_GET_A_REPOSITORY
+                      mcp_url: https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john
+                      commands:
+                        cursor: npx @composio/mcp@latest setup "https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john" --client cursor
+                        claude: npx @composio/mcp@latest setup "https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john" --client claude
+                        windsurf: npx @composio/mcp@latest setup "https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john" --client windsurf
+                      toolkits:
+                      - github
+                      - jira
+                      - slack
+                      toolkit_icons:
+                        github: https://assets.composio.dev/logos/github.png
+                        jira: https://assets.composio.dev/logos/jira.png
+                        slack: https://assets.composio.dev/logos/slack.png
+                      updated_at: '2023-06-15T14:30:00.000Z'
+                      created_at: '2023-06-10T09:15:00.000Z'
+                      server_instance_count: 5
+                      managed_auth_via_composio: true
+                  total_pages:
+                    type: number
+                    description: Total number of pages in the paginated response
+                    example: 5
+                  current_page:
+                    type: number
+                    description: Current page number being returned
+                    example: 1
+                required:
+                - items
+                - total_pages
+                - current_page
+                description: Paginated response containing MCP servers
+        '400':
+          description: Bad request. The query parameters may be invalid or in an incorrect format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The authenticated user does not have permission to view MCP servers for this application.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Application not found. No application with the specified key exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

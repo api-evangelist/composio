@@ -1,0 +1,166 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Realtime API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Realtime
+paths:
+  /api/v3/cli/realtime/credentials:
+    get:
+      summary: Get credentials for CLI realtime events
+      description: Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}.
+      tags:
+      - Realtime
+      operationId: getCliRealtimeCredentials
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      responses:
+        '200':
+          description: Credentials for CLI realtime events retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pusher_key:
+                    type: string
+                    description: The Pusher client key for subscribing to the trigger
+                  pusher_cluster:
+                    type: string
+                    description: The Pusher cluster for subscribing to the trigger
+                  project_id:
+                    type: string
+                    description: 'The project nanoId associated with the API Key provided. Used as part of the CLI channel name: private-cli-{project_id}'
+                required:
+                - pusher_key
+                - pusher_cluster
+                - project_id
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/cli/realtime/auth:
+    post:
+      summary: Authenticate CLI Pusher channel access
+      description: Authenticate CLI client access to a private-cli-{nanoId} Pusher channel
+      tags:
+      - Realtime
+      operationId: postCliRealtimeAuth
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                channel_name:
+                  type: string
+                  description: The channel name to authenticate for
+                socket_id:
+                  type: string
+                  description: The socket ID for Pusher authentication
+              required:
+              - channel_name
+              - socket_id
+      responses:
+        '200':
+          description: Pusher authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth:
+                    type: string
+                    description: The authentication string for Pusher
+                  channel_data:
+                    type: string
+                    description: Channel data for presence channels
+                required:
+                - auth
+        '400':
+          description: Invalid channel name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error occurred during authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

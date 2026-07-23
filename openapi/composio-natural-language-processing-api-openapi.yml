@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Natural Language Processing API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Natural Language Processing
+paths:
+  /api/v3/tools/execute/{tool_slug}/input:
+    post:
+      summary: Generate tool inputs from natural language
+      description: Uses AI to translate a natural language description into structured arguments for a specific tool. This endpoint is useful when you want to let users describe what they want to do in plain language instead of providing structured parameters.
+      tags:
+      - Natural Language Processing
+      operationId: postToolsExecuteByToolSlugInput
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+        required: true
+        description: The tool slug to generate inputs for
+        name: tool_slug
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Natural language description of what you want to accomplish with this tool
+                  example: I need to trigger the main workflow in the octocat/Hello-World repository to deploy to production
+                custom_description:
+                  type: string
+                  description: Custom description of the tool to help guide the LLM in generating more accurate inputs
+                  example: This tool triggers GitHub Actions workflows in a repository. It requires the repository name, workflow ID, and optional input parameters.
+                system_prompt:
+                  type: string
+                  description: System prompt to control and guide the behavior of the LLM when generating inputs
+                  example: You are an expert assistant that generates precise GitHub Actions workflow parameters. Extract exact repository names, workflow IDs, and input values from user descriptions.
+                version:
+                  type: string
+                  description: Tool version to use when generating inputs (defaults to "latest" if not specified)
+                  example: latest
+              required:
+              - text
+      responses:
+        '200':
+          description: Successfully generated structured inputs for the action based on natural language description
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  arguments:
+                    type: object
+                    additionalProperties:
+                      nullable: true
+                    description: Key-value pairs of arguments required by the tool to accomplish the described task
+                    example:
+                      repository: octocat/Hello-World
+                      workflow_id: main.yml
+                      ref: main
+                      inputs:
+                        environment: production
+                  error:
+                    type: string
+                    description: Error message if the arguments could not be generated (null if successful)
+                    example: Unable to determine the repository name from the provided description
+        '400':
+          description: Bad request - Invalid input parameters or insufficient description to generate tool arguments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found - The specified tool does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Unprocessable entity - Invalid state of the connected account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - Rate limit exceeded for natural language processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error - AI processing failed or other server error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

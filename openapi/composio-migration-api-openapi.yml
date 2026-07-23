@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Migration API
+  description: Endpoints to help with migration from v1 to v3
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Migration
+  description: Endpoints to help with migration from v1 to v3
+paths:
+  /api/v3/migration/get-nanoid:
+    get:
+      summary: Get NanoId from UUID
+      description: Convert a legacy UUID to its corresponding NanoId for migration purposes. This endpoint facilitates the transition from UUID-based identifiers to the more compact NanoId format used in the v3 API.
+      tags:
+      - Migration
+      operationId: getMigrationGetNanoid
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      parameters:
+      - schema:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        required: true
+        description: The legacy UUID that needs to be converted to a NanoId
+        name: uuid
+        in: query
+      - schema:
+          type: string
+          enum:
+          - CONNECTED_ACCOUNT
+          - AUTH_CONFIG
+          - TRIGGER_INSTANCE
+          example: CONNECTED_ACCOUNT
+        required: true
+        description: The type of resource that the UUID belongs to
+        name: type
+        in: query
+      - schema:
+          type: string
+          description: Your Composio API key used for authentication
+          example: sk_123456789abcdef
+        required: true
+        name: x-api-key
+        in: header
+      responses:
+        '200':
+          description: Successfully retrieved NanoId for the given UUID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nanoid:
+                    type: string
+                    minLength: 10
+                    maxLength: 10
+                    description: The NanoId corresponding to the provided UUID. This is the new identifier that should be used in place of the legacy UUID.
+                    example: XqXrPalt3v
+                required:
+                - nanoid
+        '400':
+          description: Bad Request - Invalid UUID or resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found - The UUID does not correspond to any resource of the specified type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '410':
+          description: Gone - The UUID does not correspond to any resource of the specified type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error - An unexpected error occurred during processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

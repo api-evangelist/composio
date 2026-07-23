@@ -1,0 +1,198 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management URL Generation API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: URL Generation
+paths:
+  /api/v3/mcp/servers/generate:
+    post:
+      summary: Generate MCP URL with custom parameters
+      description: Generates a Model Control Protocol (MCP) URL for an existing server with custom query parameters. The URL includes user-specific parameters and configuration flags that control the behavior of the MCP connection.
+      tags:
+      - URL Generation
+      operationId: postMcpServersGenerate
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mcp_server_id:
+                  type: string
+                  description: Unique identifier of the MCP server to generate URL for
+                  example: 550e8400-e29b-41d4-a716-446655440000
+                managed_auth_by_composio:
+                  type: boolean
+                  default: false
+                  description: Flag indicating if Composio manages authentication
+                  example: true
+                user_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: List of user identifiers for whom the URL is generated
+                  example:
+                  - user_123456
+                  - user_789012
+                connected_account_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: List of connected account identifiers
+                  example:
+                  - ca_1a2b3c4d5e6f
+                  - ca_7g8h9i0j1k2l
+                  - ca_3m4n5o6p7q8r
+              required:
+              - mcp_server_id
+              description: Request parameters for generating an MCP URL
+            examples:
+              Basic URL Generation:
+                value:
+                  mcp_server_id: 550e8400-e29b-41d4-a716-446655440000
+                  user_ids:
+                  - user_123456
+                  connected_account_ids:
+                  - ca_1a2b3c4d5e6f
+                  - ca_7g8h9i0j1k2l
+              Managed Auth Configuration:
+                value:
+                  mcp_server_id: 550e8400-e29b-41d4-a716-446655440000
+                  user_ids:
+                  - user_123456
+                  - user_789012
+                  connected_account_ids:
+                  - ca_1a2b3c4d5e6f
+                  - ca_7g8h9i0j1k2l
+                  - ca_3m4n5o6p7q8r
+      responses:
+        '200':
+          description: Successfully generated MCP URL. Returns the complete URL with all specified query parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mcp_url:
+                    type: string
+                    description: Base MCP URL without any query parameters
+                    example: https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000
+                  connected_account_urls:
+                    type: array
+                    items:
+                      type: string
+                    description: List of URLs generated for each connected account ID
+                    example:
+                    - https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_1a2b3c4d5e6f&user_id=user_123456,user_789012
+                    - https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_7g8h9i0j1k2l&user_id=user_123456,user_789012
+                  user_ids_url:
+                    type: array
+                    items:
+                      type: string
+                    description: List of URLs generated for each user ID
+                    example:
+                    - https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_1a2b3c4d5e6f,ca_7g8h9i0j1k2l&user_id=user_123456
+                    - https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_1a2b3c4d5e6f,ca_7g8h9i0j1k2l&user_id=user_789012
+                required:
+                - mcp_url
+                - connected_account_urls
+                - user_ids_url
+                description: Response containing the generated MCP URLs
+        '400':
+          description: Bad request. The request body may be invalid or missing required parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The authenticated user does not have permission to access this MCP server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: MCP server not found. No server with the specified ID exists or it has been deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

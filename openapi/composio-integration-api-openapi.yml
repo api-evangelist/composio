@@ -1,0 +1,918 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Integration API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Integration
+paths:
+  /api/v3/toolkits:
+    get:
+      summary: List available toolkits
+      description: Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options.
+      tags:
+      - Integration
+      operationId: getToolkits
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: Category ID or name to filter toolkits by
+          example: productivity
+        required: false
+        description: Filter toolkits by category
+        name: category
+        in: query
+      - schema:
+          type: string
+          enum:
+          - composio
+          - all
+          - project
+          description: Entity responsible for managing the toolkits
+        required: false
+        description: Filter toolkits by who manages them
+        name: managed_by
+        in: query
+      - schema:
+          type: string
+          enum:
+          - usage
+          - alphabetically
+          description: Determines how toolkits should be sorted in the response
+        required: false
+        description: Sort order for returned toolkits
+        name: sort_by
+        in: query
+      - schema:
+          type: boolean
+          nullable: true
+          default: false
+          description: Include deprecated toolkits in the response
+          example: true
+        required: false
+        description: Include deprecated toolkits in the response
+        name: include_deprecated
+        in: query
+      - schema:
+          type: string
+          description: Search query to filter toolkits by name, slug, or description (minimum 3 characters)
+          example: gmail
+        required: false
+        description: Search query to filter toolkits by name, slug, or description
+        name: search
+        in: query
+      - schema:
+          type: number
+          nullable: true
+        required: false
+        description: Number of items per page, max allowed is 1000
+        name: limit
+        in: query
+      - schema:
+          type: string
+        required: false
+        description: Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page.
+        name: cursor
+        in: query
+      responses:
+        '200':
+          description: Toolkits retrieved successfully. Returns a paginated list of available toolkits with detailed metadata.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        slug:
+                          type: string
+                          description: URL-friendly unique identifier for the toolkit
+                          example: github
+                        name:
+                          type: string
+                          description: Human-readable name of the toolkit
+                          example: GitHub
+                        auth_schemes:
+                          type: array
+                          items:
+                            type: string
+                          description: List of authentication methods supported by this toolkit
+                          example:
+                          - oauth2
+                          - api_key
+                        composio_managed_auth_schemes:
+                          type: array
+                          items:
+                            type: string
+                          description: List of authentication methods that Composio manages for this toolkit
+                          example:
+                          - oauth2
+                        is_local_toolkit:
+                          type: boolean
+                          description: 'DEPRECATED: This field is no longer meaningful and will always return false. It was previously used to indicate if a toolkit is specific to the current project.'
+                          deprecated: true
+                          example: false
+                        no_auth:
+                          type: boolean
+                          description: When true, this toolkit can be used without authentication
+                          example: false
+                        auth_guide_url:
+                          type: string
+                          nullable: true
+                          description: URL to a guide page with authentication setup instructions for this toolkit
+                          example: https://composio.dev/auth/github
+                        deprecated:
+                          $ref: '#/components/schemas/DeprecatedToolkitInfo'
+                        meta:
+                          type: object
+                          properties:
+                            created_at:
+                              type: string
+                              description: Creation date and time of the toolkit
+                              example: '2023-01-15T09:30:00.000Z'
+                            updated_at:
+                              type: string
+                              description: Last modification date and time of the toolkit
+                              example: '2023-05-20T14:45:00.000Z'
+                            description:
+                              type: string
+                              description: Human-readable description explaining the toolkit's purpose and functionality
+                              example: Integrate with GitHub repositories, issues, pull requests, and more.
+                            logo:
+                              type: string
+                              description: Image URL for the toolkit's branding
+                              example: https://assets.composio.dev/logos/github.png
+                            app_url:
+                              type: string
+                              nullable: true
+                              description: Link to the toolkit's main application or service website
+                              example: https://github.com
+                            categories:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    description: Category identifier
+                                    example: developer-tools
+                                  name:
+                                    type: string
+                                    description: Human-readable category name
+                                    example: Developer Tools
+                                required:
+                                - id
+                                - name
+                              description: List of categories associated with this toolkit
+                              example:
+                              - id: developer-tools
+                                name: Developer Tools
+                              - id: productivity
+                                name: Productivity
+                            triggers_count:
+                              type: number
+                              description: Count of available triggers in this toolkit
+                              example: 5
+                            tools_count:
+                              type: number
+                              description: Count of available tools in this toolkit
+                              example: 12
+                            version:
+                              type: string
+                              description: Version of the toolkit
+                              example: '20250905_00'
+                          required:
+                          - created_at
+                          - updated_at
+                          - description
+                          - logo
+                          - categories
+                          - triggers_count
+                          - tools_count
+                          - version
+                          description: Additional metadata about the toolkit
+                      required:
+                      - slug
+                      - name
+                      - is_local_toolkit
+                      - deprecated
+                      - meta
+                      description: Detailed information about a toolkit
+                  next_cursor:
+                    type: string
+                    nullable: true
+                  total_pages:
+                    type: number
+                  current_page:
+                    type: number
+                  total_items:
+                    type: number
+                required:
+                - items
+                - total_pages
+                - current_page
+                - total_items
+        '400':
+          description: Bad request. The query parameters may be invalid or in an incorrect format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found. The toolkits you are looking for do not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/toolkits/{slug}:
+    get:
+      summary: Get toolkit by slug
+      description: Retrieves comprehensive information about a specific toolkit using its unique slug identifier. This endpoint provides detailed metadata, authentication configuration options, and feature counts for the requested toolkit.
+      tags:
+      - Integration
+      operationId: getToolkitsBySlug
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: The unique slug identifier of the toolkit to retrieve
+          example: github
+        required: true
+        description: Toolkit slug identifier
+        name: slug
+        in: path
+      - schema:
+          type: string
+          default: latest
+          description: Version of the toolkit
+          example: '20250905_00'
+        required: false
+        description: Version of the toolkit
+        name: version
+        in: query
+      responses:
+        '200':
+          description: Successfully retrieved detailed information about the requested toolkit, including authentication options, metadata, and feature counts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slug:
+                    type: string
+                    description: URL-friendly unique identifier for the toolkit
+                    example: github
+                  name:
+                    type: string
+                    description: Human-readable name of the toolkit
+                    example: GitHub
+                  enabled:
+                    type: boolean
+                    description: Indicates if this toolkit is currently enabled and available for use
+                    example: true
+                  composio_managed_auth_schemes:
+                    type: array
+                    items:
+                      type: string
+                    description: List of authentication methods that Composio manages for this toolkit
+                    example:
+                    - oauth2
+                  is_local_toolkit:
+                    type: boolean
+                    description: 'DEPRECATED: This field is no longer meaningful and will always return false. It was previously used to indicate if a toolkit is specific to the current project.'
+                    deprecated: true
+                    example: false
+                  auth_config_details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        mode:
+                          type: string
+                          description: The type of authentication mode (e.g., oauth2, basic_auth, api_key)
+                          example: oauth2
+                        fields:
+                          type: object
+                          properties:
+                            auth_config_creation:
+                              type: object
+                              properties:
+                                required:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                      displayName:
+                                        type: string
+                                      default:
+                                        type: string
+                                        nullable: true
+                                      type:
+                                        type: string
+                                      description:
+                                        type: string
+                                      required:
+                                        type: boolean
+                                      is_secret:
+                                        type: boolean
+                                      legacy_template_name:
+                                        type: string
+                                      advanced:
+                                        type: boolean
+                                    required:
+                                    - name
+                                    - displayName
+                                    - type
+                                    - description
+                                    - required
+                                optional:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                      displayName:
+                                        type: string
+                                      default:
+                                        type: string
+                                        nullable: true
+                                      type:
+                                        type: string
+                                      description:
+                                        type: string
+                                      required:
+                                        type: boolean
+                                      is_secret:
+                                        type: boolean
+                                      legacy_template_name:
+                                        type: string
+                                      advanced:
+                                        type: boolean
+                                    required:
+                                    - name
+                                    - displayName
+                                    - type
+                                    - description
+                                    - required
+                              required:
+                              - required
+                              - optional
+                              description: Form fields needed when creating an authentication configuration
+                            connected_account_initiation:
+                              type: object
+                              properties:
+                                required:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                      displayName:
+                                        type: string
+                                      default:
+                                        type: string
+                                        nullable: true
+                                      type:
+                                        type: string
+                                      description:
+                                        type: string
+                                      required:
+                                        type: boolean
+                                      is_secret:
+                                        type: boolean
+                                      legacy_template_name:
+                                        type: string
+                                      advanced:
+                                        type: boolean
+                                    required:
+                                    - name
+                                    - displayName
+                                    - type
+                                    - description
+                                    - required
+                                optional:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      name:
+                                        type: string
+                                      displayName:
+                                        type: string
+                                      default:
+                                        type: string
+                                        nullable: true
+                                      type:
+                                        type: string
+                                      description:
+                                        type: string
+                                      required:
+                                        type: boolean
+                                      is_secret:
+                                        type: boolean
+                                      legacy_template_name:
+                                        type: string
+                                      advanced:
+                                        type: boolean
+                                    required:
+                                    - name
+                                    - displayName
+                                    - type
+                                    - description
+                                    - required
+                              required:
+                              - required
+                              - optional
+                              description: Form fields needed when connecting a user account with this authentication method
+                          required:
+                          - auth_config_creation
+                          - connected_account_initiation
+                          description: Field groups required for different authentication stages
+                        proxy:
+                          type: object
+                          properties:
+                            base_url:
+                              type: string
+                              description: URL to which authentication requests will be proxied
+                              example: https://auth.example.com/proxy
+                          required:
+                          - base_url
+                          description: Configuration for proxying authentication requests to external services
+                        name:
+                          type: string
+                          description: Display name for this authentication method
+                          example: OAuth 2.0
+                        auth_hint_url:
+                          type: string
+                          nullable: true
+                          description: URL to a page where users can obtain or configure credentials for this authentication method
+                          example: https://github.com/settings/tokens
+                        deprecated_auth_provider_details:
+                          type: object
+                          properties:
+                            authorization_url:
+                              type: string
+                            token_url:
+                              type: string
+                          description: Authentication URL fields for OAuth 2.0 and OAuth 1.0. We don't recommend using this field for authentication and might break post Aug 31 2025.
+                          deprecated: true
+                      required:
+                      - mode
+                      - fields
+                      - name
+                      description: Detailed configuration for an authentication method
+                    description: Complete authentication configuration details for each supported auth method
+                  auth_guide_url:
+                    type: string
+                    nullable: true
+                    description: URL to a guide page with authentication setup instructions for this toolkit
+                    example: https://composio.dev/auth/github
+                  base_url:
+                    type: string
+                    description: If evaluation of base URL needs some connection info (like shopify), please create the connection and get the base URL from there
+                    example: https://api.github.com
+                  meta:
+                    type: object
+                    properties:
+                      created_at:
+                        type: string
+                        description: Creation date and time of the toolkit
+                        example: '2023-01-15T09:30:00.000Z'
+                      updated_at:
+                        type: string
+                        description: Last modification date and time of the toolkit
+                        example: '2023-05-20T14:45:00.000Z'
+                      description:
+                        type: string
+                        description: Human-readable description explaining the toolkit's purpose and functionality
+                        example: Integrate with GitHub repositories, issues, pull requests, and more.
+                      logo:
+                        type: string
+                        description: Image URL for the toolkit's branding
+                        example: https://assets.composio.dev/logos/github.png
+                      app_url:
+                        type: string
+                        nullable: true
+                        description: Link to the toolkit's main application or service website
+                        example: https://github.com
+                      categories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: Human-readable category name
+                              example: Developer Tools
+                            slug:
+                              type: string
+                              description: URL-friendly identifier for the category
+                              example: developer-tools
+                          required:
+                          - name
+                          - slug
+                        description: List of categories associated with this toolkit
+                        example:
+                        - name: Developer Tools
+                          slug: developer-tools
+                        - name: Productivity
+                          slug: productivity
+                      triggers_count:
+                        type: number
+                        description: Count of available triggers in this toolkit
+                        example: 5
+                      tools_count:
+                        type: number
+                        description: Count of available tools in this toolkit
+                        example: 12
+                      version:
+                        type: string
+                        description: Version of the toolkit
+                        example: '20250905_00'
+                      available_versions:
+                        type: array
+                        items:
+                          type: string
+                        description: Available versions of the toolkit
+                        example:
+                        - '20250905_00'
+                        - '20250906_00'
+                    required:
+                    - created_at
+                    - updated_at
+                    - description
+                    - logo
+                    - categories
+                    - triggers_count
+                    - tools_count
+                    - version
+                    - available_versions
+                    description: Comprehensive metadata for the toolkit including dates, descriptions, and statistics
+                  get_current_user_endpoint:
+                    type: string
+                    description: Endpoint to get the current user
+                  get_current_user_endpoint_method:
+                    type: string
+                    description: HTTP method to use when calling the get current user endpoint (e.g., GET, POST)
+                    example: GET
+                  deprecated:
+                    type: object
+                    properties:
+                      toolkitId:
+                        type: string
+                      getCurrentUserEndpoint:
+                        type: string
+                      rawProxyInfoByAuthSchemes:
+                        type: array
+                        items:
+                          type: object
+                          additionalProperties:
+                            nullable: true
+                    required:
+                    - toolkitId
+                    - rawProxyInfoByAuthSchemes
+                required:
+                - slug
+                - name
+                - enabled
+                - is_local_toolkit
+                - meta
+                - deprecated
+                description: Detailed information about a single toolkit
+        '400':
+          description: Bad request. The toolkit slug may be invalid or in an incorrect format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found. The requested toolkit does not exist or is not accessible to the authenticated project.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpect ed error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/toolkits/multi:
+    post:
+      summary: Fetch multiple toolkits
+      description: Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options. You can optionally specify a list of toolkit slugs to fetch specific toolkits.
+      tags:
+      - Integration
+      operationId: postToolkitsMulti
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                toolkits:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of toolkit slug identifiers to retrieve
+                  example:
+                  - github
+                  - slack
+                  - gmail
+                category:
+                  type: string
+                  description: Category ID or name to filter toolkits by
+                  example: productivity
+                managed_by:
+                  type: string
+                  enum:
+                  - composio
+                  - all
+                  - project
+                  description: Entity responsible for managing the toolkits
+                sort_by:
+                  type: string
+                  enum:
+                  - usage
+                  - alphabetically
+                  description: Determines how toolkits should be sorted in the response
+                limit:
+                  type: number
+                  nullable: true
+                cursor:
+                  type: string
+              description: Body parameters for filtering and sorting toolkits
+      responses:
+        '200':
+          description: Toolkits retrieved successfully. Returns a paginated list of available toolkits with detailed metadata.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        slug:
+                          type: string
+                          description: URL-friendly unique identifier for the toolkit
+                          example: github
+                        name:
+                          type: string
+                          description: Human-readable name of the toolkit
+                          example: GitHub
+                        auth_schemes:
+                          type: array
+                          items:
+                            type: string
+                          description: List of authentication methods supported by this toolkit
+                          example:
+                          - oauth2
+                          - api_key
+                        composio_managed_auth_schemes:
+                          type: array
+                          items:
+                            type: string
+                          description: List of authentication methods that Composio manages for this toolkit
+                          example:
+                          - oauth2
+                        is_local_toolkit:
+                          type: boolean
+                          description: 'DEPRECATED: This field is no longer meaningful and will always return false. It was previously used to indicate if a toolkit is specific to the current project.'
+                          deprecated: true
+                          example: false
+                        no_auth:
+                          type: boolean
+                          description: When true, this toolkit can be used without authentication
+                          example: false
+                        auth_guide_url:
+                          type: string
+                          nullable: true
+                          description: URL to a guide page with authentication setup instructions for this toolkit
+                          example: https://composio.dev/auth/github
+                        deprecated:
+                          $ref: '#/components/schemas/DeprecatedToolkitInfo'
+                        meta:
+                          type: object
+                          properties:
+                            created_at:
+                              type: string
+                              description: Creation date and time of the toolkit
+                              example: '2023-01-15T09:30:00.000Z'
+                            updated_at:
+                              type: string
+                              description: Last modification date and time of the toolkit
+                              example: '2023-05-20T14:45:00.000Z'
+                            description:
+                              type: string
+                              description: Human-readable description explaining the toolkit's purpose and functionality
+                              example: Integrate with GitHub repositories, issues, pull requests, and more.
+                            logo:
+                              type: string
+                              description: Image URL for the toolkit's branding
+                              example: https://assets.composio.dev/logos/github.png
+                            app_url:
+                              type: string
+                              nullable: true
+                              description: Link to the toolkit's main application or service website
+                              example: https://github.com
+                            categories:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    description: Category identifier
+                                    example: developer-tools
+                                  name:
+                                    type: string
+                                    description: Human-readable category name
+                                    example: Developer Tools
+                                required:
+                                - id
+                                - name
+                              description: List of categories associated with this toolkit
+                              example:
+                              - id: developer-tools
+                                name: Developer Tools
+                              - id: productivity
+                                name: Productivity
+                            triggers_count:
+                              type: number
+                              description: Count of available triggers in this toolkit
+                              example: 5
+                            tools_count:
+                              type: number
+                              description: Count of available tools in this toolkit
+                              example: 12
+                            version:
+                              type: string
+                              description: Version of the toolkit
+                              example: '20250905_00'
+                          required:
+                          - created_at
+                          - updated_at
+                          - description
+                          - logo
+                          - categories
+                          - triggers_count
+                          - tools_count
+                          - version
+                          description: Additional metadata about the toolkit
+                      required:
+                      - slug
+                      - name
+                      - is_local_toolkit
+                      - deprecated
+                      - meta
+                      description: Detailed information about a toolkit
+                  next_cursor:
+                    type: string
+                    nullable: true
+                  total_pages:
+                    type: number
+                  current_page:
+                    type: number
+                  total_items:
+                    type: number
+                required:
+                - items
+                - total_pages
+                - current_page
+                - total_items
+        '400':
+          description: Bad request. The query parameters may be invalid or in an incorrect format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found. The toolkits you are looking for do not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    DeprecatedToolkitInfo:
+      type: object
+      properties:
+        toolkitId:
+          type: string
+      required:
+      - toolkitId
+      description: Deprecated toolkit ID
+      deprecated: true
+      example:
+        toolkitId: 550e8400-e29b-41d4-a716-446655440000
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

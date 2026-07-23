@@ -1,0 +1,254 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management CLI Authentication API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: CLI Authentication
+paths:
+  /api/v3/cli/create-session:
+    post:
+      summary: Create a new CLI session with auth code
+      description: Generates a new CLI session with a random 6-character code. This endpoint is the first step in the CLI authentication flow, creating a session that can later be linked to a user account. The generated code is displayed to the user in the CLI and should be entered in the web interface to complete authentication. Optionally accepts a scope ('project' or 'user') and a source string.
+      tags:
+      - CLI Authentication
+      operationId: postCliCreateSession
+      security:
+      - no_auth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scope:
+                  type: string
+                  enum:
+                  - project
+                  - user
+                  default: project
+                  description: Key scope. 'project' (default) returns a project-level API key; 'user' returns a user-level API key valid across projects.
+                source:
+                  type: string
+                  description: Free-form string describing the source, e.g. 'Johns MacBook (darwin, v1.2.3)'
+      responses:
+        '201':
+          description: CLI session created successfully with a unique ID and temporary authentication code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique identifier for the CLI session. UUID v4 format used for tracking and retrieval.
+                  code:
+                    type: string
+                    description: The 6-character hexadecimal code used for CLI login
+                    example: ABC123
+                  expiresAt:
+                    type: string
+                    description: The ISO timestamp when the session expires
+                    example: '2023-01-01T12:00:00.000Z'
+                  status:
+                    type: string
+                    enum:
+                    - pending
+                    - linked
+                    description: The current status of the session
+                    example: pending
+                  scope:
+                    type: string
+                    enum:
+                    - project
+                    - user
+                    description: The key scope for this session
+                    example: project
+                required:
+                - id
+                - code
+                - expiresAt
+                - status
+                - scope
+        '400':
+          description: Bad request - Invalid parameters or malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error - Failed to create CLI session due to server-side issue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/cli/get-session:
+    get:
+      summary: Get CLI session details by ID or code
+      description: Retrieves the current state of a CLI session using either the session ID (UUID) or the 6-character code. This endpoint is used by both the CLI client to check if the session has been linked, and by the web interface to display session details before linking.
+      tags:
+      - CLI Authentication
+      operationId: getCliGetSession
+      security:
+      - CookieAuth: []
+      - no_auth: []
+      parameters:
+      - schema:
+          type: string
+          description: The CLI session ID or code to check
+          example: ABC123
+        required: true
+        description: CLI session ID (UUID format) or 6-character code to check. Both formats are supported for flexibility in client implementations.
+        name: id
+        in: query
+      responses:
+        '200':
+          description: CLI session retrieved successfully. Returns full session details including linked account information if available.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier for the CLI session
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                  code:
+                    type: string
+                    description: The 6-character hexadecimal code used for CLI login
+                    example: ABC123
+                  status:
+                    type: string
+                    enum:
+                    - pending
+                    - linked
+                    description: The current status of the session
+                    example: pending
+                  expiresAt:
+                    type: string
+                    description: The ISO timestamp when the session expires
+                    example: '2023-01-01T12:00:00.000Z'
+                  account:
+                    type: object
+                    nullable: true
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the linked account
+                        example: user_12345
+                      email:
+                        type: string
+                        format: email
+                        description: The email address of the linked account
+                        example: user@example.com
+                      name:
+                        type: string
+                        description: The display name of the linked account
+                        example: John Doe
+                    required:
+                    - id
+                    - email
+                    - name
+                    description: Information about the linked account, if any. Null if the session status is "pending".
+                  api_key:
+                    type: string
+                    nullable: true
+                    description: The API key for the linked account
+                    example: '1234567890'
+                  scope:
+                    type: string
+                    nullable: true
+                    enum:
+                    - project
+                    - user
+                    description: The key scope for this session
+                    example: project
+                required:
+                - id
+                - code
+                - status
+                - expiresAt
+                - account
+                - api_key
+                - scope
+        '400':
+          description: Invalid session ID or code format. The ID must be either a valid UUID or a 6-character hexadecimal code.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: CLI session not found or expired, or the linked user API key has been revoked. Sessions expire after 10 minutes from creation. Re-run the CLI login flow to create a new session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

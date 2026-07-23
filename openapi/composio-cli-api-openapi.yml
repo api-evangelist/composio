@@ -1,0 +1,299 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management CLI API
+  description: CLI integration endpoints
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: CLI
+  description: CLI integration endpoints
+paths:
+  /api/v3/cli/codact_failures:
+    post:
+      summary: Ingest CLI codact failures
+      description: Accepts CLI-reported codact failures authenticated by user API key and stores them in ClickHouse for later analysis.
+      tags:
+      - CLI
+      operationId: postCliCodactFailures
+      security:
+      - UserApiKeyAuth: []
+      parameters:
+      - schema:
+          type: string
+          minLength: 1
+          description: User API key used to authenticate the CLI codact failure.
+          example: uak_a1b2c3d4e5f6g7h8i9j0
+        required: true
+        name: x-user-api-key
+        in: header
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                failure_type:
+                  type: string
+                  enum:
+                  - wrong_tool_slug
+                  - wrong_tool_input_param
+                  description: Type of codact failure being recorded.
+                  example: wrong_tool_slug
+                tool_info:
+                  type: object
+                  properties:
+                    toolkit:
+                      type: string
+                      minLength: 1
+                    tool:
+                      type: object
+                      properties:
+                        slug:
+                          type: string
+                          minLength: 1
+                        version:
+                          type: string
+                          minLength: 1
+                      required:
+                      - slug
+                      - version
+                  description: Optional tool metadata when the failure can be tied to a toolkit or concrete tool version.
+                  example:
+                    toolkit: github
+                    tool:
+                      slug: GITHUB_CREATE_AN_ISSUE
+                      version: 2026.03.23
+                ctx:
+                  type: object
+                  additionalProperties:
+                    nullable: true
+                  description: Arbitrary failure context from the CLI.
+                  example:
+                    invalid_tool_slug: GITHUB_MAKE_ISSUE
+                    candidate_tool_slugs:
+                    - GITHUB_CREATE_AN_ISSUE
+                session:
+                  type: object
+                  additionalProperties:
+                    nullable: true
+                  description: Arbitrary session payload from the CLI.
+                  example:
+                    id: sess_123
+                    model: gpt-5.2
+                request_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 200
+                  description: Optional request identifier associated with the failure.
+                  example: req_123
+              required:
+              - failure_type
+              - ctx
+              - session
+            example:
+              failure_type: wrong_tool_slug
+              tool_info:
+                toolkit: github
+                tool:
+                  slug: GITHUB_CREATE_AN_ISSUE
+                  version: 2026.03.23
+              ctx:
+                invalid_tool_slug: GITHUB_MAKE_ISSUE
+              session:
+                id: sess_123
+                source: cli
+              request_id: req_123
+      responses:
+        '200':
+          description: CLI codact failure accepted and stored.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tracked:
+                    type: boolean
+                    description: Whether the codact failure row was accepted for storage.
+                    example: true
+                  id:
+                    type: string
+                    description: Unique identifier for the stored failure row.
+                    example: 5f6f7a1d-72d1-4f7c-bf3a-2fd7421bc123
+                required:
+                - tracked
+                - id
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. A valid user API key is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/cli/realtime/credentials:
+    get:
+      summary: Get credentials for CLI realtime events
+      description: Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}.
+      tags:
+      - CLI
+      operationId: getCliRealtimeCredentials
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      responses:
+        '200':
+          description: Credentials for CLI realtime events retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pusher_key:
+                    type: string
+                    description: The Pusher client key for subscribing to the trigger
+                  pusher_cluster:
+                    type: string
+                    description: The Pusher cluster for subscribing to the trigger
+                  project_id:
+                    type: string
+                    description: 'The project nanoId associated with the API Key provided. Used as part of the CLI channel name: private-cli-{project_id}'
+                required:
+                - pusher_key
+                - pusher_cluster
+                - project_id
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/cli/realtime/auth:
+    post:
+      summary: Authenticate CLI Pusher channel access
+      description: Authenticate CLI client access to a private-cli-{nanoId} Pusher channel
+      tags:
+      - CLI
+      operationId: postCliRealtimeAuth
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                channel_name:
+                  type: string
+                  description: The channel name to authenticate for
+                socket_id:
+                  type: string
+                  description: The socket ID for Pusher authentication
+              required:
+              - channel_name
+              - socket_id
+      responses:
+        '200':
+          description: Pusher authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth:
+                    type: string
+                    description: The authentication string for Pusher
+                  channel_data:
+                    type: string
+                    description: Channel data for presence channels
+                required:
+                - auth
+        '400':
+          description: Invalid channel name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error occurred during authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

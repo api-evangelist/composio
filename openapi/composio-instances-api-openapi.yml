@@ -1,0 +1,411 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Instances API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Instances
+paths:
+  /api/v3/mcp/servers/{serverId}/instances:
+    get:
+      summary: List all instances for an MCP server
+      description: Retrieves a paginated list of user instances (user IDs) associated with a specific Model Control Protocol (MCP) server. This endpoint supports pagination to handle servers with many instances.
+      tags:
+      - Instances
+      operationId: getMcpServersByServerIdInstances
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: UUID of the MCP server to list instances for
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: The ID of the MCP server
+        name: serverId
+        in: path
+      - schema:
+          type: number
+          nullable: true
+          default: 1
+          description: Page number to retrieve
+          example: 1
+        required: false
+        description: Page number for pagination (1-based)
+        name: page_no
+        in: query
+      - schema:
+          type: number
+          nullable: true
+          default: 20
+          description: Number of instances to return per page
+          example: 20
+        required: false
+        description: 'Number of items per page (default: 20)'
+        name: limit
+        in: query
+      - schema:
+          type: string
+          description: Filter instances by user ID or instance ID (partial match)
+          example: user_123
+        required: false
+        description: Search instances by user ID/instance ID
+        name: search
+        in: query
+      - schema:
+          type: string
+          enum:
+          - created_at
+          - updated_at
+          default: updated_at
+          description: Field to use for ordering the results
+          example: updated_at
+        required: false
+        description: Field to order results by
+        name: order_by
+        in: query
+      - schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+          description: Sort direction (ascending or descending)
+          example: desc
+        required: false
+        description: Direction of ordering
+        name: order_direction
+        in: query
+      responses:
+        '200':
+          description: Successfully retrieved MCP server instances. Returns the list of user IDs associated with this server.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  instances:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: UUID of the instance record
+                          example: 550e8400-e29b-41d4-a716-446655440000
+                        instance_id:
+                          type: string
+                          description: The instance identifier (same as the user_id)
+                          example: user_123456
+                        mcp_server_id:
+                          type: string
+                          description: UUID of the parent MCP server
+                          example: 660e8400-e29b-41d4-a716-446655440001
+                        created_at:
+                          type: string
+                          description: Date and time when this instance was created
+                          example: '2023-06-10T09:15:00.000Z'
+                        updated_at:
+                          type: string
+                          description: Date and time when this instance was last modified
+                          example: '2023-06-15T14:30:00.000Z'
+                      required:
+                      - id
+                      - instance_id
+                      - mcp_server_id
+                      - created_at
+                      - updated_at
+                      description: MCP server instance details
+                    description: List of instance objects associated with this MCP server for the current page
+                    example:
+                    - id: 550e8400-e29b-41d4-a716-446655440000
+                      instance_id: user_123456
+                      mcp_server_id: 660e8400-e29b-41d4-a716-446655440001
+                      created_at: '2023-06-10T09:15:00.000Z'
+                      updated_at: '2023-06-15T14:30:00.000Z'
+                  server_id:
+                    type: string
+                    description: UUID of the MCP server
+                    example: 550e8400-e29b-41d4-a716-446655440000
+                  server_name:
+                    type: string
+                    description: Name of the MCP server
+                    example: Production GitHub Integration
+                  total_pages:
+                    type: number
+                    description: Total number of pages in the paginated response
+                    example: 3
+                  current_page:
+                    type: number
+                    description: Current page number being returned
+                    example: 1
+                required:
+                - instances
+                - server_id
+                - server_name
+                - total_pages
+                - current_page
+                description: Paginated list of instances for an MCP server
+        '400':
+          description: Bad request. The server ID parameter may be invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: MCP server not found. No server with the specified ID exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new MCP server instance
+      description: Creates a new instance for a Model Control Protocol (MCP) server. This endpoint validates that the user has connected accounts for all auth configurations associated with the MCP server before creating the instance.
+      tags:
+      - Instances
+      operationId: postMcpServersByServerIdInstances
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: UUID of the MCP server to create an instance for
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: The ID of the MCP server
+        name: serverId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  minLength: 1
+                  description: The user ID (entity ID) that will be used as both the user identifier and instance ID
+                  example: user_123456
+              required:
+              - user_id
+              description: Parameters for creating a new MCP server instance
+            examples:
+              Create Instance:
+                value:
+                  user_id: user_123456
+      responses:
+        '201':
+          description: Successfully created MCP server instance. Returns the created instance details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: UUID of the instance record
+                    example: 550e8400-e29b-41d4-a716-446655440000
+                  instance_id:
+                    type: string
+                    description: The instance identifier (same as the user_id)
+                    example: user_123456
+                  mcp_server_id:
+                    type: string
+                    description: UUID of the parent MCP server
+                    example: 660e8400-e29b-41d4-a716-446655440001
+                  created_at:
+                    type: string
+                    description: Date and time when this instance was created
+                    example: '2023-06-10T09:15:00.000Z'
+                  updated_at:
+                    type: string
+                    description: Date and time when this instance was last modified
+                    example: '2023-06-15T14:30:00.000Z'
+                required:
+                - id
+                - instance_id
+                - mcp_server_id
+                - created_at
+                - updated_at
+                description: MCP server instance details
+        '400':
+          description: Bad request. The request parameters may be invalid or the instance ID already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user does not have connected accounts for all required auth configurations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: MCP server not found. No server with the specified ID exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict. An instance with this ID already exists for the server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/mcp/servers/{serverId}/instances/{instanceId}:
+    delete:
+      summary: Delete an MCP server instance and associated connected accounts
+      description: Removes a user instance from the MCP server and deletes all connected accounts for that user that are associated with the auth configurations of this specific MCP server. Connected accounts for other auth configurations are not affected.
+      tags:
+      - Instances
+      operationId: deleteMcpServersByServerIdInstancesByInstanceId
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: UUID of the MCP server
+          example: 550e8400-e29b-41d4-a716-446655440000
+        required: true
+        description: The ID of the MCP server
+        name: serverId
+        in: path
+      - schema:
+          type: string
+          description: The user ID to remove from this server
+          example: user_123456
+        required: true
+        description: The instance ID (user ID) to delete
+        name: instanceId
+        in: path
+      responses:
+        '200':
+          description: Successfully deleted MCP server instance and associated connected accounts.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  deleted_connected_accounts:
+                    type: number
+                required:
+                - message
+                - deleted_connected_accounts
+        '400':
+          description: Bad request. The request parameters may be invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: MCP server or instance not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

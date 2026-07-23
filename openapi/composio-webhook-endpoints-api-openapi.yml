@@ -1,0 +1,519 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management Webhook Endpoints API
+  description: Per-OAuth-app webhook ingress endpoints. Inbound URLs the provider posts to, plus signing secret storage and verification.
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: Webhook Endpoints
+  description: Per-OAuth-app webhook ingress endpoints. Inbound URLs the provider posts to, plus signing secret storage and verification.
+paths:
+  /api/v3/webhook_endpoints:
+    post:
+      summary: Create webhook endpoint
+      description: Creates a shared webhook endpoint for a toolkit + OAuth app + project. Returns the webhook URL that the customer registers in their app dashboard. Idempotent — returns existing endpoint if one already exists for this toolkit + client_id + project.
+      tags:
+      - Webhook Endpoints
+      operationId: postWebhookEndpoints
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                toolkit_slug:
+                  type: string
+                  minLength: 1
+                  description: Toolkit identifier (e.g., slack, discord)
+                client_id:
+                  type: string
+                  minLength: 1
+                  description: OAuth app client ID — identifies which app this endpoint is for
+              required:
+              - toolkit_slug
+              - client_id
+      responses:
+        '200':
+          description: Existing webhook endpoint returned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Webhook endpoint nano ID
+                  toolkit_slug:
+                    type: string
+                    description: Toolkit this endpoint is for
+                  client_id:
+                    type: string
+                    nullable: true
+                    description: OAuth app client ID
+                  webhook_url:
+                    type: string
+                    description: The webhook URL to register with the provider
+                  data:
+                    type: object
+                    nullable: true
+                    additionalProperties:
+                      type: string
+                    description: Configured fields with secret values masked
+                  created_at:
+                    type: string
+                    description: ISO 8601 timestamp
+                required:
+                - id
+                - toolkit_slug
+                - client_id
+                - webhook_url
+                - data
+                - created_at
+        '201':
+          description: Webhook endpoint created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Webhook endpoint nano ID
+                  toolkit_slug:
+                    type: string
+                    description: Toolkit this endpoint is for
+                  client_id:
+                    type: string
+                    nullable: true
+                    description: OAuth app client ID
+                  webhook_url:
+                    type: string
+                    description: The webhook URL to register with the provider
+                  data:
+                    type: object
+                    nullable: true
+                    additionalProperties:
+                      type: string
+                    description: Configured fields with secret values masked
+                  created_at:
+                    type: string
+                    description: ISO 8601 timestamp
+                required:
+                - id
+                - toolkit_slug
+                - client_id
+                - webhook_url
+                - data
+                - created_at
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      summary: List webhook endpoints
+      description: Lists webhook endpoints for the authenticated project, optionally filtered by toolkit.
+      tags:
+      - Webhook Endpoints
+      operationId: getWebhookEndpoints
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: Filter by toolkit slug
+        required: false
+        description: Filter by toolkit slug
+        name: toolkit_slug
+        in: query
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Webhook endpoint nano ID
+                        toolkit_slug:
+                          type: string
+                          description: Toolkit this endpoint is for
+                        client_id:
+                          type: string
+                          nullable: true
+                          description: OAuth app client ID
+                      required:
+                      - id
+                      - toolkit_slug
+                      - client_id
+                required:
+                - items
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/webhook_endpoints/{nano_id}:
+    get:
+      summary: Get webhook endpoint
+      description: Retrieves a single webhook endpoint. Secret values are redacted. Use GET /webhook_endpoints/schema to discover field definitions.
+      tags:
+      - Webhook Endpoints
+      operationId: getWebhookEndpointsByNanoId
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: Webhook endpoint nano ID (e.g., we_abc123)
+        required: true
+        description: Webhook endpoint nano ID (e.g., we_abc123)
+        name: nano_id
+        in: path
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Webhook endpoint nano ID
+                  toolkit_slug:
+                    type: string
+                    description: Toolkit this endpoint is for
+                  client_id:
+                    type: string
+                    nullable: true
+                    description: OAuth app client ID
+                  webhook_url:
+                    type: string
+                    description: The webhook URL to register with the provider
+                  data:
+                    type: object
+                    nullable: true
+                    additionalProperties:
+                      type: string
+                    description: Configured fields with secret values masked
+                  created_at:
+                    type: string
+                    description: ISO 8601 timestamp
+                required:
+                - id
+                - toolkit_slug
+                - client_id
+                - webhook_url
+                - data
+                - created_at
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Put webhook endpoint configuration
+      description: Full replacement of webhook endpoint configuration. All required setup fields must be provided. Use PATCH to update individual fields.
+      tags:
+      - Webhook Endpoints
+      operationId: postWebhookEndpointsByNanoId
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: Webhook endpoint nano ID (e.g., we_abc123)
+        required: true
+        description: Webhook endpoint nano ID (e.g., we_abc123)
+        name: nano_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Key-value pairs for ALL required setup_fields. Unlike PATCH, all required fields must be provided — this is initial configuration.
+              required:
+              - data
+      responses:
+        '200':
+          description: Configured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Webhook endpoint nano ID
+                  toolkit_slug:
+                    type: string
+                    description: Toolkit this endpoint is for
+                  client_id:
+                    type: string
+                    nullable: true
+                    description: OAuth app client ID
+                  webhook_url:
+                    type: string
+                    description: The webhook URL to register with the provider
+                  data:
+                    type: object
+                    nullable: true
+                    additionalProperties:
+                      type: string
+                    description: Configured fields with secret values masked
+                  created_at:
+                    type: string
+                    description: ISO 8601 timestamp
+                required:
+                - id
+                - toolkit_slug
+                - client_id
+                - webhook_url
+                - data
+                - created_at
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: Update webhook endpoint configuration
+      description: Updates app-specific secrets and credentials. Uses merge semantics — only included fields are updated; omitted fields are preserved. Can be called on active endpoints (e.g., to rotate a signing secret).
+      tags:
+      - Webhook Endpoints
+      operationId: patchWebhookEndpointsByNanoId
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      - CookieAuth: []
+      parameters:
+      - schema:
+          type: string
+          description: Webhook endpoint nano ID (e.g., we_abc123)
+        required: true
+        description: Webhook endpoint nano ID (e.g., we_abc123)
+        name: nano_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Key-value pairs matching the toolkit's setup_fields. Only include fields you want to update — omitted fields are preserved.
+              required:
+              - data
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Webhook endpoint nano ID
+                  toolkit_slug:
+                    type: string
+                    description: Toolkit this endpoint is for
+                  client_id:
+                    type: string
+                    nullable: true
+                    description: OAuth app client ID
+                  webhook_url:
+                    type: string
+                    description: The webhook URL to register with the provider
+                  data:
+                    type: object
+                    nullable: true
+                    additionalProperties:
+                      type: string
+                    description: Configured fields with secret values masked
+                  created_at:
+                    type: string
+                    description: ISO 8601 timestamp
+                required:
+                - id
+                - toolkit_slug
+                - client_id
+                - webhook_url
+                - data
+                - created_at
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication

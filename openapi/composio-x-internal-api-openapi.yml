@@ -1,0 +1,1413 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: Composio Platform Account Management x-internal API
+  description: ''
+  contact:
+    name: Composio Support
+    url: https://composio.dev/support
+    email: support@composio.dev
+  license:
+    name: Proprietary
+    url: https://composio.dev/terms
+servers:
+- url: https://backend.composio.dev
+  description: PRODUCTION API
+tags:
+- name: x-internal
+paths:
+  /api/v3/auth/session/logout:
+    post:
+      summary: End user session and clear authentication
+      description: Terminates the current user session by invalidating authentication cookies and tokens. This effectively signs the user out of the application. After logout, the user will need to authenticate again to access protected resources.
+      tags:
+      - x-internal
+      operationId: postAuthSessionLogout
+      security:
+      - CookieAuth: []
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      responses:
+        '201':
+          description: Logout operation completed successfully. The session has been terminated and authentication cookies have been invalidated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Human-readable result message of the logout operation
+                    example: Logout successful
+                required:
+                - message
+        '401':
+          description: Unauthorized. The request requires valid authentication which was not provided.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Human-readable description of the error that occurred
+                    example: Authentication required
+                  code:
+                    type: string
+                    description: Optional machine-readable error code for programmatic handling
+                    example: AUTH_REQUIRED
+                required:
+                - message
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the logout request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Human-readable description of the error that occurred
+                    example: Authentication required
+                  code:
+                    type: string
+                    description: Optional machine-readable error code for programmatic handling
+                    example: AUTH_REQUIRED
+                required:
+                - message
+  /api/v3/cli/create-session:
+    post:
+      summary: Create a new CLI session with auth code
+      description: Generates a new CLI session with a random 6-character code. This endpoint is the first step in the CLI authentication flow, creating a session that can later be linked to a user account. The generated code is displayed to the user in the CLI and should be entered in the web interface to complete authentication. Optionally accepts a scope ('project' or 'user') and a source string.
+      tags:
+      - x-internal
+      operationId: postCliCreateSession
+      security:
+      - no_auth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scope:
+                  type: string
+                  enum:
+                  - project
+                  - user
+                  default: project
+                  description: Key scope. 'project' (default) returns a project-level API key; 'user' returns a user-level API key valid across projects.
+                source:
+                  type: string
+                  description: Free-form string describing the source, e.g. 'Johns MacBook (darwin, v1.2.3)'
+      responses:
+        '201':
+          description: CLI session created successfully with a unique ID and temporary authentication code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Unique identifier for the CLI session. UUID v4 format used for tracking and retrieval.
+                  code:
+                    type: string
+                    description: The 6-character hexadecimal code used for CLI login
+                    example: ABC123
+                  expiresAt:
+                    type: string
+                    description: The ISO timestamp when the session expires
+                    example: '2023-01-01T12:00:00.000Z'
+                  status:
+                    type: string
+                    enum:
+                    - pending
+                    - linked
+                    description: The current status of the session
+                    example: pending
+                  scope:
+                    type: string
+                    enum:
+                    - project
+                    - user
+                    description: The key scope for this session
+                    example: project
+                required:
+                - id
+                - code
+                - expiresAt
+                - status
+                - scope
+        '400':
+          description: Bad request - Invalid parameters or malformed request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error - Failed to create CLI session due to server-side issue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/cli/get-session:
+    get:
+      summary: Get CLI session details by ID or code
+      description: Retrieves the current state of a CLI session using either the session ID (UUID) or the 6-character code. This endpoint is used by both the CLI client to check if the session has been linked, and by the web interface to display session details before linking.
+      tags:
+      - x-internal
+      operationId: getCliGetSession
+      security:
+      - CookieAuth: []
+      - no_auth: []
+      parameters:
+      - schema:
+          type: string
+          description: The CLI session ID or code to check
+          example: ABC123
+        required: true
+        description: CLI session ID (UUID format) or 6-character code to check. Both formats are supported for flexibility in client implementations.
+        name: id
+        in: query
+      responses:
+        '200':
+          description: CLI session retrieved successfully. Returns full session details including linked account information if available.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier for the CLI session
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                  code:
+                    type: string
+                    description: The 6-character hexadecimal code used for CLI login
+                    example: ABC123
+                  status:
+                    type: string
+                    enum:
+                    - pending
+                    - linked
+                    description: The current status of the session
+                    example: pending
+                  expiresAt:
+                    type: string
+                    description: The ISO timestamp when the session expires
+                    example: '2023-01-01T12:00:00.000Z'
+                  account:
+                    type: object
+                    nullable: true
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the linked account
+                        example: user_12345
+                      email:
+                        type: string
+                        format: email
+                        description: The email address of the linked account
+                        example: user@example.com
+                      name:
+                        type: string
+                        description: The display name of the linked account
+                        example: John Doe
+                    required:
+                    - id
+                    - email
+                    - name
+                    description: Information about the linked account, if any. Null if the session status is "pending".
+                  api_key:
+                    type: string
+                    nullable: true
+                    description: The API key for the linked account
+                    example: '1234567890'
+                  scope:
+                    type: string
+                    nullable: true
+                    enum:
+                    - project
+                    - user
+                    description: The key scope for this session
+                    example: project
+                required:
+                - id
+                - code
+                - status
+                - expiresAt
+                - account
+                - api_key
+                - scope
+        '400':
+          description: Invalid session ID or code format. The ID must be either a valid UUID or a 6-character hexadecimal code.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: CLI session not found or expired, or the linked user API key has been revoked. Sessions expire after 10 minutes from creation. Re-run the CLI login flow to create a new session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/cli/realtime/credentials:
+    get:
+      summary: Get credentials for CLI realtime events
+      description: Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}.
+      tags:
+      - x-internal
+      operationId: getCliRealtimeCredentials
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      responses:
+        '200':
+          description: Credentials for CLI realtime events retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pusher_key:
+                    type: string
+                    description: The Pusher client key for subscribing to the trigger
+                  pusher_cluster:
+                    type: string
+                    description: The Pusher cluster for subscribing to the trigger
+                  project_id:
+                    type: string
+                    description: 'The project nanoId associated with the API Key provided. Used as part of the CLI channel name: private-cli-{project_id}'
+                required:
+                - pusher_key
+                - pusher_cluster
+                - project_id
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/cli/realtime/auth:
+    post:
+      summary: Authenticate CLI Pusher channel access
+      description: Authenticate CLI client access to a private-cli-{nanoId} Pusher channel
+      tags:
+      - x-internal
+      operationId: postCliRealtimeAuth
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                channel_name:
+                  type: string
+                  description: The channel name to authenticate for
+                socket_id:
+                  type: string
+                  description: The socket ID for Pusher authentication
+              required:
+              - channel_name
+              - socket_id
+      responses:
+        '200':
+          description: Pusher authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth:
+                    type: string
+                    description: The authentication string for Pusher
+                  channel_data:
+                    type: string
+                    description: Channel data for presence channels
+                required:
+                - auth
+        '400':
+          description: Invalid channel name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error occurred during authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/internal/trigger/logs:
+    post:
+      summary: Search and retrieve trigger event logs
+      description: Search and retrieve trigger event logs with advanced filtering capabilities including search parameters
+      tags:
+      - x-internal
+      operationId: postInternalTriggerLogs
+      security:
+      - CookieAuth: []
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                time:
+                  type: string
+                  enum:
+                  - 5m
+                  - 30m
+                  - 6h
+                  - 1d
+                  - 1w
+                  - 1month
+                  - 1y
+                  description: Return logs from the last N time units
+                  example: 5m
+                from:
+                  type: number
+                  nullable: true
+                  description: Start time for logs (epoch timestamp in milliseconds)
+                to:
+                  type: number
+                  nullable: true
+                  description: End time for logs (epoch timestamp in milliseconds)
+                status:
+                  type: string
+                  enum:
+                  - all
+                  - success
+                  - error
+                  description: Filter logs by their status level
+                  example: success
+                search:
+                  type: string
+                  description: Search term to filter logs
+                integrationId:
+                  type: string
+                  format: uuid
+                entityId:
+                  type: string
+                userId:
+                  type: string
+                  description: Filter logs by user ID
+                limit:
+                  type: number
+                  nullable: true
+                  default: 20
+                  description: The limit of trigger logs to return
+                cursor:
+                  type: string
+                  nullable: true
+                search_params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                      operation:
+                        type: string
+                      value:
+                        type: string
+                  description: Advanced search parameters for filtering logs
+                include_payload:
+                  type: boolean
+                  default: true
+                  description: Whether to include payload fields in the response. Set to false for faster list views.
+      responses:
+        '200':
+          description: Successfully retrieved trigger logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        connectionId:
+                          type: string
+                        clientId:
+                          type: string
+                        entityId:
+                          type: string
+                        status:
+                          type: string
+                        appName:
+                          type: string
+                        createdAt:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                          - trigger
+                          - action
+                          description: Log entity type (trigger or action)
+                          example: trigger
+                        meta:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            type:
+                              type: string
+                              enum:
+                              - trigger
+                              - action
+                              description: Log entity type (trigger or action)
+                              example: trigger
+                            createdAt:
+                              type: string
+                            updatedAt:
+                              type: string
+                            provider:
+                              type: string
+                            clientId:
+                              type: string
+                            connectionId:
+                              type: string
+                            triggerProviderPayload:
+                              type: string
+                            triggerClientPayload:
+                              type: string
+                            triggerClientError:
+                              type: string
+                            triggerName:
+                              type: string
+                            triggerClientResponse:
+                              type: string
+                            triggerId:
+                              type: string
+                            triggerNanoId:
+                              type: string
+                          required:
+                          - id
+                          - type
+                          - createdAt
+                          - updatedAt
+                          - provider
+                          - clientId
+                          - connectionId
+                      required:
+                      - id
+                      - connectionId
+                      - clientId
+                      - entityId
+                      - status
+                      - appName
+                      - createdAt
+                      - type
+                      - meta
+                    default: []
+                required:
+                - nextCursor
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/internal/trigger/log/{id}:
+    get:
+      summary: Get detailed trigger log by ID
+      tags:
+      - x-internal
+      operationId: getInternalTriggerLogById
+      security:
+      - CookieAuth: []
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Successfully retrieved trigger log
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  log:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      connectionId:
+                        type: string
+                      clientId:
+                        type: string
+                      entityId:
+                        type: string
+                      status:
+                        type: string
+                      appName:
+                        type: string
+                      createdAt:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - trigger
+                        - action
+                        description: Log entity type (trigger or action)
+                        example: trigger
+                      meta:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          type:
+                            type: string
+                            enum:
+                            - trigger
+                            - action
+                            description: Log entity type (trigger or action)
+                            example: trigger
+                          createdAt:
+                            type: string
+                          updatedAt:
+                            type: string
+                          provider:
+                            type: string
+                          clientId:
+                            type: string
+                          connectionId:
+                            type: string
+                          triggerProviderPayload:
+                            type: string
+                          triggerClientPayload:
+                            type: string
+                          triggerClientError:
+                            type: string
+                          triggerName:
+                            type: string
+                          triggerClientResponse:
+                            type: string
+                          triggerId:
+                            type: string
+                          triggerNanoId:
+                            type: string
+                        required:
+                        - id
+                        - type
+                        - createdAt
+                        - updatedAt
+                        - provider
+                        - clientId
+                        - connectionId
+                    required:
+                    - id
+                    - connectionId
+                    - clientId
+                    - entityId
+                    - status
+                    - appName
+                    - createdAt
+                    - type
+                    - meta
+                required:
+                - log
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/internal/action_execution/logs:
+    post:
+      summary: Search and retrieve action execution logs
+      tags:
+      - x-internal
+      operationId: postInternalActionExecutionLogs
+      security:
+      - CookieAuth: []
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cursor:
+                  type: number
+                  nullable: true
+                  description: cursor_that_can_be_used_to_paginate_through_the_logs
+                limit:
+                  type: number
+                  description: number_of_logs_to_return
+                case_sensitive:
+                  type: boolean
+                  nullable: true
+                  description: whether_the_search_is_case_sensitive_or_not
+                from:
+                  type: number
+                  description: start_time_of_the_logs_in_epoch_time
+                to:
+                  type: number
+                  description: end_time_of_the_logs_in_epoch_time
+                search_params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                      operation:
+                        type: string
+                      value:
+                        type: string
+              required:
+              - cursor
+      responses:
+        '200':
+          description: Successfully retrieved action execution fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        actionKey:
+                          type: string
+                        appKey:
+                          type: string
+                        app:
+                          type: object
+                          properties:
+                            icon:
+                              type: string
+                            name:
+                              type: string
+                          required:
+                          - icon
+                          - name
+                        connectedAccountId:
+                          type: string
+                        entityId:
+                          type: string
+                        status:
+                          type: string
+                          enum:
+                          - success
+                          - failed
+                        executionTime:
+                          type: number
+                        minimalResponse:
+                          type: string
+                          deprecated: true
+                        metadata:
+                          type: object
+                          properties:
+                            recipe_id:
+                              type: string
+                        createdAt:
+                          type: number
+                      required:
+                      - id
+                      - actionKey
+                      - appKey
+                      - app
+                      - connectedAccountId
+                      - entityId
+                      - status
+                      - executionTime
+                      - minimalResponse
+                      - createdAt
+                  nextCursor:
+                    type: number
+                    nullable: true
+                required:
+                - data
+                - nextCursor
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/internal/action_execution/fields:
+    get:
+      summary: Get action log fields for filtering
+      tags:
+      - x-internal
+      operationId: getInternalActionExecutionFields
+      security:
+      - CookieAuth: []
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      responses:
+        '200':
+          description: Successfully retrieved action execution fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fields:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: The id of the field
+                          displayName:
+                            type: string
+                            description: The display name of the field
+                          type:
+                            type: string
+                            description: The type of the field
+                          regex:
+                            type: string
+                            description: The regex of the field
+                        required:
+                        - id
+                        - displayName
+                        - type
+                required:
+                - fields
+  /api/v3/internal/action_execution/log/{id}:
+    get:
+      summary: Get detailed execution log by ID
+      tags:
+      - x-internal
+      operationId: getInternalActionExecutionLogById
+      security:
+      - CookieAuth: []
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Successfully retrieved action execution log
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  actionLogId:
+                    type: string
+                  actionId:
+                    type: string
+                  status:
+                    type: string
+                    enum:
+                    - success
+                    - error
+                    - warning
+                    - info
+                  app:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      uniqueId:
+                        type: string
+                      icon:
+                        type: string
+                    required:
+                    - name
+                    - uniqueId
+                    - icon
+                  version:
+                    type: string
+                  connection:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      entity:
+                        type: string
+                    required:
+                    - id
+                    - entity
+                  session:
+                    type: object
+                    additionalProperties:
+                      nullable: true
+                  executionMetadata:
+                    type: object
+                    additionalProperties:
+                      nullable: true
+                  steps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - tool_execution
+                          - fetch_connection_details
+                        startTime:
+                          type: number
+                        endTime:
+                          type: number
+                        totalDuration:
+                          type: number
+                        status:
+                          type: string
+                          enum:
+                          - success
+                          - failure
+                          - error
+                        message:
+                          type: string
+                        metadata:
+                          type: object
+                          properties:
+                            encryption:
+                              type: string
+                        logs:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                - network
+                                - system
+                              level:
+                                type: string
+                              message:
+                                type: string
+                              requestId:
+                                type: string
+                                format: uuid
+                              time:
+                                type: number
+                              request:
+                                type: object
+                                properties:
+                                  method:
+                                    type: string
+                                  url:
+                                    type: string
+                                  headers:
+                                    type: object
+                                    additionalProperties:
+                                      type: string
+                                  params:
+                                    type: object
+                                    additionalProperties:
+                                      nullable: true
+                                  timeout:
+                                    type: number
+                                  json:
+                                    type: object
+                                    additionalProperties:
+                                      nullable: true
+                                required:
+                                - method
+                                - url
+                              response:
+                                type: object
+                                properties:
+                                  status:
+                                    type: number
+                                  time:
+                                    type: string
+                                required:
+                                - status
+                                - time
+                            required:
+                            - type
+                            - level
+                            - message
+                            - requestId
+                            - time
+                            - request
+                            - response
+                      required:
+                      - type
+                      - startTime
+                      - endTime
+                      - totalDuration
+                      - status
+                      - message
+                  payloadReceived:
+                    type: object
+                    additionalProperties:
+                      nullable: true
+                  startTime:
+                    type: number
+                  endTime:
+                    type: number
+                  totalDuration:
+                    type: string
+                  response:
+                    type: object
+                    additionalProperties:
+                      nullable: true
+                  error:
+                    type: object
+                    additionalProperties:
+                      nullable: true
+                required:
+                - actionLogId
+                - actionId
+                - status
+                - app
+                - version
+                - connection
+                - session
+                - executionMetadata
+                - steps
+                - payloadReceived
+                - startTime
+                - endTime
+                - totalDuration
+                - response
+                - error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/org/consumer/project/resolve:
+    post:
+      summary: Resolve the organization consumer project
+      description: Finds the authenticated organization's single CONSUMER project and provisions it if absent. This endpoint is idempotent and never returns consumer API keys.
+      tags:
+      - x-internal
+      operationId: postOrgConsumerProjectResolve
+      security:
+      - UserApiKeyAuth: []
+      parameters:
+      - schema:
+          type: string
+          minLength: 1
+          description: User API key used to authenticate the request.
+          example: uak_a1b2c3d4e5f6g7h8i9j0
+        required: true
+        name: x-user-api-key
+        in: header
+      - schema:
+          type: string
+          format: orgId
+          description: Organization nano ID that scopes the user API key resolution.
+          example: ok_1a2b3c4d5e6f
+        required: true
+        name: x-org-id
+        in: header
+      responses:
+        '200':
+          description: Consumer project resolved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  project_id:
+                    type: string
+                    format: uuid
+                    description: UUID of the resolved consumer project.
+                  project_nano_id:
+                    type: string
+                    format: projectId
+                    description: Nano ID of the resolved consumer project.
+                  project_name:
+                    type: string
+                    description: Name of the resolved consumer project.
+                  org_id:
+                    type: string
+                    format: orgId
+                    description: Organization nano ID that owns the consumer project.
+                  project_type:
+                    type: string
+                    enum:
+                    - CONSUMER
+                    description: Resolved project type.
+                  consumer_user_id:
+                    type: string
+                    description: Derived internal Composio user ID for the authenticated user in this consumer org context.
+                required:
+                - project_id
+                - project_nano_id
+                - project_name
+                - org_id
+                - project_type
+                - consumer_user_id
+        '400':
+          description: Bad request. x-org-id is required for user API key authentication.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. A valid user API key is required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Org not found or deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/org/consumer/connected_toolkits:
+    get:
+      summary: List active connected toolkits for a consumer user
+      description: Resolves the organization's single CONSUMER project and returns the distinct toolkit slugs for which the specified consumer user has an ACTIVE connection.
+      tags:
+      - x-internal
+      operationId: getOrgConsumerConnectedToolkits
+      security:
+      - UserApiKeyAuth: []
+      parameters:
+      - schema:
+          type: string
+          minLength: 1
+          description: Consumer user ID to inspect within the consumer project.
+        required: true
+        description: Consumer user ID to inspect within the consumer project.
+        name: user_id
+        in: query
+      - schema:
+          type: string
+          minLength: 1
+          description: User API key used to authenticate the request.
+          example: uak_a1b2c3d4e5f6g7h8i9j0
+        required: true
+        name: x-user-api-key
+        in: header
+      - schema:
+          type: string
+          minLength: 1
+          description: Organization nano ID that owns the consumer project.
+        required: true
+        description: Organization nano ID that owns the consumer project.
+        name: x-org-id
+        in: header
+      responses:
+        '200':
+          description: Active consumer connected toolkits retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  toolkits:
+                    type: array
+                    items:
+                      type: string
+                    description: Distinct active toolkit slugs.
+                required:
+                - toolkits
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found in organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v3/labs/tool_router/session:
+    post:
+      summary: Create a new tool router session (Legacy)
+      description: Creates a new session for the tool router lab feature (Legacy). This endpoint initializes a new session with specified toolkits and their authentication configurations. The session provides an isolated environment for testing and managing tool routing logic with scoped MCP server access.
+      tags:
+      - x-internal
+      operationId: postLabsToolRouterSession
+      security:
+      - ApiKeyAuth: []
+      - UserApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  description: Unique user identifier for the session owner
+                  example: user_123456789
+                config:
+                  type: object
+                  properties:
+                    manually_manage_connections:
+                      type: boolean
+                      nullable: true
+                      default: false
+                      description: Whether to manually manage connections
+                      example: true
+                    toolkits:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          toolkit:
+                            type: string
+                            minLength: 1
+                            description: Toolkit identifier (e.g., gmail, slack, github)
+                            example: gmail
+                          auth_config_id:
+                            type: string
+                            description: Specific auth configuration ID for this toolkit
+                            example: ac_1a2b3c4d5e6f
+                        required:
+                        - toolkit
+                      default: []
+                      description: Array of toolkit configurations with optional auth configs
+                      example:
+                      - toolkit: gmail
+                        auth_config_id: ac_1a2b3c4d5e6f
+                      - toolkit: slack
+                  default: {}
+                  description: Session configuration including enabled toolkits and their auth configs
+                  example:
+                    manually_manage_connections: false
+                    toolkits:
+                    - toolkit: gmail
+                      auth_config_id: ac_1a2b3c4d5e6f
+                    - toolkit: slack
+              required:
+              - user_id
+            examples:
+              Session with multiple toolkits:
+                value:
+                  user_id: user_123456789
+                  config:
+                    toolkits:
+                    - toolkit: gmail
+                      auth_config_id: ac_1a2b3c4d5e6f
+                    - toolkit: slack
+                      auth_config_id: ac_7g8h9i0j1k2l
+                    - toolkit: github
+              Minimal session:
+                value:
+                  user_id: user_123456789
+                  config: {}
+              Session with single toolkit:
+                value:
+                  user_id: user_123456789
+                  config:
+                    toolkits:
+                    - toolkit: gmail
+      responses:
+        '201':
+          description: Session successfully created. Returns the session ID and MCP server URL for the created session.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                    description: Generated session identifier (prefixed with "trs_")
+                    example: trs_1a2b3c4d5e6f
+                  chat_session_mcp_url:
+                    type: string
+                    format: uri
+                    description: MCP server endpoint URL for this specific chat session
+                    example: https://api.composio.dev/v3/mcp/tool-router/trs_1a2b3c4d5e6f/mcp
+                  tool_router_instance_mcp_url:
+                    type: string
+                    format: uri
+                    description: MCP server endpoint URL for this specific tool router instance
+                    example: https://api.composio.dev/v3/mcp/tool-router/trs_1a2b3c4d5e6f/mcp
+                required:
+                - session_id
+                - chat_session_mcp_url
+                - tool_router_instance_mcp_url
+        '400':
+          description: Bad request. This may occur if the user_id format is invalid, toolkit names are invalid, or auth_config_id IDs are malformed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. Authentication is required or the provided credentials are invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict. A session for this user with the same configuration already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error. An unexpected error occurred while processing the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Project API key authentication
+    UserApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-user-api-key
+      description: User API key authentication
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: authToken
+      description: Cookie-based session authentication
+    OrgApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-org-api-key
+      description: Organization API key authentication
