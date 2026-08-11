@@ -958,6 +958,19 @@ apis:
   - type: Documentation
     url: https://docs.composio.dev/reference/api-reference/toolkits
 common:
+  - type: IssueTracker
+    url: https://github.com/ComposioHQ/composio/issues
+  - type: Releases
+    url: https://github.com/ComposioHQ/composio/releases
+  - type: SecurityPolicy
+    url: https://github.com/ComposioHQ/composio/blob/next/.github/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/ComposioHQ/composio/blob/next/.github/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/ComposioHQ/composio/blob/next/CONTRIBUTING.md
+  - type: License
+    name: MIT
+    url: https://github.com/ComposioHQ/composio/blob/next/LICENSE
   - type: Packages
     url: packages/composio-packages.yml
   - type: WellKnown
