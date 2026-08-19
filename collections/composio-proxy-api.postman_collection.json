@@ -1,0 +1,705 @@
+{
+  "item": [
+    {
+      "id": "1ad12e99-4157-48ae-a110-9552ea7b469f",
+      "name": "Proxy",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b160d746-8878-4cf6-99c9-e7477c779fbb",
+          "name": "Execute proxy request",
+          "request": {
+            "name": "Execute proxy request",
+            "description": {
+              "content": "Proxy an HTTP request to a third-party API using connected account credentials. This endpoint allows making authenticated API calls to external services while abstracting away authentication details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "tools",
+                "execute",
+                "proxy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"<string>\",\n  \"method\": \"<string>\",\n  \"connected_account_id\": \"<connectedAccountId>\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d0e3513d-adf8-4660-ae87-7023252c6f68",
+              "name": "Successfully executed proxy request and received response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 200,\n  \"data\": {},\n  \"binary_data\": {\n    \"url\": \"string\",\n    \"content_type\": \"string\",\n    \"size\": 4241.818441664785,\n    \"expires_at\": \"string\"\n  },\n  \"headers\": {\n    \"content-type\": \"application/json\",\n    \"cache-control\": \"no-cache\",\n    \"host\": \"api.example.com\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33d6511c-dab3-4998-a54d-e5e39933f63b",
+              "name": "Bad request - Invalid request parameters or body format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9770.608304996325,\n    \"slug\": \"string\",\n    \"status\": 1114.0128492091694,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e259855b-0318-4520-a64f-a137e3fee8fd",
+              "name": "Unauthorized - Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3d133b8-afb3-4332-b9e2-d83c51decffc",
+              "name": "Forbidden - Connected account does not have permission to access the requested resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "748fd0b1-897d-4ae9-90de-7c9d09cd2cab",
+              "name": "Not found - Resource not found or connected account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce38a894-5ef9-40ef-88c2-6040cd8260aa",
+              "name": "Unprocessable entity - Invalid state of the connected account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20c26bcc-eddf-4e91-8bce-e00d0cc9c48f",
+              "name": "Too many requests - Rate limit exceeded on the connected account or proxy service",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "897e5b41-a216-4cbd-9101-115a1ba47cb4",
+              "name": "Internal server error - Something went wrong on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a08d301b-2986-41e4-8d38-5972e622b5cd",
+              "name": "Not implemented - This operation is not supported for the requested connected account or authentication scheme",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a1d11f1-5b72-4299-80a8-7879a4584999",
+              "name": "Bad gateway - Error communicating with the upstream API",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc07c669-fa99-41c5-93e2-a697e6bd93b4",
+              "name": "Gateway timeout - Upstream API timed out",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "tools",
+                    "execute",
+                    "proxy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"/api/v1/resources\",\n  \"method\": \"GET\",\n  \"connected_account_id\": \"ca_1a2b3c4d5e6f\",\n  \"body\": {},\n  \"binary_body\": {\n    \"url\": \"<uri>\",\n    \"content_type\": \"<string>\"\n  },\n  \"parameters\": [\n    {\n      \"name\": \"x-api-key\",\n      \"value\": \"abc123def456\",\n      \"type\": \"header\"\n    },\n    {\n      \"name\": \"filter\",\n      \"value\": \"active\",\n      \"type\": \"query\"\n    }\n  ],\n  \"custom_connection_data\": {\n    \"authScheme\": \"<string>\",\n    \"toolkitSlug\": \"<string>\",\n    \"val\": {\n      \"access_token\": \"<string>\",\n      \"subdomain\": \"<string>\",\n      \"your-domain\": \"<string>\",\n      \"region\": \"<string>\",\n      \"shop\": \"<string>\",\n      \"account_url\": \"<string>\",\n      \"COMPANYDOMAIN\": \"<string>\",\n      \"extension\": \"<string>\",\n      \"form_api_base_url\": \"<string>\",\n      \"instanceEndpoint\": \"<string>\",\n      \"api_url\": \"<string>\",\n      \"borneo_dashboard_url\": \"<string>\",\n      \"proxy_username\": \"<string>\",\n      \"proxy_password\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"version\": \"<string>\",\n      \"dc\": \"<string>\",\n      \"site_name\": \"<string>\",\n      \"instanceName\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"your_server\": \"<string>\",\n      \"server_location\": \"<string>\",\n      \"base_url\": \"<string>\",\n      \"state_prefix\": \"<string>\",\n      \"long_redirect_url\": \"<boolean>\",\n      \"id_token\": \"<string>\",\n      \"token_type\": \"<string>\",\n      \"refresh_token\": \"<string>\",\n      \"expires_in\": \"<number>\",\n      \"scope\": \"<string>\",\n      \"webhook_signature\": \"<string>\",\n      \"authed_user\": {\n        \"access_token\": \"<string>\",\n        \"scope\": \"<string>\"\n      },\n      \"extra_token_data\": {\n        \"key_0\": {}\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3925.0008076355234,\n    \"slug\": \"string\",\n    \"status\": 6591.449301284995,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2512d557-eefd-43d0-9b26-b7279cca8e24",
+    "name": "Composio Platform Account Management Proxy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

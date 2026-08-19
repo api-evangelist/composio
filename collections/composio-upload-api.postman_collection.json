@@ -1,0 +1,595 @@
+{
+  "item": [
+    {
+      "id": "880a8589-15a6-4bb9-babc-20191c5bee05",
+      "name": "Upload",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aa837d3e-3c1a-4f6a-a970-4c4a0ba9f77f",
+          "name": "Create presigned URL for request file upload to S3",
+          "request": {
+            "name": "Create presigned URL for request file upload to S3",
+            "description": {
+              "content": "Generates a presigned URL for uploading a file to S3. This endpoint handles deduplication by checking if a file with the same MD5 hash already exists.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "files",
+                "upload",
+                "request"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toolkit_slug\": \"<string>\",\n  \"tool_slug\": \"<string>\",\n  \"filename\": \"<string>\",\n  \"mimetype\": \"<string>\",\n  \"md5\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "56460ce1-cc92-49ee-b581-ed00785323d4",
+              "name": "Successfully created upload URL for request file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"key\": \"string\",\n  \"new_presigned_url\": \"string\",\n  \"newPresignedUrl\": \"string\",\n  \"type\": \"new\",\n  \"metadata\": {\n    \"storage_backend\": \"azure_blob_storage\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "540874b1-6878-4e0d-aa54-f2e8fa0db0c7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6517.34941827205,\n    \"slug\": \"string\",\n    \"status\": 8485.275618770333,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dad5f7f-26df-4a35-b271-5fd90550c30a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3974.7553047991646,\n    \"slug\": \"string\",\n    \"status\": 7916.262585140963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4026c0ea-00f0-4d49-b391-d48ff914e25a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3974.7553047991646,\n    \"slug\": \"string\",\n    \"status\": 7916.262585140963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c553ec2b-1910-4005-918a-323c62f0b198",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3974.7553047991646,\n    \"slug\": \"string\",\n    \"status\": 7916.262585140963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd47f8c8-a6d7-4c0c-a41c-819e6a85b43c",
+              "name": "Gone",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3974.7553047991646,\n    \"slug\": \"string\",\n    \"status\": 7916.262585140963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7422f30-1af0-49c5-9508-40dafd94aa06",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3974.7553047991646,\n    \"slug\": \"string\",\n    \"status\": 7916.262585140963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b30c43a-7cc2-4fd3-8de0-55b482cb3e95",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3974.7553047991646,\n    \"slug\": \"string\",\n    \"status\": 7916.262585140963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07640948-da83-4575-8d02-289909ebf2b3",
+              "name": "Not Implemented",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "files",
+                    "upload",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit_slug\": \"gmail\",\n  \"tool_slug\": \"GMAIL_SEND_EMAIL\",\n  \"filename\": \"quarterly_report.pdf\",\n  \"mimetype\": \"application/pdf\",\n  \"md5\": \"a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 3974.7553047991646,\n    \"slug\": \"string\",\n    \"status\": 7916.262585140963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "15e8c492-13e3-4422-9aa9-0380cd4f9242",
+    "name": "Composio Platform Account Management Upload API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

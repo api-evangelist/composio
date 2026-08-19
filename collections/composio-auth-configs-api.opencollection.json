@@ -1,0 +1,241 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Auth Configs API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth Configs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List authentication configurations with optional filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/auth_configs",
+            "params": [
+              {
+                "name": "is_composio_managed",
+                "value": "",
+                "type": "query",
+                "description": "Whether to filter by composio managed auth configs"
+              },
+              {
+                "name": "toolkit_slug",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of toolkit slugs to filter auth configs by"
+              },
+              {
+                "name": "deprecated_app_id",
+                "value": "",
+                "type": "query",
+                "description": "The app id to filter by"
+              },
+              {
+                "name": "deprecated_status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "show_disabled",
+                "value": "",
+                "type": "query",
+                "description": "Show disabled auth configs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search auth configs by name or id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all auth configs for your project. Auth configs define how users authenticate with external services (OAuth, API keys, etc.). Use filters to find configs for specific toolkits or to distinguish between Composio-managed and custom configurations."
+        },
+        {
+          "info": {
+            "name": "Create new authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/auth_configs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new auth config for a toolkit, allowing you to use your own OAuth credentials or API keys instead of Composio-managed authentication. This is required when you want to use custom OAuth apps (bring your own client ID/secret) or configure specific authentication parameters for a toolkit."
+        },
+        {
+          "info": {
+            "name": "Get single authentication configuration by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about a specific authentication configuration using its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update an authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modifies an existing authentication configuration with new credentials or other settings. Only specified fields will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete an authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes an authentication configuration by marking it as deleted in the database. This operation cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Enable or disable an authentication configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/auth_configs/:nanoid/:status",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the authentication configuration to update"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "path",
+                "description": "The new status to set for the auth configuration"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the status of an authentication configuration to either enabled or disabled. Disabled configurations cannot be used for new connections."
+        },
+        {
+          "info": {
+            "name": "Composio List auth configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/authConfigs"
+          },
+          "docs": "Returns a list of authentication configurations for toolkit access."
+        },
+        {
+          "info": {
+            "name": "Composio Create an auth configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/authConfigs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new authentication configuration containing developer credentials and app-level settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,2547 @@
+{
+  "item": [
+    {
+      "id": "1db47714-44d2-49e3-8a26-94f503ac9e89",
+      "name": "Auth Configs",
+      "description": {
+        "content": "Authentication configuration management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6f54d710-5787-4248-9696-d924d75af7f7",
+          "name": "Create new authentication configuration",
+          "request": {
+            "name": "Create new authentication configuration",
+            "description": {
+              "content": "Creates a new auth config for a toolkit, allowing you to use your own OAuth credentials or API keys instead of Composio-managed authentication. This is required when you want to use custom OAuth apps (bring your own client ID/secret) or configure specific authentication parameters for a toolkit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "auth_configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toolkit\": {\n    \"slug\": \"<string>\"\n  },\n  \"auth_config\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"credentials\": {},\n    \"tool_access_config\": {},\n    \"shared_credentials\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"is_enabled_for_tool_router\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d1bf8c2b-e646-4ad1-b9f7-6752b157625e",
+              "name": "Successfully created auth config",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": {\n    \"slug\": \"<string>\"\n  },\n  \"auth_config\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"credentials\": {},\n    \"tool_access_config\": {},\n    \"shared_credentials\": {\n      \"key_0\": {}\n    },\n    \"is_enabled_for_tool_router\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"toolkit\": {\n    \"slug\": \"string\"\n  },\n  \"auth_config\": {\n    \"id\": \"string\",\n    \"auth_scheme\": \"string\",\n    \"is_composio_managed\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f12dac8a-72e2-4db7-9cff-3f5f2e7820b8",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": {\n    \"slug\": \"<string>\"\n  },\n  \"auth_config\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"credentials\": {},\n    \"tool_access_config\": {},\n    \"shared_credentials\": {\n      \"key_0\": {}\n    },\n    \"is_enabled_for_tool_router\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 1379.5017904922547,\n    \"slug\": \"string\",\n    \"status\": 8686.040807910102,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e872460-0d56-43a5-bd59-e950e76e6ab7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": {\n    \"slug\": \"<string>\"\n  },\n  \"auth_config\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"credentials\": {},\n    \"tool_access_config\": {},\n    \"shared_credentials\": {\n      \"key_0\": {}\n    },\n    \"is_enabled_for_tool_router\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3425f5b7-f15c-4ef2-9658-83ef86c7315f",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": {\n    \"slug\": \"<string>\"\n  },\n  \"auth_config\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"credentials\": {},\n    \"tool_access_config\": {},\n    \"shared_credentials\": {\n      \"key_0\": {}\n    },\n    \"is_enabled_for_tool_router\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aee91cbf-6753-43d4-86c7-d567d0ff968a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": {\n    \"slug\": \"<string>\"\n  },\n  \"auth_config\": {\n    \"type\": \"<string>\",\n    \"name\": \"<string>\",\n    \"credentials\": {},\n    \"tool_access_config\": {},\n    \"shared_credentials\": {\n      \"key_0\": {}\n    },\n    \"is_enabled_for_tool_router\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "008479e4-b8f9-4aa2-8280-5a82763374df",
+          "name": "List authentication configurations with optional filters",
+          "request": {
+            "name": "List authentication configurations with optional filters",
+            "description": {
+              "content": "Retrieves all auth configs for your project. Auth configs define how users authenticate with external services (OAuth, API keys, etc.). Use filters to find configs for specific toolkits or to distinguish between Composio-managed and custom configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "auth_configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "is_composio_managed",
+                  "value": "<string>",
+                  "description": "Whether to filter by composio managed auth configs"
+                },
+                {
+                  "disabled": false,
+                  "key": "toolkit_slug",
+                  "value": "<string>",
+                  "description": "Comma-separated list of toolkit slugs to filter auth configs by"
+                },
+                {
+                  "disabled": false,
+                  "key": "deprecated_app_id",
+                  "value": "<string>",
+                  "description": "The app id to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "deprecated_status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "show_disabled",
+                  "value": "false",
+                  "description": "Show disabled auth configs"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search auth configs by name or id"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<number>",
+                  "description": "Number of items per page, max allowed is 1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6fe182ae-052f-420c-a3f1-6a61efc5e52d",
+              "name": "Successfully fetched auth configs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "is_composio_managed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toolkit_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_app_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "show_disabled",
+                      "value": "false"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"uuid\": \"string\",\n      \"type\": \"custom\",\n      \"toolkit\": {\n        \"slug\": \"string\",\n        \"logo\": \"string\",\n        \"auth_guide_url\": \"string\",\n        \"auth_hint_url\": \"string\"\n      },\n      \"name\": \"string\",\n      \"status\": \"DISABLED\",\n      \"no_of_connections\": 2498.9945150157077,\n      \"tool_access_config\": {},\n      \"auth_scheme\": \"NO_AUTH\",\n      \"is_composio_managed\": false,\n      \"credentials\": {\n        \"key_0\": {}\n      },\n      \"proxy_config\": {\n        \"proxy_url\": \"https://HlZFFAZpsfLLNhJuxBqzJpRefFmGgYb.ozlBls04Uv,,F\",\n        \"proxy_auth_key\": \"string\"\n      },\n      \"created_by\": \"string\",\n      \"created_at\": \"string\",\n      \"last_updated_at\": \"string\",\n      \"restrict_to_following_tools\": [\n        \"string\",\n        \"string\"\n      ],\n      \"shared_credentials\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      },\n      \"is_enabled_for_tool_router\": true,\n      \"deprecated_params\": {\n        \"default_connector_id\": \"string\",\n        \"member_uuid\": \"string\",\n        \"toolkit_id\": \"string\",\n        \"expected_input_fields\": [\n          {\n            \"key_0\": {},\n            \"key_1\": {}\n          },\n          {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"uuid\": \"string\",\n      \"type\": \"custom\",\n      \"toolkit\": {\n        \"slug\": \"string\",\n        \"logo\": \"string\",\n        \"auth_guide_url\": \"string\",\n        \"auth_hint_url\": \"string\"\n      },\n      \"name\": \"string\",\n      \"status\": \"ENABLED\",\n      \"no_of_connections\": 84.62623951087322,\n      \"tool_access_config\": {},\n      \"auth_scheme\": \"GOOGLE_SERVICE_ACCOUNT\",\n      \"is_composio_managed\": true,\n      \"credentials\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"proxy_config\": {\n        \"proxy_url\": \"https://NctUxmh.iejpqV0RNGZfUrKB,YyTwGGrI2AD9EeXfWp3IHm3FLWHDn\",\n        \"proxy_auth_key\": \"string\"\n      },\n      \"created_by\": \"string\",\n      \"created_at\": \"string\",\n      \"last_updated_at\": \"string\",\n      \"restrict_to_following_tools\": [\n        \"string\",\n        \"string\"\n      ],\n      \"shared_credentials\": {\n        \"key_0\": {}\n      },\n      \"is_enabled_for_tool_router\": true,\n      \"deprecated_params\": {\n        \"default_connector_id\": \"string\",\n        \"member_uuid\": \"string\",\n        \"toolkit_id\": \"string\",\n        \"expected_input_fields\": [\n          {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          },\n          {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        ]\n      }\n    }\n  ],\n  \"total_pages\": 7003.165457557789,\n  \"current_page\": 9189.01995543995,\n  \"total_items\": 6149.8396834232135,\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21bec349-225f-45f7-92f9-3290b66694cc",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "is_composio_managed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toolkit_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_app_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "show_disabled",
+                      "value": "false"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7d948e7-59a9-4bd8-a43a-2a2c5e58b642",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "is_composio_managed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toolkit_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_app_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "show_disabled",
+                      "value": "false"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9b41603-ac37-4188-b648-3aabb5bdc08e",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "is_composio_managed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toolkit_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_app_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "show_disabled",
+                      "value": "false"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4e721e3-f429-4e3c-b70c-af014876c512",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "is_composio_managed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toolkit_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_app_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deprecated_status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "show_disabled",
+                      "value": "false"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "003e51ab-22b7-4e1f-96f5-368c6b843691",
+          "name": "Get single authentication configuration by ID",
+          "request": {
+            "name": "Get single authentication configuration by ID",
+            "description": {
+              "content": "Retrieves detailed information about a specific authentication configuration using its unique identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "auth_configs",
+                ":nanoid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<authConfigId>",
+                  "key": "nanoid",
+                  "description": "(Required) The unique identifier of the authentication configuration to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23d70941-ac70-4068-a301-92c4f2da0317",
+              "name": "Successfully fetched auth config",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"uuid\": \"string\",\n  \"type\": \"default\",\n  \"toolkit\": {\n    \"slug\": \"string\",\n    \"logo\": \"string\",\n    \"auth_guide_url\": \"string\",\n    \"auth_hint_url\": \"string\"\n  },\n  \"name\": \"string\",\n  \"status\": \"DISABLED\",\n  \"no_of_connections\": 1443.157994730596,\n  \"tool_access_config\": {},\n  \"auth_scheme\": \"OAUTH2\",\n  \"is_composio_managed\": true,\n  \"credentials\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"proxy_config\": {\n    \"proxy_url\": \"http://JLOFDYQphJoaaMMAKiXpGqFowIDcxCpAv.kxalsHxlzsyQNiJwMQV\",\n    \"proxy_auth_key\": \"string\"\n  },\n  \"created_by\": \"string\",\n  \"created_at\": \"string\",\n  \"last_updated_at\": \"string\",\n  \"restrict_to_following_tools\": [\n    \"string\",\n    \"string\"\n  ],\n  \"shared_credentials\": {\n    \"key_0\": {}\n  },\n  \"is_enabled_for_tool_router\": true,\n  \"deprecated_params\": {\n    \"default_connector_id\": \"string\",\n    \"member_uuid\": \"string\",\n    \"toolkit_id\": \"string\",\n    \"expected_input_fields\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      },\n      {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b94568c2-25ed-4e0d-a5c5-90564bb3d4a4",
+              "name": "Bad request - Invalid auth config ID format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0648a19-18cf-442e-bf19-772b66f291ec",
+              "name": "Unauthorized - Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b809fba5-d4e9-49b0-8202-d0016f969494",
+              "name": "Not found - Auth configuration does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1272bb08-6043-4ef1-975e-dfed5a38fe24",
+              "name": "Internal server error - Something went wrong on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3affbab8-9fb5-4569-a80b-676d79b9fec1",
+          "name": "Update an authentication configuration",
+          "request": {
+            "name": "Update an authentication configuration",
+            "description": {
+              "content": "Modifies an existing authentication configuration with new credentials or other settings. Only specified fields will be updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "auth_configs",
+                ":nanoid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<authConfigId>",
+                  "key": "nanoid",
+                  "description": "(Required) The unique identifier of the authentication configuration to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"credentials\": {\n    \"scopes\": \"<string>\",\n    \"user_scopes\": \"<string>\"\n  },\n  \"proxy_config\": {\n    \"proxy_url\": \"<uri>\",\n    \"proxy_auth_key\": \"<string>\"\n  },\n  \"restrict_to_following_tools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tool_access_config\": {\n    \"tools_for_connected_account_creation\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"tools_available_for_execution\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"shared_credentials\": {\n    \"key_0\": {}\n  },\n  \"is_enabled_for_tool_router\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "422149b8-f160-4ce3-9b16-9a7ab79883f6",
+              "name": "Successfully updated auth config",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth_config\": {\n    \"credentials\": {\n      \"api_key\": \"YOUR_NEW_API_KEY\",\n      \"client_secret\": \"YOUR_NEW_CLIENT_SECRET\"\n    },\n    \"restrict_to_following_tools\": [\n      \"GMAIL_SEND_EMAIL\",\n      \"GMAIL_FETCH_EMAILS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87ca22cb-7e66-4e18-996f-53467130ed69",
+              "name": "Bad request - Invalid input or credentials format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth_config\": {\n    \"credentials\": {\n      \"api_key\": \"YOUR_NEW_API_KEY\",\n      \"client_secret\": \"YOUR_NEW_CLIENT_SECRET\"\n    },\n    \"restrict_to_following_tools\": [\n      \"GMAIL_SEND_EMAIL\",\n      \"GMAIL_FETCH_EMAILS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24ba0444-357b-44e9-910f-5e499254ef48",
+              "name": "Unauthorized - Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth_config\": {\n    \"credentials\": {\n      \"api_key\": \"YOUR_NEW_API_KEY\",\n      \"client_secret\": \"YOUR_NEW_CLIENT_SECRET\"\n    },\n    \"restrict_to_following_tools\": [\n      \"GMAIL_SEND_EMAIL\",\n      \"GMAIL_FETCH_EMAILS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44327b6e-b6d8-4cc0-a4cc-82f5d4a6ea01",
+              "name": "Not found - Auth configuration does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth_config\": {\n    \"credentials\": {\n      \"api_key\": \"YOUR_NEW_API_KEY\",\n      \"client_secret\": \"YOUR_NEW_CLIENT_SECRET\"\n    },\n    \"restrict_to_following_tools\": [\n      \"GMAIL_SEND_EMAIL\",\n      \"GMAIL_FETCH_EMAILS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe2c523b-9864-49d5-a000-78f6321dc256",
+              "name": "Internal server error - Something went wrong on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth_config\": {\n    \"credentials\": {\n      \"api_key\": \"YOUR_NEW_API_KEY\",\n      \"client_secret\": \"YOUR_NEW_CLIENT_SECRET\"\n    },\n    \"restrict_to_following_tools\": [\n      \"GMAIL_SEND_EMAIL\",\n      \"GMAIL_FETCH_EMAILS\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b1871d0-1a4d-436e-9560-c01ff5d3f8a5",
+          "name": "Delete an authentication configuration",
+          "request": {
+            "name": "Delete an authentication configuration",
+            "description": {
+              "content": "Soft-deletes an authentication configuration by marking it as deleted in the database. This operation cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "auth_configs",
+                ":nanoid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<authConfigId>",
+                  "key": "nanoid",
+                  "description": "(Required) The unique identifier of the authentication configuration to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e807d997-8b0d-4504-8d89-5f63b7c03c4c",
+              "name": "Successfully deleted auth config",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61369171-1d2e-418a-8f4b-acdf12e133f7",
+              "name": "Bad request - Invalid auth config ID format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a9dbc31-47d8-45df-82b2-46a341dbf3ba",
+              "name": "Unauthorized - Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7ecc53e-69d7-476d-a6b9-5437f158634a",
+              "name": "Auth config not found - The specified configuration does not exist or was already deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e5afe45-9dac-4483-b9ae-587a07e0e66c",
+              "name": "Internal server error - Something went wrong on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6664a873-8b84-45e3-a4e6-fd26be392684",
+          "name": "Enable or disable an authentication configuration",
+          "request": {
+            "name": "Enable or disable an authentication configuration",
+            "description": {
+              "content": "Updates the status of an authentication configuration to either enabled or disabled. Disabled configurations cannot be used for new connections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "auth_configs",
+                ":nanoid",
+                ":status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<authConfigId>",
+                  "key": "nanoid",
+                  "description": "(Required) The unique identifier of the authentication configuration to update"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "status",
+                  "description": "(Required) The new status to set for the auth configuration"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "57589014-ce81-4ea7-bfaf-45f2d008a6e2",
+              "name": "Successfully updated auth config status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid",
+                    ":status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "status",
+                      "description": "(Required) The new status to set for the auth configuration"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e856d9c-88a1-44e3-ac9e-62d544fca988",
+              "name": "Bad request - Invalid auth config ID or status value",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid",
+                    ":status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "status",
+                      "description": "(Required) The new status to set for the auth configuration"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fee1fc8a-f602-4ea4-a72a-6eeb982fa900",
+              "name": "Unauthorized - Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid",
+                    ":status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "status",
+                      "description": "(Required) The new status to set for the auth configuration"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "924ebfa5-480b-422d-9699-f509f4012286",
+              "name": "Not found - Auth configuration does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid",
+                    ":status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "status",
+                      "description": "(Required) The new status to set for the auth configuration"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a96151b6-4a8f-4857-b476-61de5b2ede16",
+              "name": "Internal server error - Something went wrong on the server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "auth_configs",
+                    ":nanoid",
+                    ":status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<authConfigId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier of the authentication configuration to update"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "status",
+                      "description": "(Required) The new status to set for the auth configuration"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4303.694777558628,\n    \"slug\": \"string\",\n    \"status\": 3325.4414610994463,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7154ac3d-9642-4b89-96df-dafc9510f98d",
+          "name": "Composio List auth configurations",
+          "request": {
+            "name": "Composio List auth configurations",
+            "description": {
+              "content": "Returns a list of authentication configurations for toolkit access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authConfigs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a9667cc-2e5b-425f-bfb1-d5fc57b8ba01",
+              "name": "List of auth configs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authConfigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"toolkit\": \"string\",\n      \"authScheme\": \"API_KEY\",\n      \"scopes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdAt\": \"1963-02-24T23:49:32.741Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"toolkit\": \"string\",\n      \"authScheme\": \"BEARER_TOKEN\",\n      \"scopes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdAt\": \"1997-08-08T10:17:53.810Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8378387f-2765-4474-b996-c2806b4c2c69",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authConfigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8de33d27-ee53-40fd-a2d3-93d4d034a46a",
+          "name": "Composio Create an auth configuration",
+          "request": {
+            "name": "Composio Create an auth configuration",
+            "description": {
+              "content": "Creates a new authentication configuration containing developer credentials and app-level settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authConfigs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toolkit\": \"<string>\",\n  \"authScheme\": \"<string>\",\n  \"credentials\": {\n    \"key_0\": 4797,\n    \"key_1\": 4510.453208855511\n  },\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "17479ad1-d74e-4c18-839d-96c307daea75",
+              "name": "Auth config created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authConfigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": \"<string>\",\n  \"authScheme\": \"<string>\",\n  \"credentials\": {\n    \"key_0\": false\n  },\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"toolkit\": \"string\",\n  \"authScheme\": \"BASIC\",\n  \"scopes\": [\n    \"string\",\n    \"string\"\n  ],\n  \"createdAt\": \"2026-05-14T08:22:38.681Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "221cc42e-9ad9-4f77-964f-d9edee7404d3",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authConfigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": \"<string>\",\n  \"authScheme\": \"<string>\",\n  \"credentials\": {\n    \"key_0\": false\n  },\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6d196f01-1317-48a3-b595-8db908d2c30d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authConfigs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkit\": \"<string>\",\n  \"authScheme\": \"<string>\",\n  \"credentials\": {\n    \"key_0\": false\n  },\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a18ba92c-ba86-449d-b1f2-2819eec2dfd2",
+    "name": "Composio Platform Account Management Auth Configs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Authentication configuration management\n\nContact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

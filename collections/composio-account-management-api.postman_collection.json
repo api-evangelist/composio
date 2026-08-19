@@ -1,0 +1,1759 @@
+{
+  "item": [
+    {
+      "id": "bfed89d2-a0b5-42cf-a76c-43ec812d2ba0",
+      "name": "Account Management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58b849bf-e17d-474a-9c12-f93dc1761e83",
+          "name": "Get connected account details by ID",
+          "request": {
+            "name": "Get connected account details by ID",
+            "description": {
+              "content": "Retrieves comprehensive details of a connected account, including authentication configuration, connection status, and all parameters needed for API requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "connected_accounts",
+                ":nanoid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<connectedAccountId>",
+                  "key": "nanoid",
+                  "description": "(Required) The unique identifier (nanoid) of the connected account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "authToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "074eebe8-c5f0-4e40-aea6-d54d726098ad",
+              "name": "Successfully retrieved connected account details with all authentication parameters and connection status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"toolkit\": {\n    \"slug\": \"string\"\n  },\n  \"auth_config\": {\n    \"id\": \"string\",\n    \"auth_scheme\": \"SAML\",\n    \"is_composio_managed\": true,\n    \"is_disabled\": false,\n    \"deprecated\": {\n      \"uuid\": \"aa411208-f439-d9ae-62e3-342e8e83c537\"\n    }\n  },\n  \"id\": \"string\",\n  \"word_id\": \"string\",\n  \"alias\": \"string\",\n  \"user_id\": \"string\",\n  \"status\": \"INITIALIZING\",\n  \"created_at\": \"string\",\n  \"updated_at\": \"string\",\n  \"state\": {\n    \"authScheme\": \"OAUTH1\",\n    \"val\": {\n      \"status\": \"INITIALIZING\",\n      \"subdomain\": \"string\",\n      \"your-domain\": \"string\",\n      \"region\": \"string\",\n      \"shop\": \"string\",\n      \"account_url\": \"string\",\n      \"COMPANYDOMAIN\": \"string\",\n      \"extension\": \"string\",\n      \"form_api_base_url\": \"string\",\n      \"instanceEndpoint\": \"string\",\n      \"api_url\": \"string\",\n      \"borneo_dashboard_url\": \"string\",\n      \"proxy_username\": \"string\",\n      \"proxy_password\": \"string\",\n      \"domain\": \"string\",\n      \"version\": \"string\",\n      \"dc\": \"string\",\n      \"site_name\": \"string\",\n      \"instanceName\": \"string\",\n      \"account_id\": \"string\",\n      \"your_server\": \"string\",\n      \"server_location\": \"string\",\n      \"base_url\": \"string\"\n    }\n  },\n  \"data\": {\n    \"key_0\": {}\n  },\n  \"status_reason\": \"string\",\n  \"is_disabled\": true,\n  \"params\": {\n    \"key_0\": {}\n  },\n  \"experimental\": {\n    \"account_type\": \"PRIVATE\",\n    \"acl_config_for_shared\": {\n      \"allow_all_users\": true,\n      \"allowed_user_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"not_allowed_user_ids\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  \"test_request_endpoint\": \"string\",\n  \"deprecated\": {\n    \"labels\": [\n      \"string\",\n      \"string\"\n    ],\n    \"uuid\": \"bc1c47de-cff2-95cd-761b-b4acb6a6d49e\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af16a09e-a75e-4dd0-91cb-ab1270a4be57",
+              "name": "Bad request - Invalid nanoid format or other validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 4860.493889939123,\n    \"slug\": \"string\",\n    \"status\": 1056.5340487940623,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88b890ce-5a4f-4718-8a53-f8d225cb40cd",
+              "name": "Unauthorized - Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f1e259a-2679-4e43-af0b-091459227036",
+              "name": "Forbidden - Insufficient permissions to access this connected account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fe59a4e-7da5-46e3-b6fd-8d0ef3ff5015",
+              "name": "Not found - Connected account does not exist or was deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03fc5166-2592-4995-a078-f88ac33a5f64",
+              "name": "Internal server error - Failed to retrieve connected account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98d6da91-1460-42bb-8dc5-cc4f177fc21d",
+              "name": "Not implemented - This operation is not supported for the requested connected account or authentication scheme",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f424eae5-4412-4e99-931b-ad9985a8921b",
+          "name": "Delete a connected account",
+          "request": {
+            "name": "Delete a connected account",
+            "description": {
+              "content": "Soft-deletes a connected account by marking it as deleted in the database. This prevents the account from being used for API calls but preserves the record for audit purposes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "connected_accounts",
+                ":nanoid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<connectedAccountId>",
+                  "key": "nanoid",
+                  "description": "(Required) The unique identifier (nanoid) of the connected account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "authToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "eabdb0e7-7f03-4e15-9b32-36f960e61c5e",
+              "name": "Successfully deleted the connected account. The account is marked as deleted but retained in the database for historical purposes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19b0c86b-6e20-480d-8d8e-9cd8c902ce78",
+              "name": "Bad request - Invalid nanoid format or other validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60403239-8547-43e7-9d99-c68589a76997",
+              "name": "Unauthorized - Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47968adb-cdd4-4143-92c5-cdaf658d4a6b",
+              "name": "Forbidden - Insufficient permissions to delete this connected account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5eeeed53-296b-44c0-9748-adaf7aa7af4b",
+              "name": "Connected account not found - The specified account does not exist or has already been deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "306b9d27-5827-4bde-8a84-756a59175d1f",
+              "name": "Internal server error - Failed to delete the connected account due to a server-side issue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91193c2c-6c5d-4cf5-bf5a-f83bc0ad2579",
+          "name": "Update a connected account",
+          "request": {
+            "name": "Update a connected account",
+            "description": {
+              "content": "Update a connected account. Supports updating the alias and/or credentials. Only specified fields will be updated. Set a credential field to null to remove it. Alias must be unique within the same project, entity, and toolkit scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "connected_accounts",
+                ":nanoid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<connectedAccountId>",
+                  "key": "nanoid",
+                  "description": "(Required) The unique identifier (nanoid) of the connected account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alias\": \"<string>\",\n  \"connection\": {\n    \"state\": {\n      \"authScheme\": \"<string>\",\n      \"val\": {\n        \"subdomain\": \"<string>\",\n        \"your-domain\": \"<string>\",\n        \"region\": \"<string>\",\n        \"shop\": \"<string>\",\n        \"account_url\": \"<string>\",\n        \"COMPANYDOMAIN\": \"<string>\",\n        \"extension\": \"<string>\",\n        \"form_api_base_url\": \"<string>\",\n        \"instanceEndpoint\": \"<string>\",\n        \"api_url\": \"<string>\",\n        \"borneo_dashboard_url\": \"<string>\",\n        \"proxy_username\": \"<string>\",\n        \"proxy_password\": \"<string>\",\n        \"domain\": \"<string>\",\n        \"version\": \"<string>\",\n        \"dc\": \"<string>\",\n        \"site_name\": \"<string>\",\n        \"instanceName\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"your_server\": \"<string>\",\n        \"server_location\": \"<string>\",\n        \"base_url\": \"<string>\",\n        \"token\": \"<string>\",\n        \"generic_api_key\": \"<string>\",\n        \"api_key\": \"<string>\",\n        \"bearer_token\": \"<string>\",\n        \"basic_encoded\": \"<string>\",\n        \"username\": \"<string>\",\n        \"password\": \"<string>\",\n        \"credentials_json\": \"<string>\",\n        \"application_id\": \"<string>\",\n        \"installation_id\": \"<string>\",\n        \"private_key\": \"<string>\"\n      }\n    }\n  },\n  \"experimental\": {\n    \"acl_config_for_shared\": {\n      \"allow_all_users\": \"<boolean>\",\n      \"allowed_user_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"not_allowed_user_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "01745d43-0e2b-4c6c-a57e-972f393749b3",
+              "name": "Successfully updated connected account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"connection\": {\n    \"state\": {\n      \"authScheme\": \"BEARER_TOKEN\",\n      \"val\": {\n        \"token\": \"new_access_token\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"id\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e987a139-a091-402e-a070-e3412ade56ca",
+              "name": "Bad request - Invalid nanoid, duplicate alias, or invalid credential values",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"connection\": {\n    \"state\": {\n      \"authScheme\": \"BEARER_TOKEN\",\n      \"val\": {\n        \"token\": \"new_access_token\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12bcbc98-58d6-444e-93e6-7a62d3c3f7e6",
+              "name": "Unauthorized - Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"connection\": {\n    \"state\": {\n      \"authScheme\": \"BEARER_TOKEN\",\n      \"val\": {\n        \"token\": \"new_access_token\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77b9a02d-d091-461e-95f8-f64b1d60fc90",
+              "name": "Forbidden - Insufficient permissions to update this connected account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"connection\": {\n    \"state\": {\n      \"authScheme\": \"BEARER_TOKEN\",\n      \"val\": {\n        \"token\": \"new_access_token\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1b190ab-c3fe-4a46-a65d-62cc0020c0b4",
+              "name": "Not found - Connected account does not exist or was deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"connection\": {\n    \"state\": {\n      \"authScheme\": \"BEARER_TOKEN\",\n      \"val\": {\n        \"token\": \"new_access_token\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64db57c9-9f1b-4981-b9e4-1fea544fc34a",
+              "name": "Internal server error - Failed to update connected account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoid",
+                      "description": "(Required) The unique identifier (nanoid) of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"connection\": {\n    \"state\": {\n      \"authScheme\": \"BEARER_TOKEN\",\n      \"val\": {\n        \"token\": \"new_access_token\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90fe34a6-754f-4cab-914f-69d8259864e8",
+          "name": "Enable or disable a connected account",
+          "request": {
+            "name": "Enable or disable a connected account",
+            "description": {
+              "content": "Updates the status of a connected account to either enabled (active) or disabled (inactive). Disabled accounts cannot be used for API calls but remain in the database.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "connected_accounts",
+                ":nanoId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<connectedAccountId>",
+                  "key": "nanoId",
+                  "description": "(Required) The unique identifier of the connected account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "16cdb1f7-537a-480a-8da7-4ba444e536f2",
+              "name": "Successfully updated the connected account status. If enabled=true, the account status is set to ACTIVE; if enabled=false, the status is set to INACTIVE.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoId",
+                      "description": "(Required) The unique identifier of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e91a72e8-8f20-4dad-8e30-33c15057ba8f",
+              "name": "Bad request - Invalid nanoid format or invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoId",
+                      "description": "(Required) The unique identifier of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be5a0fe9-c7a3-4d68-b6ed-bee14910f587",
+              "name": "Unauthorized - Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoId",
+                      "description": "(Required) The unique identifier of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "878bb911-57ab-468c-8955-325bd409c78d",
+              "name": "Forbidden - Insufficient permissions to update this connected account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoId",
+                      "description": "(Required) The unique identifier of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "423798e6-14df-4a10-9411-fd65199cbd34",
+              "name": "Connected account not found - The specified account does not exist or has been deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoId",
+                      "description": "(Required) The unique identifier of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "000ba484-3ff6-4de2-95e8-dbcf5c10b73c",
+              "name": "Internal server error - Failed to update the connected account status due to a server-side issue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "connected_accounts",
+                    ":nanoId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<connectedAccountId>",
+                      "key": "nanoId",
+                      "description": "(Required) The unique identifier of the connected account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6794.9716136172365,\n    \"slug\": \"string\",\n    \"status\": 3213.569279539932,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cde51afb-957e-415c-a2c5-37069bb9c946",
+    "name": "Composio Platform Account Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

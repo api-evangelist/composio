@@ -1,0 +1,308 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Tools API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tools",
+            "params": [
+              {
+                "name": "toolkit_slug",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the toolkit to filter by"
+              },
+              {
+                "name": "tool_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of specific tool slugs to retrieve (overrides other filters)"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of auth config IDs to filter tools by"
+              },
+              {
+                "name": "important",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only show important/featured tools (set to \"true\" to enable)"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Filter tools by one or more tags (can be specified multiple times)"
+              },
+              {
+                "name": "scopes",
+                "value": "",
+                "type": "query",
+                "description": "Array of scopes to filter tools by)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Full-text search query to filter tools by name, slug, or description. Applied as a soft filter on top of other filters."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Deprecated: use \"query\" instead. Free-text search query to find tools by name, description, or functionality."
+              },
+              {
+                "name": "include_deprecated",
+                "value": "",
+                "type": "query",
+                "description": "Include deprecated tools in the response"
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a paginated list of available tools with comprehensive filtering, sorting and search capabilities. Use query parameters to narrow down results by toolkit, tags, or search terms."
+        },
+        {
+          "info": {
+            "name": "Get tool enum list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tools/enum",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a list of all available tool enumeration values (tool slugs) from latest version of each toolkit. This endpoint returns a comma-separated string of tool slugs that can be used in other API calls."
+        },
+        {
+          "info": {
+            "name": "Get tool by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/tools/:tool_slug",
+            "params": [
+              {
+                "name": "tool_slug",
+                "value": "",
+                "type": "path",
+                "description": "The unique slug identifier of the tool"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Optional version of the tool to retrieve"
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific tool using its slug identifier. This endpoint returns full metadata about a tool including input/output parameters, versions, and toolkit information."
+        },
+        {
+          "info": {
+            "name": "Execute tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tools/execute/:tool_slug",
+            "headers": [
+              {
+                "name": "x-llm-gateway-headers",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tool_slug",
+                "value": "",
+                "type": "path",
+                "description": "The tool slug to execute"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Execute a specific tool operation with provided arguments and authentication. This is the primary endpoint for integrating with third-party services and executing tools. You can provide structured arguments or use natural language processing by providing a text description of what you want to accomplish."
+        },
+        {
+          "info": {
+            "name": "Generate tool inputs from natural language",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tools/execute/:tool_slug/input",
+            "params": [
+              {
+                "name": "tool_slug",
+                "value": "",
+                "type": "path",
+                "description": "The tool slug to generate inputs for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Uses AI to translate a natural language description into structured arguments for a specific tool. This endpoint is useful when you want to let users describe what they want to do in plain language instead of providing structured parameters."
+        },
+        {
+          "info": {
+            "name": "Execute proxy request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/tools/execute/proxy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Proxy an HTTP request to a third-party API using connected account credentials. This endpoint allows making authenticated API calls to external services while abstracting away authentication details."
+        },
+        {
+          "info": {
+            "name": "Composio List available tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/tools",
+            "params": [
+              {
+                "name": "toolkit",
+                "value": "",
+                "type": "query",
+                "description": "Filter tools by toolkit name."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter tools."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of tools to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination."
+              }
+            ]
+          },
+          "docs": "Returns a list of available tools, optionally filtered by toolkit or search query."
+        },
+        {
+          "info": {
+            "name": "Composio Execute a tool action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/tools/:toolId/execute",
+            "params": [
+              {
+                "name": "toolId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the tool to execute."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a specific tool action on behalf of a connected user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

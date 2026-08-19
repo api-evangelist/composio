@@ -1,0 +1,403 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Servers API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List MCP servers with optional filters and pagination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter MCP servers by name (case-insensitive partial match)"
+              },
+              {
+                "name": "toolkits",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of toolkit slugs to filter servers by"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of auth config IDs to filter servers by"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of ordering"
+              },
+              {
+                "name": "page_no",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-based)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 10)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a paginated list of MCP servers associated with the authenticated project. Results can be filtered by name, toolkit, or authentication configuration ID. MCP servers are used to provide Model Control Protocol integration points for connecting AI assistants to your applications and services."
+        },
+        {
+          "info": {
+            "name": "Create a new MCP server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new Model Control Protocol (MCP) server instance for the authenticated project. An MCP server provides a connection point for AI assistants to access your applications and services. The server is configured with specific authentication and tool permissions that determine what actions the connected assistants can perform."
+        },
+        {
+          "info": {
+            "name": "Create a new custom MCP server with multiple apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/custom",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new Model Control Protocol (MCP) server instance that can integrate with multiple applications or toolkits simultaneously. This endpoint allows you to create a server that can access tools from different applications, making it suitable for complex workflows that span multiple services."
+        },
+        {
+          "info": {
+            "name": "Generate MCP URL with custom parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a Model Control Protocol (MCP) URL for an existing server with custom query parameters. The URL includes user-specific parameters and configuration flags that control the behavior of the MCP connection."
+        },
+        {
+          "info": {
+            "name": "Get MCP server details by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed configuration information for a specific Model Control Protocol (MCP) server. The returned data includes connection details, associated applications, enabled tools, and authentication configuration."
+        },
+        {
+          "info": {
+            "name": "Update MCP server configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/mcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the configuration of an existing Model Control Protocol (MCP) server. You can modify the server name, associated applications, and enabled tools. Only the fields included in the request will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete an MCP server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/mcp/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Performs a soft delete on a Model Control Protocol (MCP) server, making it unavailable for future use. This operation is reversible in the database but cannot be undone through the API. Any applications or services connected to this server will lose access after deletion."
+        },
+        {
+          "info": {
+            "name": "List MCP servers for a specific app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/app/:appKey",
+            "params": [
+              {
+                "name": "appKey",
+                "value": "",
+                "type": "path",
+                "description": "The key of the app to find MCP servers for"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter MCP servers by name (case-insensitive partial match)"
+              },
+              {
+                "name": "toolkits",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of toolkit slugs to filter servers by"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of auth config IDs to filter servers by"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of ordering"
+              },
+              {
+                "name": "page_no",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-based)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 10)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a paginated list of Model Control Protocol (MCP) servers that are configured for a specific application or toolkit. This endpoint allows you to find all MCP server instances that have access to a particular application, such as GitHub, Slack, or Jira."
+        },
+        {
+          "info": {
+            "name": "List all instances for an MCP server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/:serverId/instances",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              },
+              {
+                "name": "page_no",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (1-based)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 20)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search instances by user ID/instance ID"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "Direction of ordering"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a paginated list of user instances (user IDs) associated with a specific Model Control Protocol (MCP) server. This endpoint supports pagination to handle servers with many instances."
+        },
+        {
+          "info": {
+            "name": "Create a new MCP server instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/:serverId/instances",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new instance for a Model Control Protocol (MCP) server. This endpoint validates that the user has connected accounts for all auth configurations associated with the MCP server before creating the instance."
+        },
+        {
+          "info": {
+            "name": "Delete an MCP server instance and associated connected accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/mcp/servers/:serverId/instances/:instanceId",
+            "params": [
+              {
+                "name": "serverId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server"
+              },
+              {
+                "name": "instanceId",
+                "value": "",
+                "type": "path",
+                "description": "The instance ID (user ID) to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removes a user instance from the MCP server and deletes all connected accounts for that user that are associated with the auth configurations of this specific MCP server. Connected accounts for other auth configurations are not affected."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

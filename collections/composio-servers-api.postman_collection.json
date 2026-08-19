@@ -1,0 +1,4862 @@
+{
+  "item": [
+    {
+      "id": "47175e4a-dfd5-4ef1-8eb1-9ca901299d3b",
+      "name": "Servers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a15f122c-a77b-4168-ad49-739e67f164e6",
+          "name": "List MCP servers with optional filters and pagination",
+          "request": {
+            "name": "List MCP servers with optional filters and pagination",
+            "description": {
+              "content": "Retrieves a paginated list of MCP servers associated with the authenticated project. Results can be filtered by name, toolkit, or authentication configuration ID. MCP servers are used to provide Model Control Protocol integration points for connecting AI assistants to your applications and services.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "servers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter MCP servers by name (case-insensitive partial match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "toolkits",
+                  "value": "<string>",
+                  "description": "Comma-separated list of toolkit slugs to filter servers by"
+                },
+                {
+                  "disabled": false,
+                  "key": "auth_config_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated list of auth config IDs to filter servers by"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "updated_at",
+                  "description": "Field to order results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_direction",
+                  "value": "desc",
+                  "description": "Direction of ordering"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_no",
+                  "value": "1",
+                  "description": "Page number for pagination (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of items per page (default: 10)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ea504bbf-d0c7-4169-bfb0-6c18f34978b0",
+              "name": "Successfully retrieved MCP servers. Returns a paginated list of server configurations including connection details and command instructions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"GitHub Integration Server\",\n      \"auth_config_ids\": [\n        \"ac_1a2b3c4d5e6f\",\n        \"ac_7g8h9i0j1k2l\"\n      ],\n      \"allowed_tools\": [\n        \"GITHUB_CREATE_AN_ISSUE\",\n        \"GITHUB_GET_A_REPOSITORY\",\n        \"GITHUB_LIST_PULL_REQUESTS\"\n      ],\n      \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n      \"toolkits\": [\n        \"github\",\n        \"jira\",\n        \"slack\"\n      ],\n      \"toolkit_icons\": {\n        \"github\": \"https://assets.composio.dev/logos/github.png\",\n        \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n        \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n      },\n      \"commands\": {\n        \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n        \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n        \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n      },\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"server_instance_count\": 5,\n      \"managed_auth_via_composio\": true\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"GitHub Integration Server\",\n      \"auth_config_ids\": [\n        \"ac_1a2b3c4d5e6f\",\n        \"ac_7g8h9i0j1k2l\"\n      ],\n      \"allowed_tools\": [\n        \"GITHUB_CREATE_AN_ISSUE\",\n        \"GITHUB_GET_A_REPOSITORY\",\n        \"GITHUB_LIST_PULL_REQUESTS\"\n      ],\n      \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n      \"toolkits\": [\n        \"github\",\n        \"jira\",\n        \"slack\"\n      ],\n      \"toolkit_icons\": {\n        \"github\": \"https://assets.composio.dev/logos/github.png\",\n        \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n        \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n      },\n      \"commands\": {\n        \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n        \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n        \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n      },\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"server_instance_count\": 5,\n      \"managed_auth_via_composio\": true\n    }\n  ],\n  \"total_pages\": 5,\n  \"current_page\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "132b60cd-0a79-4f70-91b0-5dffe96c3728",
+              "name": "Bad request. The query parameters may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 1945.0218135164655,\n    \"slug\": \"string\",\n    \"status\": 4702.109864276313,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8347947-f487-4540-8d9f-c61ac29c0600",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac1f1c88-367c-4466-a866-3162352030be",
+              "name": "Forbidden. The authenticated user does not have permission to view MCP servers for this project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf036aa6-dd57-46ca-883a-ac85a9935072",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90342a74-7fc5-42a9-8db1-3f236e15e3a4",
+          "name": "Create a new MCP server",
+          "request": {
+            "name": "Create a new MCP server",
+            "description": {
+              "content": "Creates a new Model Control Protocol (MCP) server instance for the authenticated project. An MCP server provides a connection point for AI assistants to access your applications and services. The server is configured with specific authentication and tool permissions that determine what actions the connected assistants can perform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "servers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"auth_config_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"no_auth_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"managed_auth_via_composio\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e91c091-077b-4200-a90b-c007fb2d4d41",
+              "name": "MCP server created successfully. Returns the complete server configuration including connection details and command instructions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\",\n    \"ac_7g8h9i0j1k2l\"\n  ],\n  \"allowed_tools\": [\n    \"GITHUB_CREATE_AN_ISSUE\",\n    \"GITHUB_GET_A_REPOSITORY\",\n    \"GITHUB_LIST_PULL_REQUESTS\"\n  ],\n  \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\",\n    \"slack\"\n  ],\n  \"toolkit_icons\": {\n    \"github\": \"https://assets.composio.dev/logos/github.png\",\n    \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n    \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n  },\n  \"commands\": {\n    \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n    \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n    \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n  },\n  \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n  \"created_at\": \"2023-06-10T09:15:00.000Z\",\n  \"server_instance_count\": 5,\n  \"managed_auth_via_composio\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80463a09-7d04-41df-8945-93cc1e37d2c1",
+              "name": "Bad request. The request body may be invalid, missing required parameters, or the auth_config_id may not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c376f0c7-c7b2-49a2-a3a3-32d0db3d7acb",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2abefcc-b8af-4534-af9a-4c3eb1de3473",
+              "name": "Forbidden. The authenticated user does not have permission to create MCP servers for this project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc7be8f5-c6bf-4d6c-a5ae-8a011d175deb",
+              "name": "Not Found. The specified auth_config_id does not exist or is not accessible to the authenticated user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "916a7892-74eb-4dd8-bb0e-0c64b9668e7e",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c6b2c51-e8ba-49cd-a700-049a53d3f8d6",
+          "name": "Create a new custom MCP server with multiple apps",
+          "request": {
+            "name": "Create a new custom MCP server with multiple apps",
+            "description": {
+              "content": "Creates a new Model Control Protocol (MCP) server instance that can integrate with multiple applications or toolkits simultaneously. This endpoint allows you to create a server that can access tools from different applications, making it suitable for complex workflows that span multiple services.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "servers",
+                "custom"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"auth_config_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"toolkits\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowed_tools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"custom_tools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"managed_auth_via_composio\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d5aef6ac-cd2c-46f9-8f29-70f8a13d009f",
+              "name": "Custom MCP server created successfully. Returns the complete server configuration including connection details and command instructions for all specified applications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "custom"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Development Integration Server\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Multi-App Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\",\n    \"ac_7g8h9i0j1k2l\"\n  ],\n  \"allowed_tools\": [\n    \"GITHUB_CREATE_AN_ISSUE\",\n    \"JIRA_GET_ISSUE\",\n    \"SLACK_SEND_MESSAGE\",\n    \"GMAIL_SEND_EMAIL\"\n  ],\n  \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8410-e29b-41d4-a716-446655440000?user_id=john\",\n  \"commands\": {\n    \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8410-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n    \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8410-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n    \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8410-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6deda0f0-de15-4490-9a03-850cdbfb0bab",
+              "name": "Bad request. The request body may be invalid, missing required parameters, or contain invalid toolkit identifiers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "custom"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Development Integration Server\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "443a6e81-0765-4516-8eed-de3b7e7c1f54",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "custom"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Development Integration Server\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c02d07cb-8e0a-4649-bacd-467d68358eb0",
+              "name": "Forbidden. The authenticated user does not have permission to create MCP servers for this project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "custom"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Development Integration Server\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b8c8920-fc95-4e9f-bb34-3a35a2a7dff9",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "custom"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Development Integration Server\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76e966f1-103f-4451-8d48-520f298e74f7",
+          "name": "Generate MCP URL with custom parameters",
+          "request": {
+            "name": "Generate MCP URL with custom parameters",
+            "description": {
+              "content": "Generates a Model Control Protocol (MCP) URL for an existing server with custom query parameters. The URL includes user-specific parameters and configuration flags that control the behavior of the MCP connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "servers",
+                "generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mcp_server_id\": \"<string>\",\n  \"managed_auth_by_composio\": false,\n  \"user_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"connected_account_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1ab28c26-e813-4b7c-85db-fc7f97659451",
+              "name": "Successfully generated MCP URL. Returns the complete URL with all specified query parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mcp_server_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"user_ids\": [\n    \"user_123456\"\n  ],\n  \"connected_account_ids\": [\n    \"ca_1a2b3c4d5e6f\",\n    \"ca_7g8h9i0j1k2l\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mcp_url\": \"https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000\",\n  \"connected_account_urls\": [\n    \"https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_1a2b3c4d5e6f&user_id=user_123456,user_789012\",\n    \"https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_7g8h9i0j1k2l&user_id=user_123456,user_789012\"\n  ],\n  \"user_ids_url\": [\n    \"https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_1a2b3c4d5e6f,ca_7g8h9i0j1k2l&user_id=user_123456\",\n    \"https://mcp.composio.dev/composio/server/550e8400-e29b-41d4-a716-446655440000?include_composio_helper_actions=true&connected_account_ids=ca_1a2b3c4d5e6f,ca_7g8h9i0j1k2l&user_id=user_789012\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f94e157-75f8-4ca1-afa9-3cf30344d1e4",
+              "name": "Bad request. The request body may be invalid or missing required parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mcp_server_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"user_ids\": [\n    \"user_123456\"\n  ],\n  \"connected_account_ids\": [\n    \"ca_1a2b3c4d5e6f\",\n    \"ca_7g8h9i0j1k2l\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a1a0ae2-950d-4176-bf76-9d87955bce0f",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mcp_server_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"user_ids\": [\n    \"user_123456\"\n  ],\n  \"connected_account_ids\": [\n    \"ca_1a2b3c4d5e6f\",\n    \"ca_7g8h9i0j1k2l\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb03ba36-df4d-47ae-be04-c0567b463227",
+              "name": "Forbidden. The authenticated user does not have permission to access this MCP server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mcp_server_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"user_ids\": [\n    \"user_123456\"\n  ],\n  \"connected_account_ids\": [\n    \"ca_1a2b3c4d5e6f\",\n    \"ca_7g8h9i0j1k2l\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcdb344e-b858-4ba4-ac07-166cdd117c1b",
+              "name": "MCP server not found. No server with the specified ID exists or it has been deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mcp_server_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"user_ids\": [\n    \"user_123456\"\n  ],\n  \"connected_account_ids\": [\n    \"ca_1a2b3c4d5e6f\",\n    \"ca_7g8h9i0j1k2l\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e35ec95-b1bd-4dc2-ae90-1fd71812b1f1",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mcp_server_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"user_ids\": [\n    \"user_123456\"\n  ],\n  \"connected_account_ids\": [\n    \"ca_1a2b3c4d5e6f\",\n    \"ca_7g8h9i0j1k2l\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44c48ae4-862a-4ebf-8057-9efc3bbaaf24",
+          "name": "Get MCP server details by ID",
+          "request": {
+            "name": "Get MCP server details by ID",
+            "description": {
+              "content": "Retrieves detailed configuration information for a specific Model Control Protocol (MCP) server. The returned data includes connection details, associated applications, enabled tools, and authentication configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the MCP server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1100a60a-166a-4996-a7b8-8c9d8ca94543",
+              "name": "Successfully retrieved MCP server. Returns the complete server configuration including connection details, authentication settings, and available tools.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\",\n    \"ac_7g8h9i0j1k2l\"\n  ],\n  \"allowed_tools\": [\n    \"GITHUB_CREATE_AN_ISSUE\",\n    \"GITHUB_GET_A_REPOSITORY\",\n    \"GITHUB_LIST_PULL_REQUESTS\"\n  ],\n  \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\",\n    \"slack\"\n  ],\n  \"toolkit_icons\": {\n    \"github\": \"https://assets.composio.dev/logos/github.png\",\n    \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n    \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n  },\n  \"commands\": {\n    \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n    \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n    \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n  },\n  \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n  \"created_at\": \"2023-06-10T09:15:00.000Z\",\n  \"server_instance_count\": 5,\n  \"managed_auth_via_composio\": true,\n  \"deleted\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f00a408-0ac2-4d7c-9c03-78cf6b220d45",
+              "name": "Bad request. The server ID parameter may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73c9a2c9-e299-456d-974e-4cf077cbfeb1",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0697a397-9ec9-453b-b8c1-b0733d848f7e",
+              "name": "Forbidden. The authenticated user does not have permission to view this MCP server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d1e6e5f-8f3a-463d-b39c-3cab69582763",
+              "name": "MCP server not found. No server with the specified ID exists or it has been deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c3e6234-a7cf-4dc4-a293-7773beb2b0b7",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54903a2f-eec8-4f3b-a85e-52d5f2e995f6",
+          "name": "Update MCP server configuration",
+          "request": {
+            "name": "Update MCP server configuration",
+            "description": {
+              "content": "Updates the configuration of an existing Model Control Protocol (MCP) server. You can modify the server name, associated applications, and enabled tools. Only the fields included in the request will be updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the MCP server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"toolkits\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowed_tools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"managed_auth_via_composio\": \"<boolean>\",\n  \"auth_config_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "46270eea-5bd7-44a3-bc97-a65c9f05a7ae",
+              "name": "Successfully updated MCP server. Returns the complete updated server configuration including connection details, authentication settings, and available tools.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated GitHub Integration Server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"GitHub Integration Server\",\n  \"auth_config_ids\": [\n    \"ac_1a2b3c4d5e6f\",\n    \"ac_7g8h9i0j1k2l\"\n  ],\n  \"allowed_tools\": [\n    \"GITHUB_CREATE_AN_ISSUE\",\n    \"GITHUB_GET_A_REPOSITORY\",\n    \"GITHUB_LIST_PULL_REQUESTS\"\n  ],\n  \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n  \"toolkits\": [\n    \"github\",\n    \"jira\",\n    \"slack\"\n  ],\n  \"toolkit_icons\": {\n    \"github\": \"https://assets.composio.dev/logos/github.png\",\n    \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n    \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n  },\n  \"commands\": {\n    \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n    \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n    \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n  },\n  \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n  \"created_at\": \"2023-06-10T09:15:00.000Z\",\n  \"server_instance_count\": 5,\n  \"managed_auth_via_composio\": true,\n  \"deleted\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1f0a5b0-b230-4b50-9a06-f6798b216766",
+              "name": "Bad request. The request parameters may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated GitHub Integration Server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f118156-3340-44ac-94fb-4edc0999c85a",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated GitHub Integration Server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b820ce4a-69ab-4e67-a866-aebd7e41e091",
+              "name": "Forbidden. The authenticated user does not have permission to update this MCP server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated GitHub Integration Server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d7a0ad6-897d-4ebe-9048-5386396d4364",
+              "name": "MCP server not found. No server with the specified ID exists or it has been deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated GitHub Integration Server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "281f00e7-b6e5-4a94-8157-d4b3927ccf37",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated GitHub Integration Server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2dd78b1e-e540-46a1-9416-35ddcdce94c2",
+          "name": "Delete an MCP server",
+          "request": {
+            "name": "Delete an MCP server",
+            "description": {
+              "content": "Performs a soft delete on a Model Control Protocol (MCP) server, making it unavailable for future use. This operation is reversible in the database but cannot be undone through the API. Any applications or services connected to this server will lose access after deletion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the MCP server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c5b50f22-eb90-4da1-bee9-3a8d28e1925a",
+              "name": "Successfully deleted MCP server. The server has been soft-deleted and is no longer available for use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d41d1f50-8895-4321-ad73-a8b3076e7cbf",
+              "name": "Bad request. The server ID parameter may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b38efd8d-5201-4730-afed-fc8948e5854d",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37024480-ce62-44d1-994e-038dc34f5de9",
+              "name": "Forbidden. The authenticated user does not have permission to delete this MCP server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4fa641e-23f0-44cd-99ab-dc5804c89caf",
+              "name": "MCP server not found. No server with the specified ID exists or it has already been deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9da68501-4065-4e25-986b-b41ac6e0ae00",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8a5c73b-d349-4cc1-9a9b-0b5fb32fbfe7",
+          "name": "List MCP servers for a specific app",
+          "request": {
+            "name": "List MCP servers for a specific app",
+            "description": {
+              "content": "Retrieves a paginated list of Model Control Protocol (MCP) servers that are configured for a specific application or toolkit. This endpoint allows you to find all MCP server instances that have access to a particular application, such as GitHub, Slack, or Jira.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "app",
+                ":appKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter MCP servers by name (case-insensitive partial match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "toolkits",
+                  "value": "<string>",
+                  "description": "Comma-separated list of toolkit slugs to filter servers by"
+                },
+                {
+                  "disabled": false,
+                  "key": "auth_config_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated list of auth config IDs to filter servers by"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "updated_at",
+                  "description": "Field to order results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_direction",
+                  "value": "desc",
+                  "description": "Direction of ordering"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_no",
+                  "value": "1",
+                  "description": "Page number for pagination (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of items per page (default: 10)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appKey",
+                  "description": "(Required) The key of the app to find MCP servers for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2dd43b99-6237-4e59-a023-1f930e935934",
+              "name": "Successfully retrieved MCP servers for the specified application. Returns a paginated list of server configurations including connection details and command instructions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"GitHub Integration Server\",\n      \"auth_config_ids\": [\n        \"ac_1a2b3c4d5e6f\",\n        \"ac_7g8h9i0j1k2l\"\n      ],\n      \"allowed_tools\": [\n        \"GITHUB_CREATE_AN_ISSUE\",\n        \"GITHUB_GET_A_REPOSITORY\",\n        \"GITHUB_LIST_PULL_REQUESTS\"\n      ],\n      \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n      \"toolkits\": [\n        \"github\",\n        \"jira\",\n        \"slack\"\n      ],\n      \"toolkit_icons\": {\n        \"github\": \"https://assets.composio.dev/logos/github.png\",\n        \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n        \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n      },\n      \"commands\": {\n        \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n        \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n        \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n      },\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"server_instance_count\": 5,\n      \"managed_auth_via_composio\": true\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"GitHub Integration Server\",\n      \"auth_config_ids\": [\n        \"ac_1a2b3c4d5e6f\",\n        \"ac_7g8h9i0j1k2l\"\n      ],\n      \"allowed_tools\": [\n        \"GITHUB_CREATE_AN_ISSUE\",\n        \"GITHUB_GET_A_REPOSITORY\",\n        \"GITHUB_LIST_PULL_REQUESTS\"\n      ],\n      \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n      \"toolkits\": [\n        \"github\",\n        \"jira\",\n        \"slack\"\n      ],\n      \"toolkit_icons\": {\n        \"github\": \"https://assets.composio.dev/logos/github.png\",\n        \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n        \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n      },\n      \"commands\": {\n        \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n        \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n        \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n      },\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"server_instance_count\": 5,\n      \"managed_auth_via_composio\": true\n    }\n  ],\n  \"total_pages\": 5,\n  \"current_page\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27d323f7-c42d-42a2-a135-6691e0cfeb7d",
+              "name": "Bad request. The query parameters may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6976671-952a-4016-a835-f871ae636971",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ba29902-0112-4162-91fd-473c1a2219a4",
+              "name": "Forbidden. The authenticated user does not have permission to view MCP servers for this application.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "393d6430-8c87-49e6-a45b-b010a4fe9473",
+              "name": "Application not found. No application with the specified key exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f73178c-f7ab-43fe-ab2b-e043ddf7fd96",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88e3e608-2f6c-4a0b-8963-cf66922f3b2e",
+          "name": "List all instances for an MCP server",
+          "request": {
+            "name": "List all instances for an MCP server",
+            "description": {
+              "content": "Retrieves a paginated list of user instances (user IDs) associated with a specific Model Control Protocol (MCP) server. This endpoint supports pagination to handle servers with many instances.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "servers",
+                ":serverId",
+                "instances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_no",
+                  "value": "1",
+                  "description": "Page number for pagination (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of items per page (default: 20)"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search instances by user ID/instance ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "updated_at",
+                  "description": "Field to order results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_direction",
+                  "value": "desc",
+                  "description": "Direction of ordering"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serverId",
+                  "description": "(Required) The ID of the MCP server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c33e8315-5c4a-4f98-9336-24da53df12b9",
+              "name": "Successfully retrieved MCP server instances. Returns the list of user IDs associated with this server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"instances\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"instance_id\": \"user_123456\",\n      \"mcp_server_id\": \"660e8400-e29b-41d4-a716-446655440001\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\"\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"instance_id\": \"user_123456\",\n      \"mcp_server_id\": \"660e8400-e29b-41d4-a716-446655440001\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\"\n    }\n  ],\n  \"server_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"server_name\": \"Production GitHub Integration\",\n  \"total_pages\": 3,\n  \"current_page\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0853586e-1634-47d1-bbcc-7f4462b684d7",
+              "name": "Bad request. The server ID parameter may be invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff6d3334-e7f5-4374-a30c-de7305de56ce",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da524667-73e8-45e1-aaf7-cf5e3212ef99",
+              "name": "MCP server not found. No server with the specified ID exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53d55d4c-5633-44d2-b6c8-12a7495cbb6e",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "user_123"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c883dd7-1138-4713-9030-09b9bb395cc9",
+          "name": "Create a new MCP server instance",
+          "request": {
+            "name": "Create a new MCP server instance",
+            "description": {
+              "content": "Creates a new instance for a Model Control Protocol (MCP) server. This endpoint validates that the user has connected accounts for all auth configurations associated with the MCP server before creating the instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "servers",
+                ":serverId",
+                "instances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serverId",
+                  "description": "(Required) The ID of the MCP server"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "292efc73-cccf-45f7-b359-12dacf7d3424",
+              "name": "Successfully created MCP server instance. Returns the created instance details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user_123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"instance_id\": \"user_123456\",\n  \"mcp_server_id\": \"660e8400-e29b-41d4-a716-446655440001\",\n  \"created_at\": \"2023-06-10T09:15:00.000Z\",\n  \"updated_at\": \"2023-06-15T14:30:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd984083-cac5-4ee7-94b9-3373b252ea4e",
+              "name": "Bad request. The request parameters may be invalid or the instance ID already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user_123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5014e7a2-faef-4e39-b622-74f0ec4f65a7",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user_123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8187235b-4ef4-4592-9b75-a7c6e56d46b9",
+              "name": "Forbidden. The user does not have connected accounts for all required auth configurations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user_123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5abcc13-fe94-4fa3-9d1e-f03c589dd07a",
+              "name": "MCP server not found. No server with the specified ID exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user_123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "389cf679-77c7-4a3d-b873-e7ce5512badd",
+              "name": "Conflict. An instance with this ID already exists for the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user_123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b75c38dc-dcd3-40e3-9275-fe5ce2b4df05",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user_123456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22dd45d8-a79e-4a9c-b834-f591c3373a36",
+          "name": "Delete an MCP server instance and associated connected accounts",
+          "request": {
+            "name": "Delete an MCP server instance and associated connected accounts",
+            "description": {
+              "content": "Removes a user instance from the MCP server and deletes all connected accounts for that user that are associated with the auth configurations of this specific MCP server. Connected accounts for other auth configurations are not affected.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "servers",
+                ":serverId",
+                "instances",
+                ":instanceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serverId",
+                  "description": "(Required) The ID of the MCP server"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "instanceId",
+                  "description": "(Required) The instance ID (user ID) to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4fc5487b-51e2-491f-af08-f86c865dfc3f",
+              "name": "Successfully deleted MCP server instance and associated connected accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances",
+                    ":instanceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instanceId",
+                      "description": "(Required) The instance ID (user ID) to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"deleted_connected_accounts\": 6211.857269767209\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac361e2e-e909-45f6-ab5e-57e46318e3a9",
+              "name": "Bad request. The request parameters may be invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances",
+                    ":instanceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instanceId",
+                      "description": "(Required) The instance ID (user ID) to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09dc306a-10de-408e-8987-8ebdc348e5a8",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances",
+                    ":instanceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instanceId",
+                      "description": "(Required) The instance ID (user ID) to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebba81ea-b2f5-473a-92dd-73f57b7b5c8d",
+              "name": "MCP server or instance not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances",
+                    ":instanceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instanceId",
+                      "description": "(Required) The instance ID (user ID) to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4342937b-678f-499d-a963-20c7a3a85961",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "servers",
+                    ":serverId",
+                    "instances",
+                    ":instanceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serverId",
+                      "description": "(Required) The ID of the MCP server"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "instanceId",
+                      "description": "(Required) The instance ID (user ID) to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 9789.536031371792,\n    \"slug\": \"string\",\n    \"status\": 6102.500180172161,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a4eed5a2-7baa-4894-849e-ae4ea4131017",
+    "name": "Composio Platform Account Management Servers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Integration API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available toolkits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/toolkits",
+            "params": [
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Filter toolkits by category"
+              },
+              {
+                "name": "managed_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter toolkits by who manages them"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for returned toolkits"
+              },
+              {
+                "name": "include_deprecated",
+                "value": "",
+                "type": "query",
+                "description": "Include deprecated toolkits in the response"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter toolkits by name, slug, or description"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options."
+        },
+        {
+          "info": {
+            "name": "Get toolkit by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/toolkits/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Toolkit slug identifier"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version of the toolkit"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves comprehensive information about a specific toolkit using its unique slug identifier. This endpoint provides detailed metadata, authentication configuration options, and feature counts for the requested toolkit."
+        },
+        {
+          "info": {
+            "name": "Fetch multiple toolkits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/toolkits/multi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options. You can optionally specify a list of toolkit slugs to fetch specific toolkits."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,642 @@
+{
+  "item": [
+    {
+      "id": "a7cccf30-78e5-4dc8-983a-06b97c571e89",
+      "name": "Applications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6d74c2e2-486e-47a1-ae63-a00562fe2b59",
+          "name": "List MCP servers for a specific app",
+          "request": {
+            "name": "List MCP servers for a specific app",
+            "description": {
+              "content": "Retrieves a paginated list of Model Control Protocol (MCP) servers that are configured for a specific application or toolkit. This endpoint allows you to find all MCP server instances that have access to a particular application, such as GitHub, Slack, or Jira.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "mcp",
+                "app",
+                ":appKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter MCP servers by name (case-insensitive partial match)"
+                },
+                {
+                  "disabled": false,
+                  "key": "toolkits",
+                  "value": "<string>",
+                  "description": "Comma-separated list of toolkit slugs to filter servers by"
+                },
+                {
+                  "disabled": false,
+                  "key": "auth_config_ids",
+                  "value": "<string>",
+                  "description": "Comma-separated list of auth config IDs to filter servers by"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "updated_at",
+                  "description": "Field to order results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_direction",
+                  "value": "desc",
+                  "description": "Direction of ordering"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_no",
+                  "value": "1",
+                  "description": "Page number for pagination (1-based)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of items per page (default: 10)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appKey",
+                  "description": "(Required) The key of the app to find MCP servers for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d349532a-be4d-46da-a522-37d37fd95f0e",
+              "name": "Successfully retrieved MCP servers for the specified application. Returns a paginated list of server configurations including connection details and command instructions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"GitHub Integration Server\",\n      \"auth_config_ids\": [\n        \"ac_1a2b3c4d5e6f\",\n        \"ac_7g8h9i0j1k2l\"\n      ],\n      \"allowed_tools\": [\n        \"GITHUB_CREATE_AN_ISSUE\",\n        \"GITHUB_GET_A_REPOSITORY\",\n        \"GITHUB_LIST_PULL_REQUESTS\"\n      ],\n      \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n      \"toolkits\": [\n        \"github\",\n        \"jira\",\n        \"slack\"\n      ],\n      \"toolkit_icons\": {\n        \"github\": \"https://assets.composio.dev/logos/github.png\",\n        \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n        \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n      },\n      \"commands\": {\n        \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n        \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n        \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n      },\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"server_instance_count\": 5,\n      \"managed_auth_via_composio\": true\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"GitHub Integration Server\",\n      \"auth_config_ids\": [\n        \"ac_1a2b3c4d5e6f\",\n        \"ac_7g8h9i0j1k2l\"\n      ],\n      \"allowed_tools\": [\n        \"GITHUB_CREATE_AN_ISSUE\",\n        \"GITHUB_GET_A_REPOSITORY\",\n        \"GITHUB_LIST_PULL_REQUESTS\"\n      ],\n      \"mcp_url\": \"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\",\n      \"toolkits\": [\n        \"github\",\n        \"jira\",\n        \"slack\"\n      ],\n      \"toolkit_icons\": {\n        \"github\": \"https://assets.composio.dev/logos/github.png\",\n        \"jira\": \"https://assets.composio.dev/logos/jira.png\",\n        \"slack\": \"https://assets.composio.dev/logos/slack.png\"\n      },\n      \"commands\": {\n        \"cursor\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client cursor\",\n        \"claude\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client claude\",\n        \"windsurf\": \"npx @composio/mcp@latest setup \\\"https://backend.composio.dev/v3/mcp/550e8400-e29b-41d4-a716-446655440000?user_id=john\\\" --client windsurf\"\n      },\n      \"updated_at\": \"2023-06-15T14:30:00.000Z\",\n      \"created_at\": \"2023-06-10T09:15:00.000Z\",\n      \"server_instance_count\": 5,\n      \"managed_auth_via_composio\": true\n    }\n  ],\n  \"total_pages\": 5,\n  \"current_page\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8161b6cd-a4e7-4be5-87f9-32119e9f8ce5",
+              "name": "Bad request. The query parameters may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6914.096808713977,\n    \"slug\": \"string\",\n    \"status\": 2866.6612925966037,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97862536-82d0-4815-ab5a-a14b452ff4a1",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 8378.63894202734,\n    \"slug\": \"string\",\n    \"status\": 8995.488496789729,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db264bc7-b843-43e6-b9bf-122b2611dc69",
+              "name": "Forbidden. The authenticated user does not have permission to view MCP servers for this application.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 8378.63894202734,\n    \"slug\": \"string\",\n    \"status\": 8995.488496789729,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efbfedec-7d58-49b2-acf0-e9c9283e0952",
+              "name": "Application not found. No application with the specified key exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 8378.63894202734,\n    \"slug\": \"string\",\n    \"status\": 8995.488496789729,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ecbd892c-553c-4e4f-bcfa-0a4b9f1495b9",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "mcp",
+                    "app",
+                    ":appKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "github"
+                    },
+                    {
+                      "key": "toolkits",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth_config_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "updated_at"
+                    },
+                    {
+                      "key": "order_direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "page_no",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appKey",
+                      "description": "(Required) The key of the app to find MCP servers for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 8378.63894202734,\n    \"slug\": \"string\",\n    \"status\": 8995.488496789729,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "042a9f6a-63b9-4720-a8c9-661955701934",
+    "name": "Composio Platform Account Management Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

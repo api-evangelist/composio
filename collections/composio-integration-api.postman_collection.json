@@ -1,0 +1,1199 @@
+{
+  "item": [
+    {
+      "id": "7d0386b8-348f-4a35-a5a0-e8609af8d863",
+      "name": "Integration",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5ae5bab2-b036-48b9-be0f-e9736dec2e35",
+          "name": "List available toolkits",
+          "request": {
+            "name": "List available toolkits",
+            "description": {
+              "content": "Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "toolkits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Filter toolkits by category"
+                },
+                {
+                  "disabled": false,
+                  "key": "managed_by",
+                  "value": "<string>",
+                  "description": "Filter toolkits by who manages them"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "Sort order for returned toolkits"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_deprecated",
+                  "value": "false",
+                  "description": "Include deprecated toolkits in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search query to filter toolkits by name, slug, or description"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<number>",
+                  "description": "Number of items per page, max allowed is 1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8cf9a8ab-ee96-4c34-9d0f-7c42169920ea",
+              "name": "Toolkits retrieved successfully. Returns a paginated list of available toolkits with detailed metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "productivity"
+                    },
+                    {
+                      "key": "managed_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_deprecated",
+                      "value": "true"
+                    },
+                    {
+                      "key": "search",
+                      "value": "gmail"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"slug\": \"github\",\n      \"name\": \"GitHub\",\n      \"is_local_toolkit\": false,\n      \"deprecated\": {\n        \"toolkitId\": \"550e8400-e29b-41d4-a716-446655440000\"\n      },\n      \"meta\": {\n        \"created_at\": \"2023-01-15T09:30:00.000Z\",\n        \"updated_at\": \"2023-05-20T14:45:00.000Z\",\n        \"description\": \"Integrate with GitHub repositories, issues, pull requests, and more.\",\n        \"logo\": \"https://assets.composio.dev/logos/github.png\",\n        \"categories\": [\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          },\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          }\n        ],\n        \"triggers_count\": 5,\n        \"tools_count\": 12,\n        \"version\": \"20250905_00\",\n        \"app_url\": \"https://github.com\"\n      },\n      \"auth_schemes\": [\n        \"oauth2\",\n        \"api_key\"\n      ],\n      \"composio_managed_auth_schemes\": [\n        \"oauth2\"\n      ],\n      \"no_auth\": false,\n      \"auth_guide_url\": \"https://composio.dev/auth/github\"\n    },\n    {\n      \"slug\": \"github\",\n      \"name\": \"GitHub\",\n      \"is_local_toolkit\": false,\n      \"deprecated\": {\n        \"toolkitId\": \"550e8400-e29b-41d4-a716-446655440000\"\n      },\n      \"meta\": {\n        \"created_at\": \"2023-01-15T09:30:00.000Z\",\n        \"updated_at\": \"2023-05-20T14:45:00.000Z\",\n        \"description\": \"Integrate with GitHub repositories, issues, pull requests, and more.\",\n        \"logo\": \"https://assets.composio.dev/logos/github.png\",\n        \"categories\": [\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          },\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          }\n        ],\n        \"triggers_count\": 5,\n        \"tools_count\": 12,\n        \"version\": \"20250905_00\",\n        \"app_url\": \"https://github.com\"\n      },\n      \"auth_schemes\": [\n        \"oauth2\",\n        \"api_key\"\n      ],\n      \"composio_managed_auth_schemes\": [\n        \"oauth2\"\n      ],\n      \"no_auth\": false,\n      \"auth_guide_url\": \"https://composio.dev/auth/github\"\n    }\n  ],\n  \"total_pages\": 2502.7757540521757,\n  \"current_page\": 8523.245377255815,\n  \"total_items\": 9619.792202883946,\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e96ccc56-3b8a-4a99-820a-cf9f061de5aa",
+              "name": "Bad request. The query parameters may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "productivity"
+                    },
+                    {
+                      "key": "managed_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_deprecated",
+                      "value": "true"
+                    },
+                    {
+                      "key": "search",
+                      "value": "gmail"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 262.1050710058148,\n    \"slug\": \"string\",\n    \"status\": 1290.798670446789,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef4b1c11-d9c3-4a5a-a5b8-7b7d3f0090ae",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "productivity"
+                    },
+                    {
+                      "key": "managed_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_deprecated",
+                      "value": "true"
+                    },
+                    {
+                      "key": "search",
+                      "value": "gmail"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6de281f4-75b9-446a-9e81-c3adc9baed99",
+              "name": "Not found. The toolkits you are looking for do not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "productivity"
+                    },
+                    {
+                      "key": "managed_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_deprecated",
+                      "value": "true"
+                    },
+                    {
+                      "key": "search",
+                      "value": "gmail"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cb87483-9605-439a-86c5-4322a78d12d7",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "productivity"
+                    },
+                    {
+                      "key": "managed_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_deprecated",
+                      "value": "true"
+                    },
+                    {
+                      "key": "search",
+                      "value": "gmail"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3259b05d-cc5a-4081-bf97-d492d2e8fe46",
+          "name": "Get toolkit by slug",
+          "request": {
+            "name": "Get toolkit by slug",
+            "description": {
+              "content": "Retrieves comprehensive information about a specific toolkit using its unique slug identifier. This endpoint provides detailed metadata, authentication configuration options, and feature counts for the requested toolkit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "toolkits",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "latest",
+                  "description": "Version of the toolkit"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Toolkit slug identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "11442b58-17c6-4ac1-abad-8808a636ab25",
+              "name": "Successfully retrieved detailed information about the requested toolkit, including authentication options, metadata, and feature counts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "20250905_00"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Toolkit slug identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slug\": \"github\",\n  \"name\": \"GitHub\",\n  \"enabled\": true,\n  \"is_local_toolkit\": false,\n  \"meta\": {\n    \"created_at\": \"2023-01-15T09:30:00.000Z\",\n    \"updated_at\": \"2023-05-20T14:45:00.000Z\",\n    \"description\": \"Integrate with GitHub repositories, issues, pull requests, and more.\",\n    \"logo\": \"https://assets.composio.dev/logos/github.png\",\n    \"categories\": [\n      {\n        \"name\": \"Developer Tools\",\n        \"slug\": \"developer-tools\"\n      },\n      {\n        \"name\": \"Productivity\",\n        \"slug\": \"productivity\"\n      }\n    ],\n    \"triggers_count\": 5,\n    \"tools_count\": 12,\n    \"version\": \"20250905_00\",\n    \"available_versions\": [\n      \"20250905_00\",\n      \"20250906_00\"\n    ],\n    \"app_url\": \"https://github.com\"\n  },\n  \"deprecated\": {\n    \"toolkitId\": \"string\",\n    \"rawProxyInfoByAuthSchemes\": [\n      {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      },\n      {\n        \"key_0\": {}\n      }\n    ],\n    \"getCurrentUserEndpoint\": \"string\"\n  },\n  \"composio_managed_auth_schemes\": [\n    \"oauth2\"\n  ],\n  \"auth_config_details\": [\n    {\n      \"mode\": \"oauth2\",\n      \"fields\": {\n        \"auth_config_creation\": {\n          \"required\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": false,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": true\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": false,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            }\n          ],\n          \"optional\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": false,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            }\n          ]\n        },\n        \"connected_account_initiation\": {\n          \"required\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": false,\n              \"default\": \"string\",\n              \"is_secret\": false,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": true\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": true\n            }\n          ],\n          \"optional\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": false,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": false,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            }\n          ]\n        }\n      },\n      \"name\": \"OAuth 2.0\",\n      \"proxy\": {\n        \"base_url\": \"https://auth.example.com/proxy\"\n      },\n      \"auth_hint_url\": \"https://github.com/settings/tokens\",\n      \"deprecated_auth_provider_details\": {\n        \"authorization_url\": \"string\",\n        \"token_url\": \"string\"\n      }\n    },\n    {\n      \"mode\": \"oauth2\",\n      \"fields\": {\n        \"auth_config_creation\": {\n          \"required\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": false,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": true\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": false,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            }\n          ],\n          \"optional\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": false,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            }\n          ]\n        },\n        \"connected_account_initiation\": {\n          \"required\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": false,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": true\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": false,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": true\n            }\n          ],\n          \"optional\": [\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": true,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": true\n            },\n            {\n              \"name\": \"string\",\n              \"displayName\": \"string\",\n              \"type\": \"string\",\n              \"description\": \"string\",\n              \"required\": false,\n              \"default\": \"string\",\n              \"is_secret\": true,\n              \"legacy_template_name\": \"string\",\n              \"advanced\": false\n            }\n          ]\n        }\n      },\n      \"name\": \"OAuth 2.0\",\n      \"proxy\": {\n        \"base_url\": \"https://auth.example.com/proxy\"\n      },\n      \"auth_hint_url\": \"https://github.com/settings/tokens\",\n      \"deprecated_auth_provider_details\": {\n        \"authorization_url\": \"string\",\n        \"token_url\": \"string\"\n      }\n    }\n  ],\n  \"auth_guide_url\": \"https://composio.dev/auth/github\",\n  \"base_url\": \"https://api.github.com\",\n  \"get_current_user_endpoint\": \"string\",\n  \"get_current_user_endpoint_method\": \"GET\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9990f95-1b25-42a4-b35a-c35762a81cbe",
+              "name": "Bad request. The toolkit slug may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "20250905_00"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Toolkit slug identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49c3925a-1939-4afa-b6b5-b7127583d280",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "20250905_00"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Toolkit slug identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d3f900b-2b5f-4547-94ef-ac390ee17c71",
+              "name": "Not found. The requested toolkit does not exist or is not accessible to the authenticated project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "20250905_00"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Toolkit slug identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23ac4d9d-75a8-4061-bf6a-b6d6a2c66115",
+              "name": "Internal server error. An unexpect ed error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "20250905_00"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Toolkit slug identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eddf9643-162e-433a-bbc0-ddaf54bbe7c4",
+          "name": "Fetch multiple toolkits",
+          "request": {
+            "name": "Fetch multiple toolkits",
+            "description": {
+              "content": "Retrieves a comprehensive list of toolkits of their latest versions that are available to the authenticated project. Toolkits represent integration points with external services and applications, each containing a collection of tools and triggers. This endpoint supports filtering by category and management type, as well as different sorting options. You can optionally specify a list of toolkit slugs to fetch specific toolkits.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "toolkits",
+                "multi"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toolkits\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"category\": \"<string>\",\n  \"managed_by\": \"<string>\",\n  \"sort_by\": \"<string>\",\n  \"limit\": \"<number>\",\n  \"cursor\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4eb468d4-1dcc-4051-ab94-8ab0d250e033",
+              "name": "Toolkits retrieved successfully. Returns a paginated list of available toolkits with detailed metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkits\": [\n    \"github\",\n    \"slack\",\n    \"gmail\"\n  ],\n  \"category\": \"productivity\",\n  \"managed_by\": \"<string>\",\n  \"sort_by\": \"<string>\",\n  \"limit\": \"<number>\",\n  \"cursor\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"slug\": \"github\",\n      \"name\": \"GitHub\",\n      \"is_local_toolkit\": false,\n      \"deprecated\": {\n        \"toolkitId\": \"550e8400-e29b-41d4-a716-446655440000\"\n      },\n      \"meta\": {\n        \"created_at\": \"2023-01-15T09:30:00.000Z\",\n        \"updated_at\": \"2023-05-20T14:45:00.000Z\",\n        \"description\": \"Integrate with GitHub repositories, issues, pull requests, and more.\",\n        \"logo\": \"https://assets.composio.dev/logos/github.png\",\n        \"categories\": [\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          },\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          }\n        ],\n        \"triggers_count\": 5,\n        \"tools_count\": 12,\n        \"version\": \"20250905_00\",\n        \"app_url\": \"https://github.com\"\n      },\n      \"auth_schemes\": [\n        \"oauth2\",\n        \"api_key\"\n      ],\n      \"composio_managed_auth_schemes\": [\n        \"oauth2\"\n      ],\n      \"no_auth\": false,\n      \"auth_guide_url\": \"https://composio.dev/auth/github\"\n    },\n    {\n      \"slug\": \"github\",\n      \"name\": \"GitHub\",\n      \"is_local_toolkit\": false,\n      \"deprecated\": {\n        \"toolkitId\": \"550e8400-e29b-41d4-a716-446655440000\"\n      },\n      \"meta\": {\n        \"created_at\": \"2023-01-15T09:30:00.000Z\",\n        \"updated_at\": \"2023-05-20T14:45:00.000Z\",\n        \"description\": \"Integrate with GitHub repositories, issues, pull requests, and more.\",\n        \"logo\": \"https://assets.composio.dev/logos/github.png\",\n        \"categories\": [\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          },\n          {\n            \"id\": \"developer-tools\",\n            \"name\": \"Developer Tools\"\n          }\n        ],\n        \"triggers_count\": 5,\n        \"tools_count\": 12,\n        \"version\": \"20250905_00\",\n        \"app_url\": \"https://github.com\"\n      },\n      \"auth_schemes\": [\n        \"oauth2\",\n        \"api_key\"\n      ],\n      \"composio_managed_auth_schemes\": [\n        \"oauth2\"\n      ],\n      \"no_auth\": false,\n      \"auth_guide_url\": \"https://composio.dev/auth/github\"\n    }\n  ],\n  \"total_pages\": 2502.7757540521757,\n  \"current_page\": 8523.245377255815,\n  \"total_items\": 9619.792202883946,\n  \"next_cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa4a3932-e613-4015-9ee5-d539c49d4ec7",
+              "name": "Bad request. The query parameters may be invalid or in an incorrect format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkits\": [\n    \"github\",\n    \"slack\",\n    \"gmail\"\n  ],\n  \"category\": \"productivity\",\n  \"managed_by\": \"<string>\",\n  \"sort_by\": \"<string>\",\n  \"limit\": \"<number>\",\n  \"cursor\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f271d6da-4082-4363-b85b-210bb08c4857",
+              "name": "Unauthorized. Authentication is required or the provided credentials are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkits\": [\n    \"github\",\n    \"slack\",\n    \"gmail\"\n  ],\n  \"category\": \"productivity\",\n  \"managed_by\": \"<string>\",\n  \"sort_by\": \"<string>\",\n  \"limit\": \"<number>\",\n  \"cursor\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05d0d722-55b1-4547-bef2-f11f7838f862",
+              "name": "Not found. The toolkits you are looking for do not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkits\": [\n    \"github\",\n    \"slack\",\n    \"gmail\"\n  ],\n  \"category\": \"productivity\",\n  \"managed_by\": \"<string>\",\n  \"sort_by\": \"<string>\",\n  \"limit\": \"<number>\",\n  \"cursor\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92daf3a9-3f1b-456d-ba85-06c1e6da4735",
+              "name": "Internal server error. An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "toolkits",
+                    "multi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toolkits\": [\n    \"github\",\n    \"slack\",\n    \"gmail\"\n  ],\n  \"category\": \"productivity\",\n  \"managed_by\": \"<string>\",\n  \"sort_by\": \"<string>\",\n  \"limit\": \"<number>\",\n  \"cursor\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 6677.038627417064,\n    \"slug\": \"string\",\n    \"status\": 4581.676735928677,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c169dc4e-dc68-488e-8098-1bd9241a4691",
+    "name": "Composio Platform Account Management Integration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

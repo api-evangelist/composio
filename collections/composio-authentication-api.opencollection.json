@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Authentication API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current user session information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/auth/session/info",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about the current authenticated user session, including project details, organization membership, and API key information if applicable. This endpoint is useful for verifying authentication status and retrieving contextual information about the authenticated user and their access privileges."
+        },
+        {
+          "info": {
+            "name": "End user session and clear authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/auth/session/logout",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Terminates the current user session by invalidating authentication cookies and tokens. This effectively signs the user out of the application. After logout, the user will need to authenticate again to access protected resources."
+        },
+        {
+          "info": {
+            "name": "Refresh authentication for a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid/refresh",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier of the connected account"
+              },
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a new authentication flow for a connected account when credentials have expired or become invalid. This may generate a new authentication URL for OAuth flows or refresh tokens for other auth schemes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

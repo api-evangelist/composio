@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Configuration API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get project configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/project/config",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves the current project configuration including 2FA settings."
+        },
+        {
+          "info": {
+            "name": "Update project configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/org/project/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Updates the project configuration settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

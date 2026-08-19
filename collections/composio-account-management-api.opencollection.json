@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get connected account details by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves comprehensive details of a connected account, including authentication configuration, connection status, and all parameters needed for API requests."
+        },
+        {
+          "info": {
+            "name": "Update a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a connected account. Supports updating the alias and/or credentials. Only specified fields will be updated. Set a credential field to null to remove it. Alias must be unique within the same project, entity, and toolkit scope."
+        },
+        {
+          "info": {
+            "name": "Delete a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Soft-deletes a connected account by marking it as deleted in the database. This prevents the account from being used for API calls but preserves the record for audit purposes."
+        },
+        {
+          "info": {
+            "name": "Enable or disable a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoId/status",
+            "params": [
+              {
+                "name": "nanoId",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier of the connected account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the status of a connected account to either enabled (active) or disabled (inactive). Disabled accounts cannot be used for API calls but remain in the database."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management CLI API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CLI",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ingest CLI codact failures",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/codact_failures",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Accepts CLI-reported codact failures authenticated by user API key and stores them in ClickHouse for later analysis."
+        },
+        {
+          "info": {
+            "name": "Get credentials for CLI realtime events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/credentials",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}."
+        },
+        {
+          "info": {
+            "name": "Authenticate CLI Pusher channel access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticate CLI client access to a private-cli-{nanoId} Pusher channel"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

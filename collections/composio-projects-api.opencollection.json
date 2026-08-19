@@ -1,0 +1,210 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Projects API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get project configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/project/config",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves the current project configuration including 2FA settings."
+        },
+        {
+          "info": {
+            "name": "Update project configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/org/project/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Updates the project configuration settings."
+        },
+        {
+          "info": {
+            "name": "Create a new project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/new",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new project within the authenticated user's organization using the specified name. Projects are isolated environments within your organization, each with their own API keys, webhook configurations, and resources. Use this endpoint to create additional projects for different environments (e.g., development, staging, production) or for separate applications."
+        },
+        {
+          "info": {
+            "name": "List all projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/list",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all projects belonging to the authenticated organization. Projects are returned in descending order of creation date (newest first). This endpoint is useful for displaying project selection in dashboards or for integrations that need to list all available projects."
+        },
+        {
+          "info": {
+            "name": "Get project details by ID With Org Api key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier (Nano ID) of the project to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about a specific project using its unique identifier. This endpoint provides complete project configuration including webhook URLs, creation and update timestamps, and webhook secrets. Use this endpoint to inspect project settings or verify project configuration."
+        },
+        {
+          "info": {
+            "name": "Delete a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier (Nano ID) of the project to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Soft-deletes a project within the organization by its unique identifier. When a project is deleted, it is marked as deleted but not immediately removed from the database. This operation affects all resources associated with the project including API keys, webhook configurations, and connected services. This action cannot be undone through the API."
+        },
+        {
+          "info": {
+            "name": "Delete and generate new API key for project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/:nano_id/regenerate_api_key",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier (Nano ID) of the project to regenerate API key for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a new API key for the specified project, invalidating any existing API keys for that project. This operation creates a fresh API key with a new random name and key value. All existing API keys for this project will be marked as deleted."
+        },
+        {
+          "info": {
+            "name": "Resolve the organization consumer project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/consumer/project/resolve",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              },
+              {
+                "name": "x-org-id",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Finds the authenticated organization's single CONSUMER project and provisions it if absent. This endpoint is idempotent and never returns consumer API keys."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

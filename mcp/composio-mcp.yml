@@ -2,52 +2,54 @@ generated: '2026-06-20'
 method: searched
 status: published
 source: https://docs.composio.dev/docs/sessions-via-mcp
-description: >-
-  Composio exposes its 1000+ toolkits over the Model Context Protocol as a hosted,
-  per-session MCP server. The recommended path is the Tool Router: create a session
-  with `mcp: true` and read the hosted endpoint off `session.mcp.url` with auth
-  headers in `session.mcp.headers`. A single Tool Router MCP endpoint dynamically
-  discovers, authenticates, and executes tools across all connected toolkits, so
-  the tool surface is dynamic rather than a fixed manifest. The standalone
-  MCP-server management API (create/list/delete named servers) still exists but
-  Composio directs new integrations to session-based MCP.
+description: 'Composio exposes its 1000+ toolkits over the Model Context Protocol as a hosted, per-session
+  MCP server. The recommended path is the Tool Router: create a session with `mcp: true` and read the
+  hosted endpoint off `session.mcp.url` with auth headers in `session.mcp.headers`. A single Tool Router
+  MCP endpoint dynamically discovers, authenticates, and executes tools across all connected toolkits,
+  so the tool surface is dynamic rather than a fixed manifest. The standalone MCP-server management API
+  (create/list/delete named servers) still exists but Composio directs new integrations to session-based
+  MCP.'
 servers:
-  - name: composio-tool-router
-    kind: session-mcp
-    transport: http
-    url_pattern: "{session.mcp.url}"
-    provisioning: "composio.create(user_id, { mcp: true }) then read session.mcp.url + session.mcp.headers"
-    auth: session headers (session.mcp.headers); x-api-key on the underlying project
-    recommended: true
-    note: >-
-      Single dynamic MCP endpoint across all connected toolkits (tool search + meta
-      tools). Combine with the DIRECT_TOOLS preset for a fixed, search-free endpoint
-      scoped to specific tools.
-  - name: composio-single-toolkit-mcp
-    kind: named-server
-    transport: http
-    url_pattern: "https://backend.composio.dev/v3/mcp/{server_id}?user_id={user_id}"
-    auth: x-api-key header (required when require_mcp_api_key is enabled; default for new orgs)
-    management_api: openapi/composio-openapi-original.json (tag "MCP")
-    recommended: false
-    note: Legacy single-toolkit / named-server model; migration guide points to sessions.
-# The MCP tool surface is dynamic (discovered at runtime via Tool Router search),
-# not a fixed manifest. The management operations below are the API surface that
-# provisions and controls MCP servers, derived from the OpenAPI (tag "MCP").
+- name: composio-tool-router
+  kind: session-mcp
+  transport: http
+  url_pattern: '{session.mcp.url}'
+  provisioning: 'composio.create(user_id, { mcp: true }) then read session.mcp.url + session.mcp.headers'
+  auth: session headers (session.mcp.headers); x-api-key on the underlying project
+  recommended: true
+  note: Single dynamic MCP endpoint across all connected toolkits (tool search + meta tools). Combine
+    with the DIRECT_TOOLS preset for a fixed, search-free endpoint scoped to specific tools.
+- name: composio-single-toolkit-mcp
+  kind: named-server
+  transport: http
+  url_pattern: https://backend.composio.dev/v3/mcp/{server_id}?user_id={user_id}
+  auth: x-api-key header (required when require_mcp_api_key is enabled; default for new orgs)
+  management_api: openapi/composio-openapi-original.json (tag "MCP")
+  recommended: false
+  note: Legacy single-toolkit / named-server model; migration guide points to sessions.
 management_operations:
-  - name: list_mcp_servers
-    source_operation: openapi/composio-openapi-original.json#getMcpServers
-  - name: create_mcp_server
-    source_operation: openapi/composio-openapi-original.json#postMcpServers
-  - name: create_custom_mcp_server
-    source_operation: openapi/composio-openapi-original.json#postMcpServersCustom
-  - name: generate_mcp_server
-    source_operation: openapi/composio-openapi-original.json#postMcpServersGenerate
-  - name: get_mcp_server
-    source_operation: openapi/composio-openapi-original.json#getMcpById
-  - name: update_mcp_server
-    source_operation: openapi/composio-openapi-original.json#patchMcpById
-  - name: delete_mcp_server
-    source_operation: openapi/composio-openapi-original.json#deleteMcpById
-  - name: create_mcp_server_instance
-    source_operation: openapi/composio-openapi-original.json#postMcpServersByServerIdInstances
+- name: list_mcp_servers
+  source_operation: openapi/composio-openapi-original.json#getMcpServers
+- name: create_mcp_server
+  source_operation: openapi/composio-openapi-original.json#postMcpServers
+- name: create_custom_mcp_server
+  source_operation: openapi/composio-openapi-original.json#postMcpServersCustom
+- name: generate_mcp_server
+  source_operation: openapi/composio-openapi-original.json#postMcpServersGenerate
+- name: get_mcp_server
+  source_operation: openapi/composio-openapi-original.json#getMcpById
+- name: update_mcp_server
+  source_operation: openapi/composio-openapi-original.json#patchMcpById
+- name: delete_mcp_server
+  source_operation: openapi/composio-openapi-original.json#deleteMcpById
+- name: create_mcp_server_instance
+  source_operation: openapi/composio-openapi-original.json#postMcpServersByServerIdInstances
+deployment:
+  mode: none
+  endpoint: https://backend.composio.dev/v3/mcp/{server_id}?user_id={user_id}
+  verified: probed
+  probe: dead
+  note: the endpoint this manifest claimed did not answer; recorded as none rather than deleted so the
+    claim stays auditable
+  checked: '2026-08-12'
+  source: catalog MCP census

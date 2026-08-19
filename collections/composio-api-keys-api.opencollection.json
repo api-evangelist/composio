@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management API Keys API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete and generate new API key for project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/owner/project/:nano_id/regenerate_api_key",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier (Nano ID) of the project to regenerate API key for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-org-api-key",
+              "value": "{{x-org-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a new API key for the specified project, invalidating any existing API keys for that project. This operation creates a fresh API key with a new random name and key value. All existing API keys for this project will be marked as deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

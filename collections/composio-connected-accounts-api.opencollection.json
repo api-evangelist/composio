@@ -1,0 +1,396 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Connected Accounts API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connected Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connected accounts with optional filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts",
+            "params": [
+              {
+                "name": "toolkit_slugs",
+                "value": "",
+                "type": "query",
+                "description": "The toolkit slugs of the connected accounts"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "The status of the connected account"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to paginate through the connected accounts"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The limit of the connected accounts to return"
+              },
+              {
+                "name": "user_ids",
+                "value": "",
+                "type": "query",
+                "description": "The user ids of the connected accounts"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "The auth config ids of the connected accounts"
+              },
+              {
+                "name": "connected_account_ids",
+                "value": "",
+                "type": "query",
+                "description": "The connected account ids to filter by"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "The order by of the connected accounts"
+              },
+              {
+                "name": "order_direction",
+                "value": "",
+                "type": "query",
+                "description": "The order direction of the connected accounts"
+              },
+              {
+                "name": "account_type",
+                "value": "",
+                "type": "query",
+                "description": "[Experimental] Filter by sharing model. Default (omitted) returns PRIVATE only — shared accounts must be requested explicitly. Pass SHARED for only shared accounts, or ALL for PRIVATE + SHARED."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all connected accounts for your project. Connected accounts represent authenticated user connections to external services (e.g., a user's Gmail account, Slack workspace). Filter by toolkit, status, user ID, or auth config to find specific connections."
+        },
+        {
+          "info": {
+            "name": "Create a new connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a new connection to an external service for a user. For OAuth-based toolkits, this returns a redirect URL to complete authentication. For API key-based toolkits, provide the credentials directly in the request body. Use the `user_id` field to associate the connection with a specific user in your system.\n\n**Deprecated for Composio-managed OAuth:** For Composio-managed auth configs on OAuth1, OAuth2, or DCR_OAUTH schemes, this endpoint is being retired and will start returning `400 BadRe"
+        },
+        {
+          "info": {
+            "name": "Get connected account details by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves comprehensive details of a connected account, including authentication configuration, connection status, and all parameters needed for API requests."
+        },
+        {
+          "info": {
+            "name": "Update a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a connected account. Supports updating the alias and/or credentials. Only specified fields will be updated. Set a credential field to null to remove it. Alias must be unique within the same project, entity, and toolkit scope."
+        },
+        {
+          "info": {
+            "name": "Delete a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier (nanoid) of the connected account"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Soft-deletes a connected account by marking it as deleted in the database. This prevents the account from being used for API calls but preserves the record for audit purposes."
+        },
+        {
+          "info": {
+            "name": "Enable or disable a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoId/status",
+            "params": [
+              {
+                "name": "nanoId",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier of the connected account"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the status of a connected account to either enabled (active) or disabled (inactive). Disabled accounts cannot be used for API calls but remain in the database."
+        },
+        {
+          "info": {
+            "name": "Refresh authentication for a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/:nanoid/refresh",
+            "params": [
+              {
+                "name": "nanoid",
+                "value": "ca_1a2b3c4d5e6f",
+                "type": "path",
+                "description": "The unique identifier of the connected account"
+              },
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a new authentication flow for a connected account when credentials have expired or become invalid. This may generate a new authentication URL for OAuth flows or refresh tokens for other auth schemes."
+        },
+        {
+          "info": {
+            "name": "Create a new auth link session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/connected_accounts/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new authentication link session that users can use to connect their accounts"
+        },
+        {
+          "info": {
+            "name": "List active connected toolkits for a consumer user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/consumer/connected_toolkits",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              },
+              {
+                "name": "x-org-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Consumer user ID to inspect within the consumer project."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resolves the organization's single CONSUMER project and returns the distinct toolkit slugs for which the specified consumer user has an ACTIVE connection."
+        },
+        {
+          "info": {
+            "name": "Composio List connected accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/connectedAccounts",
+            "params": [
+              {
+                "name": "toolkit",
+                "value": "",
+                "type": "query",
+                "description": "Filter by toolkit name."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of authenticated connections between end users and third-party applications."
+        },
+        {
+          "info": {
+            "name": "Composio Create a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/connectedAccounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates an OAuth flow to connect a user to a third-party application."
+        },
+        {
+          "info": {
+            "name": "Composio Get a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/connectedAccounts/:connectedAccountId",
+            "params": [
+              {
+                "name": "connectedAccountId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific connected account."
+        },
+        {
+          "info": {
+            "name": "Composio Delete a connected account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/connectedAccounts/:connectedAccountId",
+            "params": [
+              {
+                "name": "connectedAccountId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes an authenticated connection to a third-party application."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,373 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Triggers API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Triggers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get credentials for CLI realtime events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/credentials",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}."
+        },
+        {
+          "info": {
+            "name": "Authenticate CLI Pusher channel access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticate CLI client access to a private-cli-{nanoId} Pusher channel"
+        },
+        {
+          "info": {
+            "name": "Create or update a trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/:slug/upsert",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the trigger instance. Case-insensitive (internally normalized to uppercase)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new trigger instance or updates an existing one with the same configuration. Triggers listen for events from external services (webhooks or polling) and can invoke your workflows. If a matching trigger already exists and is disabled, it will be re-enabled. Requires a connected account ID to associate the trigger with a specific user connection."
+        },
+        {
+          "info": {
+            "name": "List active triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/active",
+            "params": [
+              {
+                "name": "user_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of user IDs to filter triggers by"
+              },
+              {
+                "name": "connected_account_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of connected account IDs to filter triggers by"
+              },
+              {
+                "name": "auth_config_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of auth config IDs to filter triggers by"
+              },
+              {
+                "name": "trigger_ids",
+                "value": "",
+                "type": "query",
+                "description": "Array of trigger IDs to filter triggers by"
+              },
+              {
+                "name": "trigger_names",
+                "value": "",
+                "type": "query",
+                "description": "Array of trigger names to filter triggers by. Case-insensitive (internally normalized to uppercase)."
+              },
+              {
+                "name": "connectedAccountIds",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use connected_account_ids instead."
+              },
+              {
+                "name": "authConfigIds",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use auth_config_ids instead."
+              },
+              {
+                "name": "triggerIds",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use trigger_ids instead."
+              },
+              {
+                "name": "show_disabled",
+                "value": "",
+                "type": "query",
+                "description": "When set to true, includes disabled triggers in the response."
+              },
+              {
+                "name": "triggerNames",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use trigger_names instead."
+              },
+              {
+                "name": "showDisabled",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use show_disabled instead."
+              },
+              {
+                "name": "deprecatedConnectedAccountUuids",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use connected_account_ids instead."
+              },
+              {
+                "name": "deprecatedAuthConfigUuids",
+                "value": "",
+                "type": "query",
+                "description": "DEPRECATED: This parameter will be removed in a future version. Please use auth_config_ids instead."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all active trigger instances for your project. Triggers listen for events from connected accounts (e.g., new emails, Slack messages, GitHub commits) and can invoke webhooks or workflows. Use filters to find triggers for specific users, connected accounts, or trigger types."
+        },
+        {
+          "info": {
+            "name": "Enable or disable a trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/manage/:triggerId",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the trigger instance to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the status of a trigger instance to enable or disable it. Disabling a trigger pauses event listening without deleting the trigger configuration. Re-enabling restores the trigger to its active state. Use this for temporary maintenance or to control trigger execution."
+        },
+        {
+          "info": {
+            "name": "Delete a trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://backend.composio.dev/api/v3/trigger_instances/manage/:triggerId",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the trigger instance to delete"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Permanently deletes a trigger instance. This stops the trigger from listening for events and removes it from your project. Use the PATCH endpoint with status \"disable\" if you want to temporarily pause a trigger instead."
+        },
+        {
+          "info": {
+            "name": "List trigger type enums",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/triggers_types/list/enum",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves a list of all available trigger type enum values that can be used across the API from latest versions of the toolkit only"
+        },
+        {
+          "info": {
+            "name": "Get trigger type by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/triggers_types/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The unique slug identifier for the trigger type. Case-insensitive (internally normalized to uppercase)."
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific trigger type using its slug identifier"
+        },
+        {
+          "info": {
+            "name": "List trigger types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/triggers_types",
+            "params": [
+              {
+                "name": "toolkit_slugs",
+                "value": "",
+                "type": "query",
+                "description": "Array of toolkit slugs to filter triggers by"
+              },
+              {
+                "name": "toolkit_versions",
+                "value": "",
+                "type": "query",
+                "description": "Toolkit version specification. Use \"latest\" for latest versions or bracket notation for specific versions per toolkit."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page, max allowed is 1000"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. The cursor is a base64 encoded string of the page and limit. The page is the page number and the limit is the number of items per page. The cursor is used to paginate through the items. The cursor is not required for the first page."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a list of available trigger types with optional filtering by toolkit. Results are paginated and can be filtered by toolkit."
+        },
+        {
+          "info": {
+            "name": "Composio List triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/triggers",
+            "params": [
+              {
+                "name": "connectedAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter triggers by connected account."
+              }
+            ]
+          },
+          "docs": "Returns a list of webhook subscriptions from connected applications."
+        },
+        {
+          "info": {
+            "name": "Composio Create a trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/triggers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets up a webhook subscription for event-driven notifications from a connected application."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

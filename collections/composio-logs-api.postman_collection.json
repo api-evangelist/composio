@@ -1,0 +1,1274 @@
+{
+  "item": [
+    {
+      "id": "e04ef8d1-6a2f-4cce-8381-049ad851f0fe",
+      "name": "Logs",
+      "description": {
+        "content": "Logging and monitoring",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d0265054-2088-4ce5-a7f3-f52a42ee4177",
+          "name": "Search and retrieve trigger event logs",
+          "request": {
+            "name": "Search and retrieve trigger event logs",
+            "description": {
+              "content": "Search and retrieve trigger event logs with advanced filtering capabilities including search parameters",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "internal",
+                "trigger",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "authToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"time\": \"<string>\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"status\": \"<string>\",\n  \"search\": \"<string>\",\n  \"integrationId\": \"<uuid>\",\n  \"entityId\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"limit\": 20,\n  \"cursor\": \"<string>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"include_payload\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9151a154-b549-49be-b731-b774e25215a7",
+              "name": "Successfully retrieved trigger logs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"time\": \"5m\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"status\": \"success\",\n  \"search\": \"<string>\",\n  \"integrationId\": \"<uuid>\",\n  \"entityId\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"limit\": 20,\n  \"cursor\": \"<string>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"include_payload\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e68c04a2-b8ba-43bc-bc74-be56a665be04",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"time\": \"5m\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"status\": \"success\",\n  \"search\": \"<string>\",\n  \"integrationId\": \"<uuid>\",\n  \"entityId\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"limit\": 20,\n  \"cursor\": \"<string>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"include_payload\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 884.7593313616476,\n    \"slug\": \"string\",\n    \"status\": 1000.4372599739963,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f95d15cc-958c-47b1-af43-12f2ec2d8be2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"time\": \"5m\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"status\": \"success\",\n  \"search\": \"<string>\",\n  \"integrationId\": \"<uuid>\",\n  \"entityId\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"limit\": 20,\n  \"cursor\": \"<string>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"include_payload\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9399bf5-4e5e-4b39-ad03-2366ce8cce63",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"time\": \"5m\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"status\": \"success\",\n  \"search\": \"<string>\",\n  \"integrationId\": \"<uuid>\",\n  \"entityId\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"limit\": 20,\n  \"cursor\": \"<string>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"include_payload\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1b9e53a-8441-4280-9120-6983a09b1687",
+          "name": "Get detailed trigger log by ID",
+          "request": {
+            "name": "Get detailed trigger log by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "internal",
+                "trigger",
+                "log",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "authToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dccd70d7-dce9-4aa1-bb34-07ae7009da2c",
+              "name": "Successfully retrieved trigger log",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log\": {\n    \"id\": \"string\",\n    \"connectionId\": \"string\",\n    \"clientId\": \"string\",\n    \"entityId\": \"string\",\n    \"status\": \"string\",\n    \"appName\": \"string\",\n    \"createdAt\": \"string\",\n    \"type\": \"trigger\",\n    \"meta\": {\n      \"id\": \"string\",\n      \"type\": \"trigger\",\n      \"createdAt\": \"string\",\n      \"updatedAt\": \"string\",\n      \"provider\": \"string\",\n      \"clientId\": \"string\",\n      \"connectionId\": \"string\",\n      \"triggerProviderPayload\": \"string\",\n      \"triggerClientPayload\": \"string\",\n      \"triggerClientError\": \"string\",\n      \"triggerName\": \"string\",\n      \"triggerClientResponse\": \"string\",\n      \"triggerId\": \"string\",\n      \"triggerNanoId\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d8b72a4-621b-4ba5-915a-727d1092e62b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b92e7953-af6e-44fe-8a0f-9cdcbb92f52e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "596592fa-ee10-45b6-aeff-f6c0c38b8cef",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "trigger",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "067582d3-5249-43e9-be8f-4b9086e27574",
+          "name": "Search and retrieve action execution logs",
+          "request": {
+            "name": "Search and retrieve action execution logs",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "internal",
+                "action_execution",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "authToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<number>\",\n  \"limit\": \"<number>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "948c2051-567d-44ed-b9c4-e0b386e057ea",
+              "name": "Successfully retrieved action execution fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<number>\",\n  \"limit\": \"<number>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"actionKey\": \"string\",\n      \"appKey\": \"string\",\n      \"app\": {\n        \"icon\": \"string\",\n        \"name\": \"string\"\n      },\n      \"connectedAccountId\": \"string\",\n      \"entityId\": \"string\",\n      \"status\": \"failed\",\n      \"executionTime\": 7099.057752435536,\n      \"minimalResponse\": \"string\",\n      \"createdAt\": 5011.285879417104,\n      \"metadata\": {\n        \"recipe_id\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"actionKey\": \"string\",\n      \"appKey\": \"string\",\n      \"app\": {\n        \"icon\": \"string\",\n        \"name\": \"string\"\n      },\n      \"connectedAccountId\": \"string\",\n      \"entityId\": \"string\",\n      \"status\": \"failed\",\n      \"executionTime\": 3300.0979560674336,\n      \"minimalResponse\": \"string\",\n      \"createdAt\": 7138.02864182778,\n      \"metadata\": {\n        \"recipe_id\": \"string\"\n      }\n    }\n  ],\n  \"nextCursor\": 7883.32052508202\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0408c056-cad0-47c0-9777-372a5a3e72f7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<number>\",\n  \"limit\": \"<number>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74850b0a-7e2b-4beb-81bc-773f69ff859e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<number>\",\n  \"limit\": \"<number>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "137e2699-ee48-4b0f-8a1a-68e3b2ccf4b1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<number>\",\n  \"limit\": \"<number>\",\n  \"case_sensitive\": \"<boolean>\",\n  \"from\": \"<number>\",\n  \"to\": \"<number>\",\n  \"search_params\": [\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operation\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4cf80721-df01-4984-a8b5-d59086c6a4dd",
+          "name": "Get action log fields for filtering",
+          "request": {
+            "name": "Get action log fields for filtering",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "internal",
+                "action_execution",
+                "fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "authToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aa9ec0b5-bbca-4716-97f2-605a5a584ab6",
+              "name": "Successfully retrieved action execution fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fields\": {\n    \"key_0\": [\n      {\n        \"id\": \"string\",\n        \"displayName\": \"string\",\n        \"type\": \"string\",\n        \"regex\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"displayName\": \"string\",\n        \"type\": \"string\",\n        \"regex\": \"string\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"id\": \"string\",\n        \"displayName\": \"string\",\n        \"type\": \"string\",\n        \"regex\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"displayName\": \"string\",\n        \"type\": \"string\",\n        \"regex\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc439990-7df3-4e7b-a545-ab6ecc9549f4",
+          "name": "Get detailed execution log by ID",
+          "request": {
+            "name": "Get detailed execution log by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "internal",
+                "action_execution",
+                "log",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "authToken"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b40795f1-be8c-401b-bece-7b0281c0cef7",
+              "name": "Successfully retrieved action execution log",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actionLogId\": \"string\",\n  \"actionId\": \"string\",\n  \"status\": \"warning\",\n  \"app\": {\n    \"name\": \"string\",\n    \"uniqueId\": \"string\",\n    \"icon\": \"string\"\n  },\n  \"version\": \"string\",\n  \"connection\": {\n    \"id\": \"string\",\n    \"entity\": \"string\"\n  },\n  \"session\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  },\n  \"executionMetadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"steps\": [\n    {\n      \"type\": \"tool_execution\",\n      \"startTime\": 1903.2048409714753,\n      \"endTime\": 7783.104652671284,\n      \"totalDuration\": 7126.600479338828,\n      \"status\": \"failure\",\n      \"message\": \"string\",\n      \"metadata\": {\n        \"encryption\": \"string\"\n      },\n      \"logs\": [\n        {\n          \"type\": \"network\",\n          \"level\": \"string\",\n          \"message\": \"string\",\n          \"requestId\": \"e887d4d5-562c-bc90-4c9a-c7648dd220c8\",\n          \"time\": 3607.8871736892515,\n          \"request\": {\n            \"method\": \"string\",\n            \"url\": \"string\",\n            \"headers\": {\n              \"key_0\": \"string\",\n              \"key_1\": \"string\",\n              \"key_2\": \"string\",\n              \"key_3\": \"string\"\n            },\n            \"params\": {\n              \"key_0\": {}\n            },\n            \"timeout\": 254.45846315496735,\n            \"json\": {\n              \"key_0\": {},\n              \"key_1\": {},\n              \"key_2\": {},\n              \"key_3\": {}\n            }\n          },\n          \"response\": {\n            \"status\": 1904.7387055632025,\n            \"time\": \"string\"\n          }\n        },\n        {\n          \"type\": \"network\",\n          \"level\": \"string\",\n          \"message\": \"string\",\n          \"requestId\": \"0179270c-5ce3-ff06-8908-4c0b93cf93f4\",\n          \"time\": 1439.8017849614819,\n          \"request\": {\n            \"method\": \"string\",\n            \"url\": \"string\",\n            \"headers\": {\n              \"key_0\": \"string\"\n            },\n            \"params\": {\n              \"key_0\": {}\n            },\n            \"timeout\": 5011.984700131205,\n            \"json\": {\n              \"key_0\": {},\n              \"key_1\": {},\n              \"key_2\": {}\n            }\n          },\n          \"response\": {\n            \"status\": 4208.235986606495,\n            \"time\": \"string\"\n          }\n        }\n      ]\n    },\n    {\n      \"type\": \"tool_execution\",\n      \"startTime\": 2850.1184996639395,\n      \"endTime\": 1127.6305890434191,\n      \"totalDuration\": 3733.966689337772,\n      \"status\": \"failure\",\n      \"message\": \"string\",\n      \"metadata\": {\n        \"encryption\": \"string\"\n      },\n      \"logs\": [\n        {\n          \"type\": \"system\",\n          \"level\": \"string\",\n          \"message\": \"string\",\n          \"requestId\": \"ab4d6173-c28c-5dbe-db2e-0f764287236b\",\n          \"time\": 7840.069025582283,\n          \"request\": {\n            \"method\": \"string\",\n            \"url\": \"string\",\n            \"headers\": {\n              \"key_0\": \"string\",\n              \"key_1\": \"string\",\n              \"key_2\": \"string\",\n              \"key_3\": \"string\",\n              \"key_4\": \"string\"\n            },\n            \"params\": {\n              \"key_0\": {},\n              \"key_1\": {}\n            },\n            \"timeout\": 3293.336490427764,\n            \"json\": {\n              \"key_0\": {}\n            }\n          },\n          \"response\": {\n            \"status\": 2414.0532708426454,\n            \"time\": \"string\"\n          }\n        },\n        {\n          \"type\": \"network\",\n          \"level\": \"string\",\n          \"message\": \"string\",\n          \"requestId\": \"2bb55cee-e77c-d317-d874-1004c68c24a2\",\n          \"time\": 8318.065432190439,\n          \"request\": {\n            \"method\": \"string\",\n            \"url\": \"string\",\n            \"headers\": {\n              \"key_0\": \"string\"\n            },\n            \"params\": {\n              \"key_0\": {},\n              \"key_1\": {},\n              \"key_2\": {},\n              \"key_3\": {}\n            },\n            \"timeout\": 4911.648929182569,\n            \"json\": {\n              \"key_0\": {}\n            }\n          },\n          \"response\": {\n            \"status\": 281.03966287010394,\n            \"time\": \"string\"\n          }\n        }\n      ]\n    }\n  ],\n  \"payloadReceived\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"startTime\": 2790.5742495698196,\n  \"endTime\": 7944.440460946636,\n  \"totalDuration\": \"string\",\n  \"response\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"error\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84f2158b-a985-46d6-8f80-86f04ce940f6",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdfd5123-db3b-4037-8e20-4afc49c1672a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df1e2b41-ade8-4a02-afd8-5cf539aef7ce",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "internal",
+                    "action_execution",
+                    "log",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "authToken",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"code\": 7124.709140093832,\n    \"slug\": \"string\",\n    \"status\": 3087.0162416522207,\n    \"request_id\": \"string\",\n    \"suggested_fix\": \"string\",\n    \"errors\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://backend.composio.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "36e1973b-befe-4a6f-a22e-2a7aaff86020",
+    "name": "Composio Platform Account Management Logs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Logging and monitoring\n\nContact Support:\n Name: Composio Support\n Email: support@composio.dev",
+      "type": "text/plain"
+    }
+  }
+}

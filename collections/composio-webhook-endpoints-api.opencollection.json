@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management Webhook Endpoints API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhook Endpoints",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List webhook endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints",
+            "params": [
+              {
+                "name": "toolkit_slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by toolkit slug"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Lists webhook endpoints for the authenticated project, optionally filtered by toolkit."
+        },
+        {
+          "info": {
+            "name": "Create webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a shared webhook endpoint for a toolkit + OAuth app + project. Returns the webhook URL that the customer registers in their app dashboard. Idempotent — returns existing endpoint if one already exists for this toolkit + client_id + project."
+        },
+        {
+          "info": {
+            "name": "Get webhook endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint nano ID (e.g., we_abc123)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a single webhook endpoint. Secret values are redacted. Use GET /webhook_endpoints/schema to discover field definitions."
+        },
+        {
+          "info": {
+            "name": "Put webhook endpoint configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint nano ID (e.g., we_abc123)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Full replacement of webhook endpoint configuration. All required setup fields must be provided. Use PATCH to update individual fields."
+        },
+        {
+          "info": {
+            "name": "Update webhook endpoint configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://backend.composio.dev/api/v3/webhook_endpoints/:nano_id",
+            "params": [
+              {
+                "name": "nano_id",
+                "value": "",
+                "type": "path",
+                "description": "Webhook endpoint nano ID (e.g., we_abc123)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates app-specific secrets and credentials. Uses merge semantics — only included fields are updated; omitted fields are preserved. Can be called on active endpoints (e.g., to rotate a signing secret)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

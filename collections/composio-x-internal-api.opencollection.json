@@ -1,0 +1,303 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Composio Platform Account Management x-internal API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "x-internal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "End user session and clear authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/auth/session/logout",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Terminates the current user session by invalidating authentication cookies and tokens. This effectively signs the user out of the application. After logout, the user will need to authenticate again to access protected resources."
+        },
+        {
+          "info": {
+            "name": "Create a new CLI session with auth code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/create-session",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a new CLI session with a random 6-character code. This endpoint is the first step in the CLI authentication flow, creating a session that can later be linked to a user account. The generated code is displayed to the user in the CLI and should be entered in the web interface to complete authentication. Optionally accepts a scope ('project' or 'user') and a source string."
+        },
+        {
+          "info": {
+            "name": "Get CLI session details by ID or code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/cli/get-session",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "CLI session ID (UUID format) or 6-character code to check. Both formats are supported for flexibility in client implementations."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Retrieves the current state of a CLI session using either the session ID (UUID) or the 6-character code. This endpoint is used by both the CLI client to check if the session has been linked, and by the web interface to display session details before linking."
+        },
+        {
+          "info": {
+            "name": "Get credentials for CLI realtime events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/credentials",
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}."
+        },
+        {
+          "info": {
+            "name": "Authenticate CLI Pusher channel access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/cli/realtime/auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Authenticate CLI client access to a private-cli-{nanoId} Pusher channel"
+        },
+        {
+          "info": {
+            "name": "Search and retrieve trigger event logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/internal/trigger/logs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Search and retrieve trigger event logs with advanced filtering capabilities including search parameters"
+        },
+        {
+          "info": {
+            "name": "Get detailed trigger log by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/internal/trigger/log/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get detailed trigger log by ID"
+        },
+        {
+          "info": {
+            "name": "Search and retrieve action execution logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/internal/action_execution/logs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Search and retrieve action execution logs"
+        },
+        {
+          "info": {
+            "name": "Get action log fields for filtering",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/internal/action_execution/fields",
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get action log fields for filtering"
+        },
+        {
+          "info": {
+            "name": "Get detailed execution log by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/internal/action_execution/log/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authToken",
+              "value": "{{authToken}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get detailed execution log by ID"
+        },
+        {
+          "info": {
+            "name": "Resolve the organization consumer project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/org/consumer/project/resolve",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              },
+              {
+                "name": "x-org-id",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Finds the authenticated organization's single CONSUMER project and provisions it if absent. This endpoint is idempotent and never returns consumer API keys."
+        },
+        {
+          "info": {
+            "name": "List active connected toolkits for a consumer user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://backend.composio.dev/api/v3/org/consumer/connected_toolkits",
+            "headers": [
+              {
+                "name": "x-user-api-key",
+                "value": ""
+              },
+              {
+                "name": "x-org-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Consumer user ID to inspect within the consumer project."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "x-user-api-key",
+              "value": "{{x-user-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resolves the organization's single CONSUMER project and returns the distinct toolkit slugs for which the specified consumer user has an ACTIVE connection."
+        },
+        {
+          "info": {
+            "name": "Create a new tool router session (Legacy)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://backend.composio.dev/api/v3/labs/tool_router/session",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "x-api-key",
+              "value": "{{x-api-key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new session for the tool router lab feature (Legacy). This endpoint initializes a new session with specified toolkits and their authentication configurations. The session provides an isolated environment for testing and managing tool routing logic with scoped MCP server access."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
