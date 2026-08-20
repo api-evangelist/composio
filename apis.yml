@@ -25,6 +25,16 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/composio.p
 tags:
   - AI Agents
   - Authentication
+  - Integration
+  - MCP
+  - Sandbox
+  - Tools
+  - Triggers
+  - Unified-API
+  - Webhook
+tags_raw:
+  - AI Agents
+  - Authentication
   - Integrations
   - MCP
   - OAuth
@@ -69,6 +79,8 @@ apis:
   humanURL: https://docs.composio.dev/reference
   baseURL: https://backend.composio.dev/api/v3
   tags:
+  - Artificial Intelligence
+  tags_raw:
   - AI
   properties:
   - type: OpenAPI
@@ -93,6 +105,8 @@ apis:
   humanURL: https://docs.composio.dev/reference
   baseURL: https://backend.composio.dev/api/v3
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
@@ -117,6 +131,8 @@ apis:
   humanURL: https://docs.composio.dev/reference
   baseURL: https://backend.composio.dev/api/v3
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -357,6 +373,8 @@ apis:
   humanURL: https://docs.composio.dev/reference
   baseURL: https://backend.composio.dev/api/v3
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -575,6 +593,8 @@ apis:
   humanURL: https://docs.composio.dev/reference
   baseURL: https://backend.composio.dev/api/v3
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -623,6 +643,8 @@ apis:
   humanURL: https://docs.composio.dev/reference
   baseURL: https://backend.composio.dev/api/v3
   tags:
+  - Real-Time
+  tags_raw:
   - Realtime
   properties:
   - type: OpenAPI
@@ -939,6 +961,8 @@ apis:
   humanURL: https://docs.composio.dev/reference
   baseURL: https://backend.composio.dev/api/v3
   tags:
+  - X-Internal
+  tags_raw:
   - x-internal
   properties:
   - type: OpenAPI
