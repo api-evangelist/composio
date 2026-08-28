@@ -6,6 +6,20 @@ description: >-
   and context-aware sessions. Developers get managed OAuth, a tool router for runtime tool discovery, webhook triggers,
   and a CLI so agents turn intent into action without custom integration work.
 type: Index
+deliveryModel:
+  model: open-core
+  license: MIT
+  open_source: true
+  commercial: true
+  callable_host: true
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
