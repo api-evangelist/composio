@@ -11,8 +11,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: composioApi
-  url: ../openapi/composio-openapi-original.json
+- name: authConfigsApi
+  url: ../openapi/composio-auth-configs-api-openapi.yml
+  type: openapi
+- name: mcpApi
+  url: ../openapi/composio-mcp-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-mcp-server

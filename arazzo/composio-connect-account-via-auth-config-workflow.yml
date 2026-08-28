@@ -11,8 +11,11 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: composioApi
-  url: ../openapi/composio-openapi-original.json
+- name: authConfigsApi
+  url: ../openapi/composio-auth-configs-api-openapi.yml
+  type: openapi
+- name: connectedAccountsApi
+  url: ../openapi/composio-connected-accounts-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: connect-account-via-auth-config

@@ -11,8 +11,8 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: composioApi
-  url: ../openapi/composio-openapi-original.json
+- name: toolRouterApi
+  url: ../openapi/composio-tool-router-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: tool-router-connect-toolkit
