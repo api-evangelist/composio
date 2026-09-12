@@ -482,6 +482,8 @@ apis:
   - type: Documentation
     url: https://docs.composio.dev/reference/api-reference/toolkits
 common:
+  - type: Website
+    url: https://www.composio.dev/
   - type: IssueTracker
     url: https://github.com/ComposioHQ/composio/issues
   - type: Releases
