@@ -1,18 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 3.0.0
-  title: Composio Platform Account Management Auth Configs API
-  description: Authentication configuration management
-  contact:
-    name: Composio Support
-    url: https://composio.dev/support
-    email: support@composio.dev
-  license:
-    name: Proprietary
-    url: https://composio.dev/terms
+  title: Composio Auth Configs API
+  version: '1.0'
+  description: 'Operations tagged Auth Configs across 2 of this provider''s published API definitions: composio-openapi-original.json, composio-openapi-original.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://backend.composio.dev
   description: PRODUCTION API
+- url: https://backend.composio.dev/api/v3
+  description: Production Server
 tags:
 - name: Auth Configs
   description: Authentication configuration management
@@ -87,8 +82,7 @@ paths:
                         deprecated: true
                       shared_credentials:
                         type: object
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                         description: '[EXPERIMENTAL] Shared credentials that will be inherited by all connected accounts using this auth config'
                         x-experimental: true
                       is_enabled_for_tool_router:
@@ -139,8 +133,9 @@ paths:
                                 type: string
                         default: {}
                       proxy_config:
-                        type: object
-                        nullable: true
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           proxy_url:
                             type: string
@@ -169,8 +164,7 @@ paths:
                             description: Tools used to generate the minimum required scopes for the auth config (only valid for OAuth). If passed, this will update the scopes.
                       shared_credentials:
                         type: object
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                         description: '[EXPERIMENTAL] Shared credentials that will be inherited by all connected accounts using this auth config'
                         x-experimental: true
                       is_enabled_for_tool_router:
@@ -293,8 +287,9 @@ paths:
         name: deprecated_status
         in: query
       - schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           default: false
           description: Show disabled auth configs
         required: false
@@ -309,8 +304,9 @@ paths:
         name: search
         in: query
       - schema:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         required: false
         description: Number of items per page, max allowed is 1000
         name: limit
@@ -357,12 +353,14 @@ paths:
                               type: string
                               description: The URL to the integration app's logo image
                             auth_guide_url:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                               description: URL to a guide page with authentication setup instructions
                             auth_hint_url:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                               description: URL to a page where users can obtain or configure credentials
                           required:
                           - slug
@@ -394,12 +392,12 @@ paths:
                           description: Whether this authentication configuration is managed by Composio or the user
                         credentials:
                           type: object
-                          additionalProperties:
-                            nullable: true
+                          additionalProperties: {}
                           description: The authentication credentials (tokens, keys, etc.) - may be partially hidden for security
                         proxy_config:
-                          type: object
-                          nullable: true
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             proxy_url:
                               type: string
@@ -430,8 +428,7 @@ paths:
                           description: The number of active connections using this auth config
                         expected_input_fields:
                           type: array
-                          items:
-                            nullable: true
+                          items: {}
                           description: Fields expected during connection initialization
                         restrict_to_following_tools:
                           type: array
@@ -456,8 +453,7 @@ paths:
                               description: The actions that the user can perform on the auth config. If passed, this will update the actions that the user can perform on the auth config.
                         shared_credentials:
                           type: object
-                          additionalProperties:
-                            nullable: true
+                          additionalProperties: {}
                           description: '[EXPERIMENTAL] Shared credentials that will be inherited by all connected accounts using this auth config'
                           x-experimental: true
                         is_enabled_for_tool_router:
@@ -467,8 +463,9 @@ paths:
                           type: object
                           properties:
                             default_connector_id:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                               description: 'Deprecated: Default connector ID'
                             member_uuid:
                               type: string
@@ -480,8 +477,7 @@ paths:
                               type: array
                               items:
                                 type: object
-                                additionalProperties:
-                                  nullable: true
+                                additionalProperties: {}
                               description: 'Deprecated: Fields expected during connection initialization'
                           required:
                           - default_connector_id
@@ -497,8 +493,9 @@ paths:
                       - no_of_connections
                       - tool_access_config
                   next_cursor:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   total_pages:
                     type: number
                   current_page:
@@ -534,6 +531,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /api/v3/auth_configs/{nanoid}:
     get:
       summary: Get single authentication configuration by ID
@@ -585,12 +585,14 @@ paths:
                         type: string
                         description: The URL to the integration app's logo image
                       auth_guide_url:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: URL to a guide page with authentication setup instructions
                       auth_hint_url:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: URL to a page where users can obtain or configure credentials
                     required:
                     - slug
@@ -622,12 +624,12 @@ paths:
                     description: Whether this authentication configuration is managed by Composio or the user
                   credentials:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                     description: The authentication credentials (tokens, keys, etc.) - may be partially hidden for security
                   proxy_config:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       proxy_url:
                         type: string
@@ -658,8 +660,7 @@ paths:
                     description: The number of active connections using this auth config
                   expected_input_fields:
                     type: array
-                    items:
-                      nullable: true
+                    items: {}
                     description: Fields expected during connection initialization
                   restrict_to_following_tools:
                     type: array
@@ -684,8 +685,7 @@ paths:
                         description: The actions that the user can perform on the auth config. If passed, this will update the actions that the user can perform on the auth config.
                   shared_credentials:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                     description: '[EXPERIMENTAL] Shared credentials that will be inherited by all connected accounts using this auth config'
                     x-experimental: true
                   is_enabled_for_tool_router:
@@ -695,8 +695,9 @@ paths:
                     type: object
                     properties:
                       default_connector_id:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: 'Deprecated: Default connector ID'
                       member_uuid:
                         type: string
@@ -708,8 +709,7 @@ paths:
                         type: array
                         items:
                           type: object
-                          additionalProperties:
-                            nullable: true
+                          additionalProperties: {}
                         description: 'Deprecated: Fields expected during connection initialization'
                     required:
                     - default_connector_id
@@ -798,8 +798,9 @@ paths:
                           items:
                             type: string
                   proxy_config:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       proxy_url:
                         type: string
@@ -831,8 +832,7 @@ paths:
                         description: The actions that the user can perform on the auth config. If passed, this will update the actions that the user can perform on the auth config.
                   shared_credentials:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                     description: 'Shared credentials that will be inherited by connected accounts. For eg: this can be used to share the API key for a tool with all connected accounts using this auth config.'
                   is_enabled_for_tool_router:
                     type: boolean
@@ -882,8 +882,7 @@ paths:
                         description: The actions that the user can perform on the auth config. If passed, this will update the actions that the user can perform on the auth config.
                   shared_credentials:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                     description: 'Shared credentials that will be inherited by connected accounts. For eg: this can be used to share the API key for a tool with all connected accounts using this auth config.'
                   is_enabled_for_tool_router:
                     type: boolean
@@ -985,6 +984,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /api/v3/auth_configs/{nanoid}/{status}:
     patch:
       summary: Enable or disable an authentication configuration
@@ -1047,6 +1049,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /authConfigs:
     get:
       operationId: listAuthConfigs
@@ -1063,6 +1068,8 @@ paths:
                 $ref: '#/components/schemas/AuthConfigListResponse'
         '401':
           description: Unauthorized
+      security:
+      - apiKeyAuth: []
     post:
       operationId: createAuthConfig
       summary: Composio Create an auth configuration
@@ -1086,66 +1093,13 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://backend.composio.dev/api/v3
+      description: Production Server
 components:
   schemas:
-    AuthConfigResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the auth config.
-        toolkit:
-          type: string
-          description: The toolkit this auth config applies to.
-        authScheme:
-          type: string
-          description: The authentication scheme.
-          enum:
-          - OAUTH2
-          - API_KEY
-          - BASIC
-          - BEARER_TOKEN
-        scopes:
-          type: array
-          items:
-            type: string
-          description: OAuth scopes requested.
-        createdAt:
-          type: string
-          format: date-time
-    AuthConfigListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthConfigResponse'
-    CreateAuthConfigRequest:
-      type: object
-      required:
-      - toolkit
-      - authScheme
-      properties:
-        toolkit:
-          type: string
-          description: The toolkit to configure authentication for.
-        authScheme:
-          type: string
-          description: The authentication scheme to use.
-          enum:
-          - OAUTH2
-          - API_KEY
-          - BASIC
-          - BEARER_TOKEN
-        credentials:
-          type: object
-          description: Developer credentials for the authentication scheme.
-          additionalProperties: true
-        scopes:
-          type: array
-          items:
-            type: string
-          description: OAuth scopes to request.
     Error:
       type: object
       properties:
@@ -1175,6 +1129,64 @@ components:
           - status
       required:
       - error
+    CreateAuthConfigRequest:
+      type: object
+      required:
+      - toolkit
+      - authScheme
+      properties:
+        toolkit:
+          type: string
+          description: The toolkit to configure authentication for.
+        authScheme:
+          type: string
+          description: The authentication scheme to use.
+          enum:
+          - OAUTH2
+          - API_KEY
+          - BASIC
+          - BEARER_TOKEN
+        credentials:
+          type: object
+          description: Developer credentials for the authentication scheme.
+          additionalProperties: true
+        scopes:
+          type: array
+          items:
+            type: string
+          description: OAuth scopes to request.
+    AuthConfigListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthConfigResponse'
+    AuthConfigResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the auth config.
+        toolkit:
+          type: string
+          description: The toolkit this auth config applies to.
+        authScheme:
+          type: string
+          description: The authentication scheme.
+          enum:
+          - OAUTH2
+          - API_KEY
+          - BASIC
+          - BEARER_TOKEN
+        scopes:
+          type: array
+          items:
+            type: string
+          description: OAuth scopes requested.
+        createdAt:
+          type: string
+          format: date-time
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -1196,3 +1208,14 @@ components:
       in: header
       name: x-org-api-key
       description: Organization API key authentication
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key for authenticating requests to the Composio platform. Obtain from the Composio dashboard at app.composio.dev.
+externalDocs:
+  description: Composio API Reference
+  url: https://docs.composio.dev/reference
+x-refined-from:
+- composio-openapi-original.json
+- composio-openapi-original.yml

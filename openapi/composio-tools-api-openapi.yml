@@ -1,18 +1,13 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 3.0.0
-  title: Composio Platform Account Management Tools API
-  description: Tool execution endpoints
-  contact:
-    name: Composio Support
-    url: https://composio.dev/support
-    email: support@composio.dev
-  license:
-    name: Proprietary
-    url: https://composio.dev/terms
+  title: Composio Tools API
+  version: '1.0'
+  description: 'Operations tagged Tools across 2 of this provider''s published API definitions: composio-openapi-original.json, composio-openapi-original.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://backend.composio.dev
   description: PRODUCTION API
+- url: https://backend.composio.dev/api/v3
+  description: Production Server
 tags:
 - name: Tools
   description: Tool execution endpoints
@@ -69,8 +64,9 @@ paths:
         in: query
         name: tags
       - schema:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             type: string
           description: Filter tools by one or more scopes (can be specified multiple times)
@@ -121,8 +117,9 @@ paths:
             summary: No version specified (uses 00000000_00)
             value: null
       - schema:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         required: false
         description: Number of items per page, max allowed is 1000
         name: limit
@@ -176,6 +173,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /api/v3/tools/enum:
     get:
       summary: Get tool enum list
@@ -227,6 +227,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /api/v3/tools/{tool_slug}:
     get:
       summary: Get tool by slug
@@ -304,6 +307,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /api/v3/tools/execute/{tool_slug}:
     post:
       summary: Execute tool
@@ -383,8 +389,7 @@ paths:
                         - value
                     body:
                       type: object
-                      additionalProperties:
-                        nullable: true
+                      additionalProperties: {}
                       description: 'The body to be sent to the endpoint for authentication. This is a JSON object. Note: This is very rarely needed and is only required by very few apps.'
                   description: Custom authentication parameters for tools that support parameterized authentication
                   example:
@@ -464,20 +469,21 @@ paths:
                           token_type:
                             type: string
                           refresh_token:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                           expires_in:
                             anyOf:
                             - type: number
                             - type: string
-                            - nullable: true
+                            - {}
                           scope:
                             anyOf:
                             - type: string
                             - type: array
                               items:
                                 type: string
-                            - nullable: true
+                            - {}
                           webhook_signature:
                             type: string
                           authed_user:
@@ -490,12 +496,10 @@ paths:
                             description: for slack user scopes
                           extra_token_data:
                             type: object
-                            additionalProperties:
-                              nullable: true
+                            additionalProperties: {}
                         required:
                         - access_token
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -575,20 +579,21 @@ paths:
                           token_type:
                             type: string
                           refresh_token:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                           expires_in:
                             anyOf:
                             - type: number
                             - type: string
-                            - nullable: true
+                            - {}
                           scope:
                             anyOf:
                             - type: string
                             - type: array
                               items:
                                 type: string
-                            - nullable: true
+                            - {}
                           client_id_issued_at:
                             type: number
                           client_secret_expires_at:
@@ -596,8 +601,7 @@ paths:
                         required:
                         - client_id
                         - access_token
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -665,8 +669,7 @@ paths:
                             type: string
                           basic_encoded:
                             type: string
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -733,8 +736,7 @@ paths:
                         required:
                         - username
                         - password
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -800,8 +802,7 @@ paths:
                             type: string
                         required:
                         - username
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -865,8 +866,7 @@ paths:
                             type: string
                         required:
                         - token
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -941,8 +941,7 @@ paths:
                         required:
                         - oauth_token
                         - oauth_token_secret
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1002,8 +1001,7 @@ paths:
                             type: string
                           base_url:
                             type: string
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1073,8 +1071,7 @@ paths:
                         - application_id
                         - installation_id
                         - private_key
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1138,8 +1135,7 @@ paths:
                             type: string
                         required:
                         - credentials_json
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1211,7 +1207,7 @@ paths:
                             anyOf:
                             - type: number
                             - type: string
-                            - nullable: true
+                            - {}
                           expires_at:
                             type: string
                           scope:
@@ -1220,13 +1216,12 @@ paths:
                             - type: array
                               items:
                                 type: string
-                            - nullable: true
+                            - {}
                         required:
                         - access_token
                         - client_id
                         - client_secret
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1239,8 +1234,7 @@ paths:
                       access_token: secret-token
                 arguments:
                   type: object
-                  additionalProperties:
-                    nullable: true
+                  additionalProperties: {}
                   description: Key-value pairs of arguments required by the tool (mutually exclusive with text)
                   example:
                     repository: octocat/Hello-World
@@ -1253,8 +1247,9 @@ paths:
                   description: Natural language description of the task to perform (mutually exclusive with arguments)
                   example: Trigger the main workflow in the octocat/Hello-World repository on the main branch for the production environment
                 allow_tracing:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                   description: Deprecated. Enable debug tracing for tool execution (useful for debugging)
                   deprecated: true
                   example: false
@@ -1268,8 +1263,7 @@ paths:
                 properties:
                   data:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                     description: Tool execution output data that varies based on the specific tool
                     example:
                       run_id: 12345678
@@ -1277,15 +1271,15 @@ paths:
                       created_at: '2023-01-01T12:00:00Z'
                       html_url: https://github.com/octocat/Hello-World/actions/runs/12345678
                   error:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: Error message if the tool execution was not successful (null if successful)
                   successful:
                     type: boolean
                     description: Indicates if the tool execution was successful
                     example: true
                   session_info:
-                    nullable: true
                     description: Optional session information for tools that return session context
                     example:
                       session_id: session-12345
@@ -1376,6 +1370,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /api/v3/tools/execute/{tool_slug}/input:
     post:
       summary: Generate tool inputs from natural language
@@ -1428,8 +1425,7 @@ paths:
                 properties:
                   arguments:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                     description: Key-value pairs of arguments required by the tool to accomplish the described task
                     example:
                       repository: octocat/Hello-World
@@ -1477,6 +1473,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /api/v3/tools/execute/proxy:
     post:
       summary: Execute proxy request
@@ -1515,7 +1514,6 @@ paths:
                   description: The HTTP method to use for the request
                   example: GET
                 body:
-                  nullable: true
                   description: The request body (for POST, PUT, and PATCH requests)
                   example:
                     name: New Resource
@@ -1648,20 +1646,21 @@ paths:
                           token_type:
                             type: string
                           refresh_token:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                           expires_in:
                             anyOf:
                             - type: number
                             - type: string
-                            - nullable: true
+                            - {}
                           scope:
                             anyOf:
                             - type: string
                             - type: array
                               items:
                                 type: string
-                            - nullable: true
+                            - {}
                           webhook_signature:
                             type: string
                           authed_user:
@@ -1674,12 +1673,10 @@ paths:
                             description: for slack user scopes
                           extra_token_data:
                             type: object
-                            additionalProperties:
-                              nullable: true
+                            additionalProperties: {}
                         required:
                         - access_token
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1759,20 +1756,21 @@ paths:
                           token_type:
                             type: string
                           refresh_token:
-                            type: string
-                            nullable: true
+                            type:
+                            - string
+                            - 'null'
                           expires_in:
                             anyOf:
                             - type: number
                             - type: string
-                            - nullable: true
+                            - {}
                           scope:
                             anyOf:
                             - type: string
                             - type: array
                               items:
                                 type: string
-                            - nullable: true
+                            - {}
                           client_id_issued_at:
                             type: number
                           client_secret_expires_at:
@@ -1780,8 +1778,7 @@ paths:
                         required:
                         - client_id
                         - access_token
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1849,8 +1846,7 @@ paths:
                             type: string
                           basic_encoded:
                             type: string
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1917,8 +1913,7 @@ paths:
                         required:
                         - username
                         - password
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -1984,8 +1979,7 @@ paths:
                             type: string
                         required:
                         - username
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -2049,8 +2043,7 @@ paths:
                             type: string
                         required:
                         - token
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -2125,8 +2118,7 @@ paths:
                         required:
                         - oauth_token
                         - oauth_token_secret
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -2186,8 +2178,7 @@ paths:
                             type: string
                           base_url:
                             type: string
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -2257,8 +2248,7 @@ paths:
                         - application_id
                         - installation_id
                         - private_key
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -2322,8 +2312,7 @@ paths:
                             type: string
                         required:
                         - credentials_json
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -2395,7 +2384,7 @@ paths:
                             anyOf:
                             - type: number
                             - type: string
-                            - nullable: true
+                            - {}
                           expires_at:
                             type: string
                           scope:
@@ -2404,13 +2393,12 @@ paths:
                             - type: array
                               items:
                                 type: string
-                            - nullable: true
+                            - {}
                         required:
                         - access_token
                         - client_id
                         - client_secret
-                        additionalProperties:
-                          nullable: true
+                        additionalProperties: {}
                     required:
                     - authScheme
                     - toolkitSlug
@@ -2428,7 +2416,6 @@ paths:
                 type: object
                 properties:
                   data:
-                    nullable: true
                     description: The response data returned from the proxied API
                     example:
                       id: '123'
@@ -2529,6 +2516,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    servers:
+    - url: https://backend.composio.dev
+      description: PRODUCTION API
   /tools:
     get:
       operationId: listTools
@@ -2568,6 +2558,11 @@ paths:
                 $ref: '#/components/schemas/ToolListResponse'
         '401':
           description: Unauthorized
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://backend.composio.dev/api/v3
+      description: Production Server
   /tools/{toolId}/execute:
     post:
       operationId: executeTool
@@ -2601,92 +2596,35 @@ paths:
           description: Unauthorized
         '404':
           description: Tool not found
+      security:
+      - apiKeyAuth: []
+    servers:
+    - url: https://backend.composio.dev/api/v3
+      description: Production Server
 components:
   schemas:
-    ToolListResponse:
+    ToolsPaginated:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Tool_2'
-        totalCount:
-          type: integer
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            code:
-              type: number
-            slug:
-              type: string
-            status:
-              type: number
-            request_id:
-              type: string
-            suggested_fix:
-              type: string
-            errors:
-              type: array
-              items:
-                type: string
-          required:
-          - message
-          - code
-          - slug
-          - status
+            $ref: '#/components/schemas/Tool'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        total_pages:
+          type: number
+        current_page:
+          type: number
+        total_items:
+          type: number
       required:
-      - error
-    ExecuteToolRequest:
-      type: object
-      required:
-      - connectedAccountId
-      properties:
-        connectedAccountId:
-          type: string
-          description: The connected account to execute on behalf of.
-        input:
-          type: object
-          description: Input parameters for the tool execution.
-          additionalProperties: true
-    ExecuteToolResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Whether the execution succeeded.
-        output:
-          description: The output from the tool execution.
-        error:
-          type: string
-          description: Error message if execution failed.
-    Tool_2:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the tool.
-        name:
-          type: string
-          description: Human-readable name of the tool.
-        description:
-          type: string
-          description: Description of the tool's functionality.
-        toolkit:
-          type: string
-          description: The toolkit this tool belongs to.
-        parameters:
-          type: object
-          description: JSON Schema for the tool's input parameters.
-          additionalProperties: true
-        tags:
-          type: array
-          items:
-            type: string
+      - items
+      - total_pages
+      - current_page
+      - total_items
     Tool:
       type: object
       properties:
@@ -2723,8 +2661,7 @@ components:
           - logo
         input_parameters:
           type: object
-          additionalProperties:
-            nullable: true
+          additionalProperties: {}
           description: Schema definition of required input parameters for the tool
           example:
             repo_name:
@@ -2755,8 +2692,7 @@ components:
           example: '20250905_00'
         output_parameters:
           type: object
-          additionalProperties:
-            nullable: true
+          additionalProperties: {}
           description: Schema definition of return values from the tool
           example:
             run_id:
@@ -2780,8 +2716,9 @@ components:
           example:
           - https://www.googleapis.com/auth/gmail.modify
         scope_requirements:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             all_of:
               type: array
@@ -2877,27 +2814,90 @@ components:
       - tags
       - is_deprecated
       - deprecated
-    ToolsPaginated:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+    Tool_2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the tool.
+        name:
+          type: string
+          description: Human-readable name of the tool.
+        description:
+          type: string
+          description: Description of the tool's functionality.
+        toolkit:
+          type: string
+          description: The toolkit this tool belongs to.
+        parameters:
+          type: object
+          description: JSON Schema for the tool's input parameters.
+          additionalProperties: true
+        tags:
+          type: array
+          items:
+            type: string
+    ExecuteToolResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the execution succeeded.
+        output:
+          description: The output from the tool execution.
+        error:
+          type: string
+          description: Error message if execution failed.
+    ExecuteToolRequest:
+      type: object
+      required:
+      - connectedAccountId
+      properties:
+        connectedAccountId:
+          type: string
+          description: The connected account to execute on behalf of.
+        input:
+          type: object
+          description: Input parameters for the tool execution.
+          additionalProperties: true
+    ToolListResponse:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Tool'
-        next_cursor:
-          type: string
-          nullable: true
-        total_pages:
-          type: number
-        current_page:
-          type: number
-        total_items:
-          type: number
-      required:
-      - items
-      - total_pages
-      - current_page
-      - total_items
+            $ref: '#/components/schemas/Tool_2'
+        totalCount:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
@@ -2919,3 +2919,14 @@ components:
       in: header
       name: x-org-api-key
       description: Organization API key authentication
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key for authenticating requests to the Composio platform. Obtain from the Composio dashboard at app.composio.dev.
+externalDocs:
+  description: Composio API Reference
+  url: https://docs.composio.dev/reference
+x-refined-from:
+- composio-openapi-original.json
+- composio-openapi-original.yml

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Composio Platform Account Management Authentication API
+  title: Composio Platform Authentication API
   description: Authentication related endpoints
   contact:
     name: Composio Support
@@ -37,8 +37,9 @@ paths:
                 type: object
                 properties:
                   project:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       auto_id:
                         type: number
@@ -74,18 +75,21 @@ paths:
                         description: Date and time when the project was last modified
                         example: '2023-05-18T09:15:30.000Z'
                       webhook_url:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Endpoint URL for trigger webhook notifications
                         example: https://example.com/webhook
                       event_webhook_url:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Endpoint URL for event webhook notifications
                         example: https://example.com/events
                       webhook_secret:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Secret used to verify webhook signatures
                         example: whsec_a1b2c3d4e5f6g7h8i9j0
                       triggers_enabled:
@@ -93,8 +97,9 @@ paths:
                         description: Flag indicating if triggers are enabled for this project
                         example: true
                       last_subscribed_at:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Date and time when the project last subscribed to updates
                         example: '2023-05-17T10:00:00.000Z'
                       deleted:
@@ -155,8 +160,9 @@ paths:
                     - org
                     description: Details of the current active project (null if accessing with org-level credentials)
                   api_key:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       auto_id:
                         type: number
@@ -188,8 +194,9 @@ paths:
                         description: Date and time when the API key was last modified
                         example: '2023-05-01T10:00:00.000Z'
                       deleted_at:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Date and time when the API key was deleted (if applicable)
                       key:
                         type: string
@@ -371,123 +378,6 @@ paths:
                     example: AUTH_REQUIRED
                 required:
                 - message
-  /api/v3/connected_accounts/{nanoid}/refresh:
-    post:
-      summary: Refresh authentication for a connected account
-      description: Initiates a new authentication flow for a connected account when credentials have expired or become invalid. This may generate a new authentication URL for OAuth flows or refresh tokens for other auth schemes.
-      tags:
-      - Authentication
-      operationId: postConnectedAccountsByNanoidRefresh
-      security:
-      - ApiKeyAuth: []
-      - UserApiKeyAuth: []
-      - CookieAuth: []
-      parameters:
-      - schema:
-          type: string
-          format: connectedAccountId
-        required: true
-        description: The unique identifier of the connected account
-        example: ca_1a2b3c4d5e6f
-        name: nanoid
-        in: path
-      - schema:
-          type: string
-          format: uri
-        required: false
-        name: redirect_url
-        in: query
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                redirect_url:
-                  type: string
-                  format: uri
-                validate_credentials:
-                  type: boolean
-                  default: false
-                  description: '[EXPERIMENTAL] Whether to validate the provided credentials, validates only for API Key Auth scheme'
-                  x-experimental: true
-      responses:
-        '200':
-          description: Successfully refreshed the connected account authentication. For OAuth flows, a new redirect URL is provided.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: The unique identifier of the connected account
-                  status:
-                    type: string
-                    enum:
-                    - INITIALIZING
-                    - INITIATED
-                    - ACTIVE
-                    - FAILED
-                    - EXPIRED
-                    - INACTIVE
-                    - REVOKED
-                    description: The current status of the connected account (e.g., active, pending, failed)
-                  redirect_url:
-                    type: string
-                    nullable: true
-                    description: The URL to which the user should be redirected to complete the authentication process (null for auth schemes that do not require redirection)
-                required:
-                - id
-                - status
-                - redirect_url
-                description: Response schema for a refreshed connected account authentication
-                example:
-                  id: ca_1a2b3c4d5e6f
-                  status: ACTIVE
-                  redirect_url: https://app.example.com/oauth/callback
-        '400':
-          description: Bad request - Invalid nanoid format or the account cannot be refreshed in its current state
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '401':
-          description: Unauthorized - Authentication failed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '403':
-          description: Forbidden - Insufficient permissions to refresh this connected account
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '404':
-          description: Not found - Connected account does not exist or was deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '409':
-          description: Conflict - The connection cannot be refreshed because of a permanent attribute (e.g. its auth scheme does not support refresh, such as API_KEY or BEARER_TOKEN)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '422':
-          description: Unprocessable entity - The connection is in an invalid state for refresh (e.g. connection-data validation failed, or the stored connection status is incompatible with reinitiation)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal server error - Failed to refresh the connected account authentication
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Error:

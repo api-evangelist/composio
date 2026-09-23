@@ -1,0 +1,30 @@
+# Front Door AI Index — composio — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: composio
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.composio.dev
+  final_host: composio.dev
+  ownership: own
+  owner: composio
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 33
+  host_score: 33
+  density: 29.44
+  words: 1121
+  tiers:
+    agentic: 13
+    core: 8
+    model: 12
+  ambiguous: 17
+  top_terms:
+    agent: 17
+    prompts: 11
+    AI: 8
+    Claude: 8
+    ChatGPT: 4
+    MCP: 2

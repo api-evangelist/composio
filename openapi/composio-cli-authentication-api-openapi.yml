@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Composio Platform Account Management CLI Authentication API
+  title: Composio Platform CLI Authentication API
   description: ''
   contact:
     name: Composio Support
@@ -140,8 +140,9 @@ paths:
                     description: The ISO timestamp when the session expires
                     example: '2023-01-01T12:00:00.000Z'
                   account:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       id:
                         type: string
@@ -162,13 +163,15 @@ paths:
                     - name
                     description: Information about the linked account, if any. Null if the session status is "pending".
                   api_key:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: The API key for the linked account
                     example: '1234567890'
                   scope:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     enum:
                     - project
                     - user

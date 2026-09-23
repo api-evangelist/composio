@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Composio Platform Account Management CLI API
+  title: Composio Platform CLI API
   description: CLI integration endpoints
   contact:
     name: Composio Support
@@ -74,8 +74,7 @@ paths:
                       version: 2026.03.23
                 ctx:
                   type: object
-                  additionalProperties:
-                    nullable: true
+                  additionalProperties: {}
                   description: Arbitrary failure context from the CLI.
                   example:
                     invalid_tool_slug: GITHUB_MAKE_ISSUE
@@ -83,8 +82,7 @@ paths:
                     - GITHUB_CREATE_AN_ISSUE
                 session:
                   type: object
-                  additionalProperties:
-                    nullable: true
+                  additionalProperties: {}
                   description: Arbitrary session payload from the CLI.
                   example:
                     id: sess_123
@@ -145,102 +143,6 @@ paths:
                 $ref: '#/components/schemas/Error'
         '500':
           description: Internal server error.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /api/v3/cli/realtime/credentials:
-    get:
-      summary: Get credentials for CLI realtime events
-      description: Get the Pusher key and project nanoId for the CLI realtime trigger channel. The CLI subscribes to private-cli-{project_id}.
-      tags:
-      - CLI
-      operationId: getCliRealtimeCredentials
-      security:
-      - ApiKeyAuth: []
-      - UserApiKeyAuth: []
-      responses:
-        '200':
-          description: Credentials for CLI realtime events retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  pusher_key:
-                    type: string
-                    description: The Pusher client key for subscribing to the trigger
-                  pusher_cluster:
-                    type: string
-                    description: The Pusher cluster for subscribing to the trigger
-                  project_id:
-                    type: string
-                    description: 'The project nanoId associated with the API Key provided. Used as part of the CLI channel name: private-cli-{project_id}'
-                required:
-                - pusher_key
-                - pusher_cluster
-                - project_id
-        '401':
-          description: Unauthorized. Authentication is required or the provided credentials are invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /api/v3/cli/realtime/auth:
-    post:
-      summary: Authenticate CLI Pusher channel access
-      description: Authenticate CLI client access to a private-cli-{nanoId} Pusher channel
-      tags:
-      - CLI
-      operationId: postCliRealtimeAuth
-      security:
-      - ApiKeyAuth: []
-      - UserApiKeyAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                channel_name:
-                  type: string
-                  description: The channel name to authenticate for
-                socket_id:
-                  type: string
-                  description: The socket ID for Pusher authentication
-              required:
-              - channel_name
-              - socket_id
-      responses:
-        '200':
-          description: Pusher authentication successful
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  auth:
-                    type: string
-                    description: The authentication string for Pusher
-                  channel_data:
-                    type: string
-                    description: Channel data for presence channels
-                required:
-                - auth
-        '400':
-          description: Invalid channel name
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '401':
-          description: Unauthorized. Authentication is required or the provided credentials are invalid.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal server error occurred during authentication.
           content:
             application/json:
               schema:

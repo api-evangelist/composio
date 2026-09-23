@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Composio Platform Account Management Files API
+  title: Composio Platform Files API
   description: File management
   contact:
     name: Composio Support
@@ -44,8 +44,9 @@ paths:
         name: tool_slug
         in: query
       - schema:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         required: false
         description: Number of items per page, max allowed is 1000
         name: limit
@@ -91,8 +92,9 @@ paths:
                       - mimetype
                       - md5
                   next_cursor:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   total_pages:
                     type: number
                   current_page:

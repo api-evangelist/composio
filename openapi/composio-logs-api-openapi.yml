@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Composio Platform Account Management Logs API
+  title: Composio Platform Logs API
   description: Logging and monitoring
   contact:
     name: Composio Support
@@ -47,12 +47,14 @@ paths:
                   description: Return logs from the last N time units
                   example: 5m
                 from:
-                  type: number
-                  nullable: true
+                  type:
+                  - number
+                  - 'null'
                   description: Start time for logs (epoch timestamp in milliseconds)
                 to:
-                  type: number
-                  nullable: true
+                  type:
+                  - number
+                  - 'null'
                   description: End time for logs (epoch timestamp in milliseconds)
                 status:
                   type: string
@@ -74,13 +76,15 @@ paths:
                   type: string
                   description: Filter logs by user ID
                 limit:
-                  type: number
-                  nullable: true
+                  type:
+                  - number
+                  - 'null'
                   default: 20
                   description: The limit of trigger logs to return
                 cursor:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 search_params:
                   type: array
                   items:
@@ -106,8 +110,9 @@ paths:
                 type: object
                 properties:
                   nextCursor:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   data:
                     type: array
                     items:
@@ -348,15 +353,17 @@ paths:
               type: object
               properties:
                 cursor:
-                  type: number
-                  nullable: true
+                  type:
+                  - number
+                  - 'null'
                   description: cursor_that_can_be_used_to_paginate_through_the_logs
                 limit:
                   type: number
                   description: number_of_logs_to_return
                 case_sensitive:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                   description: whether_the_search_is_case_sensitive_or_not
                 from:
                   type: number
@@ -439,8 +446,9 @@ paths:
                       - minimalResponse
                       - createdAt
                   nextCursor:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                 required:
                 - data
                 - nextCursor
@@ -567,12 +575,10 @@ paths:
                     - entity
                   session:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                   executionMetadata:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                   steps:
                     type: array
                     items:
@@ -634,14 +640,12 @@ paths:
                                       type: string
                                   params:
                                     type: object
-                                    additionalProperties:
-                                      nullable: true
+                                    additionalProperties: {}
                                   timeout:
                                     type: number
                                   json:
                                     type: object
-                                    additionalProperties:
-                                      nullable: true
+                                    additionalProperties: {}
                                 required:
                                 - method
                                 - url
@@ -672,8 +676,7 @@ paths:
                       - message
                   payloadReceived:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                   startTime:
                     type: number
                   endTime:
@@ -682,12 +685,10 @@ paths:
                     type: string
                   response:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                   error:
                     type: object
-                    additionalProperties:
-                      nullable: true
+                    additionalProperties: {}
                 required:
                 - actionLogId
                 - actionId

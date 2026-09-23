@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Composio Platform Account Management Webhook Endpoints API
+  title: Composio Platform Webhook Endpoints API
   description: Per-OAuth-app webhook ingress endpoints. Inbound URLs the provider posts to, plus signing secret storage and verification.
   contact:
     name: Composio Support
@@ -60,15 +60,17 @@ paths:
                     type: string
                     description: Toolkit this endpoint is for
                   client_id:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: OAuth app client ID
                   webhook_url:
                     type: string
                     description: The webhook URL to register with the provider
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     additionalProperties:
                       type: string
                     description: Configured fields with secret values masked
@@ -96,15 +98,17 @@ paths:
                     type: string
                     description: Toolkit this endpoint is for
                   client_id:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: OAuth app client ID
                   webhook_url:
                     type: string
                     description: The webhook URL to register with the provider
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     additionalProperties:
                       type: string
                     description: Configured fields with secret values masked
@@ -180,8 +184,9 @@ paths:
                           type: string
                           description: Toolkit this endpoint is for
                         client_id:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: OAuth app client ID
                       required:
                       - id
@@ -235,15 +240,17 @@ paths:
                     type: string
                     description: Toolkit this endpoint is for
                   client_id:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: OAuth app client ID
                   webhook_url:
                     type: string
                     description: The webhook URL to register with the provider
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     additionalProperties:
                       type: string
                     description: Configured fields with secret values masked
@@ -327,15 +334,17 @@ paths:
                     type: string
                     description: Toolkit this endpoint is for
                   client_id:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: OAuth app client ID
                   webhook_url:
                     type: string
                     description: The webhook URL to register with the provider
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     additionalProperties:
                       type: string
                     description: Configured fields with secret values masked
@@ -419,15 +428,17 @@ paths:
                     type: string
                     description: Toolkit this endpoint is for
                   client_id:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: OAuth app client ID
                   webhook_url:
                     type: string
                     description: The webhook URL to register with the provider
                   data:
-                    type: object
-                    nullable: true
+                    type:
+                    - object
+                    - 'null'
                     additionalProperties:
                       type: string
                     description: Configured fields with secret values masked

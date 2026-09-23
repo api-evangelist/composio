@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 3.0.0
-  title: Composio Platform Account Management Webhook Subscriptions API
+  title: Composio Platform Webhook Subscriptions API
   description: Webhook delivery subscriptions. Outbound URLs Composio posts trigger events to, plus signing secret rotation and event-type filters.
   contact:
     name: Composio Support
@@ -136,8 +136,9 @@ paths:
       - CookieAuth: []
       parameters:
       - schema:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
         required: false
         description: Number of items per page, max allowed is 1000
         name: limit
@@ -198,8 +199,9 @@ paths:
                       - created_at
                       - updated_at
                   next_cursor:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   total_pages:
                     type: number
                   current_page:
