@@ -2625,6 +2625,35 @@ components:
       - total_pages
       - current_page
       - total_items
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
     Tool:
       type: object
       properties:
@@ -2814,35 +2843,29 @@ components:
       - tags
       - is_deprecated
       - deprecated
-    Error:
+    ExecuteToolRequest:
+      type: object
+      required:
+      - connectedAccountId
+      properties:
+        connectedAccountId:
+          type: string
+          description: The connected account to execute on behalf of.
+        input:
+          type: object
+          description: Input parameters for the tool execution.
+          additionalProperties: true
+    ExecuteToolResponse:
       type: object
       properties:
+        success:
+          type: boolean
+          description: Whether the execution succeeded.
+        output:
+          description: The output from the tool execution.
         error:
-          type: object
-          properties:
-            message:
-              type: string
-            code:
-              type: number
-            slug:
-              type: string
-            status:
-              type: number
-            request_id:
-              type: string
-            suggested_fix:
-              type: string
-            errors:
-              type: array
-              items:
-                type: string
-          required:
-          - message
-          - code
-          - slug
-          - status
-      required:
-      - error
+          type: string
+          description: Error message if execution failed.
     Tool_2:
       type: object
       properties:
@@ -2866,29 +2889,6 @@ components:
           type: array
           items:
             type: string
-    ExecuteToolResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Whether the execution succeeded.
-        output:
-          description: The output from the tool execution.
-        error:
-          type: string
-          description: Error message if execution failed.
-    ExecuteToolRequest:
-      type: object
-      required:
-      - connectedAccountId
-      properties:
-        connectedAccountId:
-          type: string
-          description: The connected account to execute on behalf of.
-        input:
-          type: object
-          description: Input parameters for the tool execution.
-          additionalProperties: true
     ToolListResponse:
       type: object
       properties:

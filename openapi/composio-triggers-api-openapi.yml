@@ -1258,31 +1258,6 @@ components:
           - status
       required:
       - error
-    TriggerResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the trigger.
-        connectedAccountId:
-          type: string
-          description: The connected account this trigger is associated with.
-        triggerName:
-          type: string
-          description: Name of the trigger event.
-        webhookUrl:
-          type: string
-          format: uri
-          description: The webhook URL for receiving events.
-        status:
-          type: string
-          enum:
-          - active
-          - paused
-          - disabled
-        createdAt:
-          type: string
-          format: date-time
     CreateTriggerRequest:
       type: object
       required:
@@ -1310,6 +1285,31 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TriggerResponse'
+    TriggerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the trigger.
+        connectedAccountId:
+          type: string
+          description: The connected account this trigger is associated with.
+        triggerName:
+          type: string
+          description: Name of the trigger event.
+        webhookUrl:
+          type: string
+          format: uri
+          description: The webhook URL for receiving events.
+        status:
+          type: string
+          enum:
+          - active
+          - paused
+          - disabled
+        createdAt:
+          type: string
+          format: date-time
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

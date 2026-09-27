@@ -45,7 +45,7 @@ tags:
   - Sandbox
   - Tools
   - Triggers
-  - Unified-API
+  - Unified API
   - Webhook
 tags_raw:
   - AI Agents
@@ -58,6 +58,7 @@ tags_raw:
   - Triggers
   - Unified_API
   - Webhooks
+  - Unified-API
 created: '2026-03-03'
 modified: '2026-06-20'
 url: https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml

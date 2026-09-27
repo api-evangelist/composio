@@ -1148,15 +1148,6 @@ components:
           - status
       required:
       - error
-    ToolkitListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolkitResponse'
-        totalCount:
-          type: integer
     ToolkitResponse:
       type: object
       properties:
@@ -1185,6 +1176,15 @@ components:
         toolCount:
           type: integer
           description: Number of tools in this toolkit.
+    ToolkitListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolkitResponse'
+        totalCount:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
