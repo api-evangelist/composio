@@ -2603,28 +2603,6 @@ paths:
       description: Production Server
 components:
   schemas:
-    ToolsPaginated:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tool'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-        total_pages:
-          type: number
-        current_page:
-          type: number
-        total_items:
-          type: number
-      required:
-      - items
-      - total_pages
-      - current_page
-      - total_items
     Error:
       type: object
       properties:
@@ -2843,29 +2821,28 @@ components:
       - tags
       - is_deprecated
       - deprecated
-    ExecuteToolRequest:
+    ToolsPaginated:
       type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        total_pages:
+          type: number
+        current_page:
+          type: number
+        total_items:
+          type: number
       required:
-      - connectedAccountId
-      properties:
-        connectedAccountId:
-          type: string
-          description: The connected account to execute on behalf of.
-        input:
-          type: object
-          description: Input parameters for the tool execution.
-          additionalProperties: true
-    ExecuteToolResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Whether the execution succeeded.
-        output:
-          description: The output from the tool execution.
-        error:
-          type: string
-          description: Error message if execution failed.
+      - items
+      - total_pages
+      - current_page
+      - total_items
     Tool_2:
       type: object
       properties:
@@ -2898,6 +2875,29 @@ components:
             $ref: '#/components/schemas/Tool_2'
         totalCount:
           type: integer
+    ExecuteToolRequest:
+      type: object
+      required:
+      - connectedAccountId
+      properties:
+        connectedAccountId:
+          type: string
+          description: The connected account to execute on behalf of.
+        input:
+          type: object
+          description: Input parameters for the tool execution.
+          additionalProperties: true
+    ExecuteToolResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the execution succeeded.
+        output:
+          description: The output from the tool execution.
+        error:
+          type: string
+          description: Error message if execution failed.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

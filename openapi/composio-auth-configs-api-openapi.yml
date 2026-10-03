@@ -1129,13 +1129,6 @@ components:
           - status
       required:
       - error
-    AuthConfigListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthConfigResponse'
     AuthConfigResponse:
       type: object
       properties:
@@ -1187,6 +1180,13 @@ components:
           items:
             type: string
           description: OAuth scopes to request.
+    AuthConfigListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthConfigResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

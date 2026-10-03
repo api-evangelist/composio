@@ -1108,17 +1108,6 @@ paths:
       description: Production Server
 components:
   schemas:
-    DeprecatedToolkitInfo:
-      type: object
-      properties:
-        toolkitId:
-          type: string
-      required:
-      - toolkitId
-      description: Deprecated toolkit ID
-      deprecated: true
-      example:
-        toolkitId: 550e8400-e29b-41d4-a716-446655440000
     Error:
       type: object
       properties:
@@ -1148,6 +1137,26 @@ components:
           - status
       required:
       - error
+    DeprecatedToolkitInfo:
+      type: object
+      properties:
+        toolkitId:
+          type: string
+      required:
+      - toolkitId
+      description: Deprecated toolkit ID
+      deprecated: true
+      example:
+        toolkitId: 550e8400-e29b-41d4-a716-446655440000
+    ToolkitListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolkitResponse'
+        totalCount:
+          type: integer
     ToolkitResponse:
       type: object
       properties:
@@ -1176,15 +1185,6 @@ components:
         toolCount:
           type: integer
           description: Number of tools in this toolkit.
-    ToolkitListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ToolkitResponse'
-        totalCount:
-          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

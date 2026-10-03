@@ -24336,6 +24336,20 @@ components:
               x-experimental: true
           description: Experimental features - not stable, may be modified or removed in future versions.
           x-experimental: true
+    CreateConnectedAccountRequest:
+      type: object
+      required:
+      - toolkit
+      properties:
+        toolkit:
+          type: string
+          description: The toolkit to connect to.
+        authConfigId:
+          type: string
+          description: Optional auth config to use for this connection.
+        entityId:
+          type: string
+          description: Identifier for the end user entity.
     ConnectedAccountListResponse:
       type: object
       properties:
@@ -24364,20 +24378,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    CreateConnectedAccountRequest:
-      type: object
-      required:
-      - toolkit
-      properties:
-        toolkit:
-          type: string
-          description: The toolkit to connect to.
-        authConfigId:
-          type: string
-          description: Optional auth config to use for this connection.
-        entityId:
-          type: string
-          description: Identifier for the end user entity.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
