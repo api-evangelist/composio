@@ -1154,6 +1154,13 @@ components:
         createdAt:
           type: string
           format: date-time
+    AuthConfigListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthConfigResponse'
     CreateAuthConfigRequest:
       type: object
       required:
@@ -1180,13 +1187,6 @@ components:
           items:
             type: string
           description: OAuth scopes to request.
-    AuthConfigListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuthConfigResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -1258,13 +1258,6 @@ components:
           - status
       required:
       - error
-    TriggerListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TriggerResponse'
     CreateTriggerRequest:
       type: object
       required:
@@ -1310,6 +1303,13 @@ components:
         createdAt:
           type: string
           format: date-time
+    TriggerListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TriggerResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

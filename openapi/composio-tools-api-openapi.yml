@@ -2603,35 +2603,28 @@ paths:
       description: Production Server
 components:
   schemas:
-    Error:
+    ToolsPaginated:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            code:
-              type: number
-            slug:
-              type: string
-            status:
-              type: number
-            request_id:
-              type: string
-            suggested_fix:
-              type: string
-            errors:
-              type: array
-              items:
-                type: string
-          required:
-          - message
-          - code
-          - slug
-          - status
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        total_pages:
+          type: number
+        current_page:
+          type: number
+        total_items:
+          type: number
       required:
-      - error
+      - items
+      - total_pages
+      - current_page
+      - total_items
     Tool:
       type: object
       properties:
@@ -2821,28 +2814,55 @@ components:
       - tags
       - is_deprecated
       - deprecated
-    ToolsPaginated:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
+      required:
+      - error
+    ToolListResponse:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Tool'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-        total_pages:
-          type: number
-        current_page:
-          type: number
-        total_items:
-          type: number
-      required:
-      - items
-      - total_pages
-      - current_page
-      - total_items
+            $ref: '#/components/schemas/Tool_2'
+        totalCount:
+          type: integer
+    ExecuteToolResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the execution succeeded.
+        output:
+          description: The output from the tool execution.
+        error:
+          type: string
+          description: Error message if execution failed.
     Tool_2:
       type: object
       properties:
@@ -2866,15 +2886,6 @@ components:
           type: array
           items:
             type: string
-    ToolListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tool_2'
-        totalCount:
-          type: integer
     ExecuteToolRequest:
       type: object
       required:
@@ -2887,17 +2898,6 @@ components:
           type: object
           description: Input parameters for the tool execution.
           additionalProperties: true
-    ExecuteToolResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Whether the execution succeeded.
-        output:
-          description: The output from the tool execution.
-        error:
-          type: string
-          description: Error message if execution failed.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

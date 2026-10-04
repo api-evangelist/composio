@@ -24114,35 +24114,6 @@ paths:
       description: Production Server
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            code:
-              type: number
-            slug:
-              type: string
-            status:
-              type: number
-            request_id:
-              type: string
-            suggested_fix:
-              type: string
-            errors:
-              type: array
-              items:
-                type: string
-          required:
-          - message
-          - code
-          - slug
-          - status
-      required:
-      - error
     PatchConnectedAccountBody:
       type: object
       properties:
@@ -24336,29 +24307,35 @@ components:
               x-experimental: true
           description: Experimental features - not stable, may be modified or removed in future versions.
           x-experimental: true
-    CreateConnectedAccountRequest:
+    Error:
       type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: number
+            slug:
+              type: string
+            status:
+              type: number
+            request_id:
+              type: string
+            suggested_fix:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+          required:
+          - message
+          - code
+          - slug
+          - status
       required:
-      - toolkit
-      properties:
-        toolkit:
-          type: string
-          description: The toolkit to connect to.
-        authConfigId:
-          type: string
-          description: Optional auth config to use for this connection.
-        entityId:
-          type: string
-          description: Identifier for the end user entity.
-    ConnectedAccountListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConnectedAccountResponse'
-        totalCount:
-          type: integer
+      - error
     ConnectedAccountResponse:
       type: object
       properties:
@@ -24378,6 +24355,29 @@ components:
         createdAt:
           type: string
           format: date-time
+    ConnectedAccountListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectedAccountResponse'
+        totalCount:
+          type: integer
+    CreateConnectedAccountRequest:
+      type: object
+      required:
+      - toolkit
+      properties:
+        toolkit:
+          type: string
+          description: The toolkit to connect to.
+        authConfigId:
+          type: string
+          description: Optional auth config to use for this connection.
+        entityId:
+          type: string
+          description: Identifier for the end user entity.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
