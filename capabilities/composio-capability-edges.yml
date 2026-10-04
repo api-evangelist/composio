@@ -1,0 +1,25 @@
+slug: composio
+provider: Composio
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Webhook Subscriptions
+  spec_file: composio-webhook-subscriptions-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.8
+  evidence: '''Webhook delivery subscriptions. Outbound URLs Composio posts trigger events to, plus signing
+    secret rotation and event-type filters''; POST /api/v3/webhook_subscriptions/{id}/rotate_secret'
+  reason: Create/update/delete outbound webhook subscriptions, rotate signing secrets and list available
+    event types — this is squarely lifecycle management of outbound webhook subscriptions and event schemas.

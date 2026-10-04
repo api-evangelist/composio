@@ -483,6 +483,9 @@ apis:
   - type: Documentation
     url: https://docs.composio.dev/reference/api-reference/toolkits
 common:
+  - type: CapabilityMap
+    url: capabilities/composio-capability-edges.yml
+    name: Composio Business Capability Map
   - type: VendorFacets
     url: vendor-facets/composio-vendor-facets.yml
   - type: Website
