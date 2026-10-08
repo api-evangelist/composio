@@ -483,6 +483,12 @@ apis:
   - type: Documentation
     url: https://docs.composio.dev/reference/api-reference/toolkits
 common:
+  - type: Plans
+    url: plans/composio-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/composio-rate-limits.yml
+  - type: FinOps
+    url: finops/composio-finops.yml
   - type: CapabilityMap
     url: capabilities/composio-capability-edges.yml
     name: Composio Business Capability Map
