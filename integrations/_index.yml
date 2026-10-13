@@ -129,6 +129,6 @@
   channel: distribution
   evidence: https://aws.amazon.com/marketplace/seller-profile?id=seller-mwphjbhgd2siy
   source: edge
-  relationship: platform-app
+  relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
