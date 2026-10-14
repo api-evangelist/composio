@@ -132,3 +132,14 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: composio-blackbaud-blackbaud-marketplace
+  label: Blackbaud (Blackbaud Marketplace)
+  partner_name: Blackbaud (Blackbaud Marketplace)
+  type: marketplace
+  marketplace: blackbaud-marketplace
+  channel: partner-built
+  evidence: https://app.blackbaud.com/marketplace/applications/cd749541-5ac3-4073-9971-28ff622835a7
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
