@@ -4,6 +4,7 @@ checked:
 - blackbaud/integrations/blackbaud-integration-edges.yml
 - https://aws.amazon.com/marketplace/
 - https://mpl-pusa01.app.blackbaud.net/mktpl/v1/public/marketplace/applications
+- stripe/integrations/stripe-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -39,5 +40,22 @@ edges:
   detected_by: mirror-platform-listings.py
   badges:
   - Reviewed by Blackbaud
+- partner_name: Stripe (own)
+  partner: stripe
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.stripe.com/apps/composio
+  mirror_of: stripe/integrations/stripe-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: developer_tools
 source:
 - https://mpl-pusa01.app.blackbaud.net/mktpl/v1/public/marketplace/applications
