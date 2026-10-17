@@ -1258,26 +1258,6 @@ components:
           - status
       required:
       - error
-    CreateTriggerRequest:
-      type: object
-      required:
-      - connectedAccountId
-      - triggerName
-      properties:
-        connectedAccountId:
-          type: string
-          description: The connected account to create the trigger for.
-        triggerName:
-          type: string
-          description: The name of the trigger event to subscribe to.
-        webhookUrl:
-          type: string
-          format: uri
-          description: The URL to receive webhook events.
-        config:
-          type: object
-          description: Additional trigger configuration.
-          additionalProperties: true
     TriggerResponse:
       type: object
       properties:
@@ -1310,6 +1290,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TriggerResponse'
+    CreateTriggerRequest:
+      type: object
+      required:
+      - connectedAccountId
+      - triggerName
+      properties:
+        connectedAccountId:
+          type: string
+          description: The connected account to create the trigger for.
+        triggerName:
+          type: string
+          description: The name of the trigger event to subscribe to.
+        webhookUrl:
+          type: string
+          format: uri
+          description: The URL to receive webhook events.
+        config:
+          type: object
+          description: Additional trigger configuration.
+          additionalProperties: true
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
