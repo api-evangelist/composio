@@ -191,3 +191,29 @@
     detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
+- slug: composio-monday-com-own
+  label: Monday.com (own)
+  partner: monday-com
+  partner_name: Monday.com (own)
+  category: monday.com app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://monday.com/marketplace/listing/10000946
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: composio-zoom-own
+  label: Zoom (own)
+  partner: zoom
+  partner_name: Zoom (own)
+  category: Zoom app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.zoom.us/apps/pgQNuJblRs-J3iWIXc18VA
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

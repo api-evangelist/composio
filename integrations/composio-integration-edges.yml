@@ -7,7 +7,9 @@ checked:
 - https://github.com/cncf/k8s-conformance
 - https://github.com/cncf/landscape
 - https://mpl-pusa01.app.blackbaud.net/mktpl/v1/public/marketplace/applications
+- monday-com/integrations/monday-com-integration-edges.yml
 - stripe/integrations/stripe-integration-edges.yml
+- zoom/integrations/zoom-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -93,5 +95,39 @@ edges:
     detected: '2026-10-15'
   detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
+- partner_name: Monday.com (own)
+  partner: monday-com
+  partner_match: mirror
+  mirror_match: domain+product
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://monday.com/marketplace/listing/10000946
+  mirror_of: monday-com/integrations/monday-com-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: monday.com app
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/pgQNuJblRs-J3iWIXc18VA
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
 source:
 - https://mpl-pusa01.app.blackbaud.net/mktpl/v1/public/marketplace/applications
