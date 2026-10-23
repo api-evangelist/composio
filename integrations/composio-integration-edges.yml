@@ -26,6 +26,7 @@ checked:
 - https://www.skills.sh/sitemap.xml
 - https://pypi.org/org/{org}/
 - https://pypi.org/pypi/{package}/json
+- discord/integrations/discord-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -190,91 +191,6 @@ edges:
     detected: '2026-10-19'
   detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
-- partner_name: Blackbaud (blackbaud-marketplace)
-  partner: blackbaud
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: blackbaud-marketplace
-  evidence: https://app.blackbaud.com/marketplace/applications/cd749541-5ac3-4073-9971-28ff622835a7
-  mirror_of: blackbaud/integrations/blackbaud-integration-edges.yml
-  apps:
-  - Composio
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  badges:
-  - Reviewed by Blackbaud
-- partner_name: Gorgias (own)
-  partner: gorgias
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.gorgias.com/apps/composio
-  mirror_of: gorgias/integrations/gorgias-integration-edges.yml
-  apps:
-  - Composio
-  listing_count: 1
-  detected: '2026-10-20'
-  detected_by: mirror-platform-listings.py
-- partner_name: Monday.com (own)
-  partner: monday-com
-  partner_match: mirror
-  mirror_match: domain+product
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://monday.com/marketplace/listing/10000946
-  mirror_of: monday-com/integrations/monday-com-integration-edges.yml
-  apps:
-  - Composio
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: monday.com app
-- partner_name: Stripe (own)
-  partner: stripe
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://marketplace.stripe.com/apps/composio
-  mirror_of: stripe/integrations/stripe-integration-edges.yml
-  apps:
-  - Composio
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  category: developer_tools
-- partner_name: Zoom (own)
-  partner: zoom
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://marketplace.zoom.us/apps/pgQNuJblRs-J3iWIXc18VA
-  mirror_of: zoom/integrations/zoom-integration-edges.yml
-  apps:
-  - Composio
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: Zoom app
 - partner_name: Agent Skills (own GitHub org)
   partner: null
   partner_match: register
@@ -507,5 +423,109 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-ide-extension-marketplaces.py
   first_seen: '2026-10-20'
+- partner_name: Blackbaud (blackbaud-marketplace)
+  partner: blackbaud
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: blackbaud-marketplace
+  evidence: https://app.blackbaud.com/marketplace/applications/cd749541-5ac3-4073-9971-28ff622835a7
+  mirror_of: blackbaud/integrations/blackbaud-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  badges:
+  - Reviewed by Blackbaud
+- partner_name: Gorgias (own)
+  partner: gorgias
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.gorgias.com/apps/composio
+  mirror_of: gorgias/integrations/gorgias-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+- partner_name: Monday.com (own)
+  partner: monday-com
+  partner_match: mirror
+  mirror_match: domain+product
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://monday.com/marketplace/listing/10000946
+  mirror_of: monday-com/integrations/monday-com-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: monday.com app
+- partner_name: Stripe (own)
+  partner: stripe
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.stripe.com/apps/composio
+  mirror_of: stripe/integrations/stripe-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: developer_tools
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/pgQNuJblRs-J3iWIXc18VA
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
+- partner_name: Discord (discord-app-directory)
+  partner: discord
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: discord-app-directory
+  evidence: https://discord.com/discovery/applications/1501160137694642207
+  mirror_of: discord/integrations/discord-integration-edges.yml
+  apps:
+  - Composio
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Utilities, Moderation and Tools
+  publisher_verified:
+  - discord-verified-app
 source:
 - https://mpl-pusa01.app.blackbaud.net/mktpl/v1/public/marketplace/applications

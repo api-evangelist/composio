@@ -282,69 +282,6 @@
     detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
-- slug: composio-blackbaud-blackbaud-marketplace
-  label: Blackbaud (blackbaud-marketplace)
-  partner: blackbaud
-  partner_name: Blackbaud (blackbaud-marketplace)
-  type: marketplace
-  marketplace: blackbaud-marketplace
-  channel: partner-built
-  evidence: https://app.blackbaud.com/marketplace/applications/cd749541-5ac3-4073-9971-28ff622835a7
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: composio-gorgias-own
-  label: Gorgias (own)
-  partner: gorgias
-  partner_name: Gorgias (own)
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.gorgias.com/apps/composio
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: composio-monday-com-own
-  label: Monday.com (own)
-  partner: monday-com
-  partner_name: Monday.com (own)
-  category: monday.com app
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://monday.com/marketplace/listing/10000946
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: composio-stripe-own
-  label: Stripe (own)
-  partner: stripe
-  partner_name: Stripe (own)
-  category: developer_tools
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://marketplace.stripe.com/apps/composio
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: composio-zoom-own
-  label: Zoom (own)
-  partner: zoom
-  partner_name: Zoom (own)
-  category: Zoom app
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://marketplace.zoom.us/apps/pgQNuJblRs-J3iWIXc18VA
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: composio-agent-skills-own-github-org
   label: Agent Skills (own GitHub org)
   partner_name: Agent Skills (own GitHub org)
@@ -512,5 +449,81 @@
     signal_note: 'participation only (python): an organization account on PyPI, not a package count'
     detected_by: sweep-ide-extension-marketplaces.py
     detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: composio-blackbaud-blackbaud-marketplace
+  label: Blackbaud (blackbaud-marketplace)
+  partner: blackbaud
+  partner_name: Blackbaud (blackbaud-marketplace)
+  type: marketplace
+  marketplace: blackbaud-marketplace
+  channel: partner-built
+  evidence: https://app.blackbaud.com/marketplace/applications/cd749541-5ac3-4073-9971-28ff622835a7
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: composio-gorgias-own
+  label: Gorgias (own)
+  partner: gorgias
+  partner_name: Gorgias (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.gorgias.com/apps/composio
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: composio-monday-com-own
+  label: Monday.com (own)
+  partner: monday-com
+  partner_name: Monday.com (own)
+  category: monday.com app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://monday.com/marketplace/listing/10000946
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: composio-stripe-own
+  label: Stripe (own)
+  partner: stripe
+  partner_name: Stripe (own)
+  category: developer_tools
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.stripe.com/apps/composio
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: composio-zoom-own
+  label: Zoom (own)
+  partner: zoom
+  partner_name: Zoom (own)
+  category: Zoom app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.zoom.us/apps/pgQNuJblRs-J3iWIXc18VA
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: composio-discord-discord-app-directory
+  label: Discord (discord-app-directory)
+  partner: discord
+  partner_name: Discord (discord-app-directory)
+  category: Utilities, Moderation and Tools
+  type: marketplace
+  marketplace: discord-app-directory
+  channel: partner-built
+  evidence: https://discord.com/discovery/applications/1501160137694642207
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
