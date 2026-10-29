@@ -1,4 +1,4 @@
-# Composio (composio)
+# Composio
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,250 +66,266 @@
 
 Composio is an agent execution platform that bridges AI decision-making and real-world action across 1000+ apps through just-in-time tool calls, secure delegated auth, sandboxed environments, an MCP gateway, parallel execution, and context-aware sessions. Developers get managed OAuth, a tool router for runtime tool discovery, webhook triggers, and a CLI so agents turn intent into action without custom integration work.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/composio/refs/heads/main/apis.yml)
+**Areas:** AI Agents · Authentication · Integration · MCP · Sandbox · Tools · Triggers · Unified API · Webhook
 
-## Scope
+## Composio on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Composio is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/composio/](https://apis.io/providers/composio/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (17)
 
-- AI Agents
-- Authentication
-- Integrations
-- MCP
-- OAuth
-- Sandbox
-- Tools
-- Triggers
-- Unified_API
-- Webhooks
+- [Composio Auth Configs API](https://apis.io/apis/composio/composio-auth-configs-api/) — Authentication configuration management
+- [Composio Authentication API](https://apis.io/apis/composio/composio-authentication-api/) — Authentication related endpoints
+- [Composio CLI API](https://apis.io/apis/composio/composio-cli-api/) — CLI integration endpoints
+- [Composio CLI Authentication API](https://apis.io/apis/composio/composio-cli-authentication-api/) — The CLI Authentication API from Composio — 2 operation(s) for cli authentication.
+- [Composio Connected Accounts API](https://apis.io/apis/composio/composio-connected-accounts-api/) — Connected account management
+- [Composio Files API](https://apis.io/apis/composio/composio-files-api/) — File management
+- [Composio Logs API](https://apis.io/apis/composio/composio-logs-api/) — Logging and monitoring
+- [Composio MCP API](https://apis.io/apis/composio/composio-mcp-api/) — MCP server management
+- [Composio Migration API](https://apis.io/apis/composio/composio-migration-api/) — Endpoints to help with migration from v1 to v3
+- [Composio Organization Management API](https://apis.io/apis/composio/composio-organization-management-api/) — The Organization Management API from Composio — 5 operation(s) for organization management.
+- [Composio Projects API](https://apis.io/apis/composio/composio-projects-api/) — The Projects API from Composio — 6 operation(s) for projects.
+- [Composio Tool Router API](https://apis.io/apis/composio/composio-tool-router-api/) — (Labs) Tool router endpoints
+- [Composio Toolkits API](https://apis.io/apis/composio/composio-toolkits-api/) — Toolkit and tool management
+- [Composio Tools API](https://apis.io/apis/composio/composio-tools-api/) — Tool execution endpoints
+- [Composio Triggers API](https://apis.io/apis/composio/composio-triggers-api/) — Trigger management and execution
+- [Composio Webhook Endpoints API](https://apis.io/apis/composio/composio-webhook-endpoints-api/) — Per-OAuth-app webhook ingress endpoints. Inbound URLs the provider posts to, plus signing secret storage and verification.
+- [Composio Webhook Subscriptions API](https://apis.io/apis/composio/composio-webhook-subscriptions-api/) — Webhook delivery subscriptions. Outbound URLs Composio posts trigger events to, plus signing secret rotation and event-type filters.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-03
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Arazzo workflows (11)
 
-### Composio Tool Router API
+Multi-step workflows that chain operations into a business task.
+
+- [Composio Connect an Account via a New Auth Config](https://apis.io/arazzos/composio/composio-connect-account-via-auth-config-workflow/)
+- [Composio Disable an Active Trigger](https://apis.io/arazzos/composio/composio-disable-active-trigger-workflow/)
+- [Composio Discover and Execute a Tool](https://apis.io/arazzos/composio/composio-discover-and-execute-tool-workflow/)
+- [Composio Execute a Tool on a User's Connected Account](https://apis.io/arazzos/composio/composio-execute-tool-on-connected-account-workflow/)
+- [Composio Generate a Hosted Auth Link](https://apis.io/arazzos/composio/composio-hosted-auth-link-workflow/)
+- [Composio Natural Language Tool Execution](https://apis.io/arazzos/composio/composio-natural-language-tool-execution-workflow/)
+- [Composio Provision an MCP Server](https://apis.io/arazzos/composio/composio-provision-mcp-server-workflow/)
+- [Composio Refresh a Connected Account](https://apis.io/arazzos/composio/composio-refresh-connected-account-workflow/)
+- [Composio Set Up a Trigger](https://apis.io/arazzos/composio/composio-setup-trigger-workflow/)
+- [Composio Tool Router Connect a Toolkit](https://apis.io/arazzos/composio/composio-tool-router-connect-toolkit-workflow/)
+- [Composio Tool Router Session](https://apis.io/arazzos/composio/composio-tool-router-session-workflow/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [composio-mcp.yml](https://apis.io/servers/composio/composio-mcp-yml/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Composio Agentic Access](https://apis.io/agentic-access/composio/composio-agentic-access/)
+
+#### JSON Schema (24)
+
+The data models the API reads and writes.
+
+- [AuthConfigListResponse](https://apis.io/schemas/composio/composio-authconfiglistresponse/)
+- [AuthConfigResponse](https://apis.io/schemas/composio/composio-authconfigresponse/)
+- [Composio Connected Account](https://apis.io/schemas/composio/composio-connected-account/)
+- [ConnectedAccountListResponse](https://apis.io/schemas/composio/composio-connectedaccountlistresponse/)
+- [ConnectedAccountResponse](https://apis.io/schemas/composio/composio-connectedaccountresponse/)
+- [CreateAuthConfigRequest](https://apis.io/schemas/composio/composio-createauthconfigrequest/)
+- [CreateConnectedAccountRequest](https://apis.io/schemas/composio/composio-createconnectedaccountrequest/)
+- [CreateTriggerRequest](https://apis.io/schemas/composio/composio-createtriggerrequest/)
+- [DeprecatedToolkitInfo](https://apis.io/schemas/composio/composio-deprecatedtoolkitinfo/)
+- [Error](https://apis.io/schemas/composio/composio-error/)
+- [ErrorResponse](https://apis.io/schemas/composio/composio-errorresponse/)
+- [ExecuteToolRequest](https://apis.io/schemas/composio/composio-executetoolrequest/)
+- [ExecuteToolResponse](https://apis.io/schemas/composio/composio-executetoolresponse/)
+- [PatchConnectedAccountBody](https://apis.io/schemas/composio/composio-patchconnectedaccountbody/)
+- [SessionResponse](https://apis.io/schemas/composio/composio-sessionresponse/)
+- [Composio Tool](https://apis.io/schemas/composio/composio-tool/)
+- [Composio Toolkit](https://apis.io/schemas/composio/composio-toolkit/)
+- [ToolkitListResponse](https://apis.io/schemas/composio/composio-toolkitlistresponse/)
+- [ToolkitResponse](https://apis.io/schemas/composio/composio-toolkitresponse/)
+- [ToolListResponse](https://apis.io/schemas/composio/composio-toollistresponse/)
+- [ToolRouterToolkitsListResponse](https://apis.io/schemas/composio/composio-toolroutertoolkitslistresponse/)
+- [ToolsPaginated](https://apis.io/schemas/composio/composio-toolspaginated/)
+- [TriggerListResponse](https://apis.io/schemas/composio/composio-triggerlistresponse/)
+- [TriggerResponse](https://apis.io/schemas/composio/composio-triggerresponse/)
 
-Session-based API for AI agents to discover and execute tools. The Tool Router provides the primary interface for AI agents to find relevant tools and execute actions through Composio's unified platform.
+#### JSON Structure (1)
 
-- **Human URL:** [https://docs.composio.dev/reference](https://docs.composio.dev/reference)
-- **Base URL:** `https://backend.composio.dev/api/v3`
+Data models expressed in JSON Structure.
 
-#### Tags
+- [Composio Structure](https://apis.io/json-structure/composio/composio-structure/)
 
-- AI Agents
-- Sessions
-- Tools
+#### JSON-LD (1)
 
-#### Properties
+Linked-data contexts for the provider's vocabulary.
 
-- [Documentation](https://docs.composio.dev/reference)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
+- [Composio Context](https://apis.io/jsonld/composio/composio-context/)
 
-### Composio Tools API
+#### Vocabulary (1)
 
-Enables listing, searching, and executing individual actions within toolkits. The Tools API allows developers to discover available tools, filter by toolkit or capability, and execute specific actions on behalf of connected users.
+The provider's domain terms, defined.
 
-- **Human URL:** [https://docs.composio.dev/reference/api-reference/tools](https://docs.composio.dev/reference/api-reference/tools)
-- **Base URL:** `https://backend.composio.dev/api/v3`
+- [Composio Domain Vocabulary](https://apis.io/vocabularies/composio/composio-vocabulary/)
 
-#### Tags
+#### Examples (13)
 
-- Actions
-- Execution
-- Tools
+Example requests and responses.
 
-#### Properties
+- [Composio Patchauthconfigsbynanoid Example](https://apis.io/examples/composio/composio-patchauthconfigsbynanoid-example/)
+- [Composio Patchconnectedaccountsbynanoid Example](https://apis.io/examples/composio/composio-patchconnectedaccountsbynanoid-example/)
+- [Composio Patchmcpbyid Example](https://apis.io/examples/composio/composio-patchmcpbyid-example/)
+- [Composio Patchorgprojectconfig Example](https://apis.io/examples/composio/composio-patchorgprojectconfig-example/)
+- [Composio Postclicodactfailures Example](https://apis.io/examples/composio/composio-postclicodactfailures-example/)
+- [Composio Postfilesuploadrequest Example](https://apis.io/examples/composio/composio-postfilesuploadrequest-example/)
+- [Composio Postlabstoolroutersession Example](https://apis.io/examples/composio/composio-postlabstoolroutersession-example/)
+- [Composio Postmcpservers Example](https://apis.io/examples/composio/composio-postmcpservers-example/)
+- [Composio Postmcpserversbyserveridinstances Example](https://apis.io/examples/composio/composio-postmcpserversbyserveridinstances-example/)
+- [Composio Postmcpserverscustom Example](https://apis.io/examples/composio/composio-postmcpserverscustom-example/)
+- [Composio Postmcpserversgenerate Example](https://apis.io/examples/composio/composio-postmcpserversgenerate-example/)
+- [Composio Postorgownerprojectnew Example](https://apis.io/examples/composio/composio-postorgownerprojectnew-example/)
+- [Composio Posttoolroutersession Example](https://apis.io/examples/composio/composio-posttoolroutersession-example/)
 
-- [Documentation](https://docs.composio.dev/reference/api-reference/tools)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
+#### Collections (40)
 
-### Composio Connected Accounts API
+Postman and Open Collection request collections.
 
-Handles management of user OAuth connections to applications. The Connected Accounts API enables creating, listing, and managing authenticated connections between end users and third-party applications through Composio's managed OAuth flow.
+- [Composio Platform Account Management API](https://apis.io/collections/composio/open-composio-account-management-api/)
+- [Composio Platform Account Management AI API](https://apis.io/collections/composio/open-composio-ai-api/)
+- [Composio Platform Account Management API Keys API](https://apis.io/collections/composio/open-composio-api-keys-api/)
+- [Composio Platform Account Management Applications API](https://apis.io/collections/composio/open-composio-applications-api/)
+- [Composio Platform Account Management Auth Configs API](https://apis.io/collections/composio/open-composio-auth-configs-api/)
+- [Composio Platform Account Management Authentication API](https://apis.io/collections/composio/open-composio-authentication-api/)
+- [Composio Platform Account Management Categories API](https://apis.io/collections/composio/open-composio-categories-api/)
+- [Composio Platform Account Management CLI API](https://apis.io/collections/composio/open-composio-cli-api/)
+- [Composio Platform Account Management CLI Authentication API](https://apis.io/collections/composio/open-composio-cli-authentication-api/)
+- [Composio Platform Account Management Configuration API](https://apis.io/collections/composio/open-composio-configuration-api/)
+- [Composio Platform Account Management Connected Accounts API](https://apis.io/collections/composio/open-composio-connected-accounts-api/)
+- [Composio Platform Account Management Custom API](https://apis.io/collections/composio/open-composio-custom-api/)
+- [Composio Platform Account Management Execution API](https://apis.io/collections/composio/open-composio-execution-api/)
+- [Composio Platform Account Management Files API](https://apis.io/collections/composio/open-composio-files-api/)
+- [Composio Platform Account Management Instances API](https://apis.io/collections/composio/open-composio-instances-api/)
+- [Composio Platform Account Management Integration API](https://apis.io/collections/composio/open-composio-integration-api/)
+- [Composio Platform Account Management Logs API](https://apis.io/collections/composio/open-composio-logs-api/)
+- [Composio Platform Account Management MCP API](https://apis.io/collections/composio/open-composio-mcp-api/)
+- [Composio Platform Account Management Migration API](https://apis.io/collections/composio/open-composio-migration-api/)
+- [Composio Platform Account Management Natural Language Processing API](https://apis.io/collections/composio/open-composio-natural-language-processing-api/)
+- [Composio Platform API](https://apis.io/collections/composio/open-composio-openapi-original/)
+- [Composio Platform Account Management Organization API](https://apis.io/collections/composio/open-composio-organization-api/)
+- [Composio Platform Account Management Organization Management API](https://apis.io/collections/composio/open-composio-organization-management-api/)
+- [Composio Platform Account Management Projects API](https://apis.io/collections/composio/open-composio-projects-api/)
+- [Composio Platform Account Management Proxy API](https://apis.io/collections/composio/open-composio-proxy-api/)
+- …and 15 more published on APIs.io
 
-- **Human URL:** [https://docs.composio.dev/reference/api-reference/connected-accounts](https://docs.composio.dev/reference/api-reference/connected-accounts)
-- **Base URL:** `https://backend.composio.dev/api/v3`
+#### Overlays (1)
 
-#### Tags
+OpenAPI overlays, including conversational phrasing for each operation.
 
-- Accounts
-- Authentication
-- Connections
-- OAuth
+- [Composio Openapi Original Overlay](https://apis.io/overlays/composio/composio-openapi-original-overlay/)
 
-#### Properties
+#### Governance rules (2)
 
-- [Documentation](https://docs.composio.dev/reference/api-reference/connected-accounts)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
+Spectral rulesets for the provider's contracts.
 
-### Composio Auth Configs API
+- [Composio — jsonschema rules](https://apis.io/rules/composio/composio-jsonschema-spectral-rules/)
+- [Composio API Rules](https://apis.io/rules/composio/composio-rules/)
 
-Allows configuration of authentication methods for toolkit access. Auth configs contain developer credentials and app-level settings such as scopes and authentication methods, and can be reused across all users.
+#### Security (3)
 
-- **Human URL:** [https://docs.composio.dev/reference/api-reference/auth-configs](https://docs.composio.dev/reference/api-reference/auth-configs)
-- **Base URL:** `https://backend.composio.dev/api/v3`
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Tags
+- [Composio Authentication](https://apis.io/security/composio/composio-authentication/)
+- [Composio Domain Security](https://apis.io/security/composio/composio-domain-security/)
+- [Composio Vulnerability Disclosure](https://apis.io/security/composio/composio-vulnerability-disclosure/)
 
-- Authentication
-- Configuration
-- OAuth
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [Documentation](https://docs.composio.dev/reference/api-reference/auth-configs)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
+- [Composio Plans Pricing](https://apis.io/plans/composio/composio-plans-pricing/)
 
-### Composio Triggers API
+#### Rate limits (1)
 
-Manages webhook subscriptions from connected applications. The Triggers API enables developers to set up and manage event-driven notifications from third-party applications, allowing AI agents to respond to real-time events.
+Published request limits.
 
-- **Human URL:** [https://docs.composio.dev/reference/api-reference/triggers](https://docs.composio.dev/reference/api-reference/triggers)
-- **Base URL:** `https://backend.composio.dev/api/v3`
+- [Composio Rate Limits](https://apis.io/rate-limits/composio/composio-rate-limits/)
 
-#### Tags
+#### FinOps (1)
 
-- Events
-- Triggers
-- Webhooks
+What the API costs to run, by operation.
 
-#### Properties
+- [Composio Finops](https://apis.io/finops/composio/composio-finops/)
 
-- [Documentation](https://docs.composio.dev/reference/api-reference/triggers)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
+## Where to find this API
 
-### Composio Toolkits API
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-Provides browsing capabilities for available applications and their associated tools. The Toolkits API allows developers to discover and explore the 1000+ available integrations across services like GitHub, Gmail, Slack, Notion, and more.
-
-- **Human URL:** [https://docs.composio.dev/reference/api-reference/toolkits](https://docs.composio.dev/reference/api-reference/toolkits)
-- **Base URL:** `https://backend.composio.dev/api/v3`
-
-#### Tags
-
-- Applications
-- Integrations
-- Toolkits
-
-#### Properties
-
-- [Documentation](https://docs.composio.dev/reference/api-reference/toolkits)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
-
-### Composio MCP API
-
-Exposes Composio's toolkits over the Model Context Protocol so MCP-compatible clients (Claude Desktop, Cursor, and other MCP hosts) can discover and execute Composio tools through a managed gateway with delegated auth and scoped sessions.
-
-- **Human URL:** [https://docs.composio.dev/reference](https://docs.composio.dev/reference)
-- **Base URL:** `https://backend.composio.dev/api/v3`
-
-#### Tags
-
-- MCP
-- Gateway
-- AI Agents
-- Tools
-
-#### Properties
-
-- [Documentation](https://docs.composio.dev/reference)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
-
-### Composio Webhooks API
-
-Manages webhook endpoints and subscriptions for outbound delivery of Composio events (trigger fires, account state changes, execution events) to consumer-owned HTTP endpoints, including signing keys and replay controls.
-
-- **Human URL:** [https://docs.composio.dev/reference](https://docs.composio.dev/reference)
-- **Base URL:** `https://backend.composio.dev/api/v3`
-
-#### Tags
-
-- Events
-- Webhooks
-- Notifications
-
-#### Properties
-
-- [Documentation](https://docs.composio.dev/reference)
-- [OpenAPI](openapi/composio-openapi-original.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/composio-openapi-original.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/composio-openapi-original.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/composio-openapi-original.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral  Rules](rules/composio-rules.yml)
-
-## Common Properties
-
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
-- [LinkedIn](https://www.linkedin.com/company/composiohq)
-- [Portal](https://app.composio.dev/dashboard)
+- [Website](https://www.composio.dev/)
 - [Documentation](https://docs.composio.dev/docs)
-- [Getting Started](https://docs.composio.dev/docs/quickstart)
-- [API Reference](https://docs.composio.dev/reference)
-- [OpenAPI](https://backend.composio.dev/api/v3/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://docs.composio.dev/faq/api_key/api_key)
-- [Blog](https://composio.dev/blog)
-- [Status Page](https://status.composio.dev)
+- [Getting started](https://docs.composio.dev/docs/quickstart)
+- [API reference](https://docs.composio.dev/reference)
 - [Pricing](https://composio.dev/pricing)
 - [Changelog](https://docs.composio.dev/docs/changelog)
-- [Privacy Policy](https://composio.dev/privacy)
-- [Terms of Service](https://composio.dev/terms)
-- [GitHub Organization](https://github.com/ComposioHQ)
-- [Git Hub  Repo](https://github.com/ComposioHQ/composio)
-- [Python  S D K](https://github.com/ComposioHQ/composio)
-- [Node.js  S D K](https://www.npmjs.com/package/@composio/client)
-- [Sign Up](https://app.composio.dev/dashboard)
-- [Agent  Sign  Up](https://agents.composio.dev)
-- [Toolkits  Catalog](https://composio.dev/toolkits)
-- [JSON-LD](json-ld/composio-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/composio-tool-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/composio-toolkit-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/composio-connected-account-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [L L Ms Txt](https://docs.composio.dev/llms.txt)
+- [Blog](https://composio.dev/blog)
+- [Terms of service](https://composio.dev/terms)
+- [Privacy policy](https://composio.dev/privacy)
+- [GitHub](https://github.com/ComposioHQ)
+- [Status](https://status.composio.dev)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 55.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 54.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 56.0 |
+| Access clarity | 52.6 |
+
+**Agent readiness 30.9** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/composio/](https://apis.io/providers/composio/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Composio: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/composio/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
